@@ -395,6 +395,8 @@ console.log(BinarySearch(arr,n));
 
 #### 算法总结：
 
+![img](https://pic4.zhimg.com/80/v2-bb4d0a4e62e92e3e9fcf71f4e9c6f91a_hd.jpg)
+
 ![算法总结](.\img\算法总结.jpg)
 
 图片名次解释：

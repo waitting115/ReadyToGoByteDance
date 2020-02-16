@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+		//选择排序
+		function selectionSort (arr, rule) {
+			let len = arr.length;
+			if(len == 0) {
+				return arr;
+			};
+			let location = 0;
+			for(let i = 0; i < len; i ++) {
+				//第一步，循环整个数组，找到最小的或者最大的，将它的位置标记下来，循环一遍完成后将最小的与第一个元素交换位置
+				//第二步，循环除了第一个元素的余下数字，找到最小的或最大的，记下位置，循环完成后将最小的与第二个元素交换位置
+				//。。。依次循环，直至完成
+				location = i;
+				for(let j = i; j < len; j ++) {
+					if(arr[j] < arr[location]) {
+						location = j;
+					}
+				}
+				//循环一遍之后location保存的就是最小数字的位置，接下来将它与i位置的数字交换位置即可
+				let temp = arr[location];
+				arr[location] = arr[i];
+				arr[i] = temp;
+			}
+			return arr;
+		}
+
+		console.log('选择排序算法升序排序结果：', selectionSort(arr));
+	</script>
+</body>
+</html>

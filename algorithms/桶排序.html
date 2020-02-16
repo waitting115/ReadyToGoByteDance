@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+		//桶排序
+		function bucketSort(arr) {
+			//思路：首先根据数组A的数据确定桶的个数以及桶能装元素范围；然后创建辅助数组B，for循环为数组B添加若干个数组（也就是桶）；然后循环A向B中添加元素；然后根据桶里的数据确定每个桶内用哪种排序方法；然后每个桶内数据排好序之后，将数组B中的数据放回A数组。
+			if(arr.length == 0) return arr;
+	        
+			let max = arr[0],
+				min = arr[0],
+				dif = 0,
+				len = arr.length,
+				temp = 0;
+			for(let i = 1; i < len; i ++) {
+				if(arr[i] > max) {
+					max = arr[i];
+				}
+				if(arr[i] < min) {
+					min = arr[i];
+				}
+			}
+			dif = max - min;
+
+			let range = 10,//每个桶的范围
+				bucketNum = Math.ceil(dif / range);//桶的个数
+			//B
+			let arrB = [];
+			for(let i = 0; i < bucketNum; i ++) {
+				arrB[i] = [];
+			}
+			//A-->B(这里是个难点哦)
+			for(let i = 0; i < len; i ++) {
+				temp = parseInt((arr[i] - min) / len);//这里一定要减min因为每个桶的范围是从2~12,12~22,...并不是我们想象的1~10,10~20...
+				arrB[temp].push(arr[i]);
+			}
+
+			//操作每个桶，这里就可用其他的排序方法了
+			let arrBlen = arrB.length;
+			for(let i = 0; i < arrBlen; i ++) {
+				if(arrB[i].length > 1) {//略掉空桶和只有一个元素的桶
+					fastSort(arrB[i]);
+				}
+			}
+			//B-->A
+			let num = 0;
+			for(let i = 0; i < arrBlen; i ++) {
+				if(arrB[i].length > 0) {//不是空桶
+					let arrBiLen = arrB[i].length;
+					for(let j = 0; j < arrBiLen; j ++) {//把非空桶中的元素依次放入A数组
+						arr[num] = arrB[i][j];
+						num ++;
+					}
+				}
+			}
+			return arr;
+		}
+		console.log('桶排序算法升序序列的结果：', bucketSort(arr));
+	</script>
+</body>
+</html>

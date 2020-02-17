@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [1,3,4,6,7,9,11,13,14,15,16];
+		let n = 2;
+		function interpolationFind(arr, n) {
+			let time = 0;
+			let low, high, mid, len = arr.length;
+			low = 0, high = len - 1;
+			while(low < high) {
+				console.log('比较次数：', ++ time);
+				mid = low + parseInt((n - arr[low]) / (arr[high] - arr[low]) * (high - low));
+				console.log(mid);2
+				// mid = low + parseInt((high - low) / 2);
+				if(arr[mid] == n) {
+					return mid;
+				} else if (arr[mid] > n) {
+					high = mid - 1;
+				} else {
+					low = mid + 1;
+				}
+			}
+			return -1;
+		}
+
+		console.log('n的位置：', interpolationFind(arr, n));
+	</script>
+</body>
+</html>

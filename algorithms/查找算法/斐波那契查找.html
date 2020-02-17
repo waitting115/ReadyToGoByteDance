@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [0,5,8,11,16,17,22,34,55,78,99];
+		let n = 55;
+		//斐波那契查找
+		function FibonacciFind (arr, n) {
+			//思路：首先按照arr长度创建fibonacci数列数组（fibonacci数列的最后一位数要比数组长度减一要大）；
+			let len = arr.length;
+			//创建所需的fibonacci数列
+			let FibonacciArr = [];
+			FibonacciArr[0] = 0;
+			FibonacciArr[1] = 1;
+			let FibNum = 0,//fibonacci数列的最后一位数
+				i = 2;
+			while(FibNum <= len - 1) {
+				FibonacciArr[i] = FibonacciArr[i - 1] + FibonacciArr[i - 2];
+				FibNum = FibonacciArr[i];
+				i ++;
+			}
+			// console.log(FibonacciArr);
+			
+		}
+		FibonacciFind(arr, n);
+	</script>
+</body>
+</html>

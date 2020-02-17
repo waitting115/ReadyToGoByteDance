@@ -112,17 +112,120 @@ public class ArrayQueue {
 }
 ~~~
 
-当队尾指针指向了数组的最后一个位置，而队头指针并没有在-1 的位置上时，就会出现假溢出现象，因为数组出去过数据，所以有位置，但是默认队列已经满了。
+当队尾指针指向了数组的最后一个位置，而队头指针并没有在-1 的位置上时，就会出现**假溢出**现象，因为数组出去过数据，所以有位置，但是默认队列已经满了。
 
-为了解决这个问题， 循环队列应运而生，即将队头和队尾连接起来。
+为了解决这个问题， 循环队列应运而生，即将队头和队尾连接起来，利用循环解决空间浪费问题。
 
 #### 循环队列
 
 ![这里写图片描述](https://img-blog.csdn.net/20170801165226110?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaXNtYWh1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
+**代码实现：**
 
+~~~java
+public class CircularQueue {
+    private int size;  //循环队列的大小
+    private int front; //队头指针
+    private int rear;  //队尾指针
+    private int[] arr; //用于存放数据，模拟队列
+    
+    //构造函数
+    public void CircularQueue(int size) {
+        this.size = size;
+        front = -1;
+        rear = -1;
+        arr = new Array(size);
+    }
+    //判断队列是否已满
+    public boolean isFull() {
+        return front == (rear + 1) % size;//这里要理解为何取余，因为当出现普通队列的’假溢出‘现象时rear要变为0，然后继续加一，再加一...
+    }
+    //判断队列是否为空
+    public boolean isEmpty() {
+        return rear == (front + 1) % size;
+    }
+    //插入元素
+    public void addQueue(int n) {
+        //判断队列是否已满
+        if(isFUll()) {
+            System.out.println('队列已满！');
+            return;
+        }; 
+        rear = (rear + 1) % size;
+        arr[rear] = n;
+    }
+    //删除元素并返回
+    public int delQueue() {
+        //判断队列是否为空
+        if(isEmpty()) {
+            System.out.println('队列已空！');
+            return;
+        }
+        front = (front + 1) % size;
+        return add[front];
+    }
+    //显示队列中所有元素
+    public void showQueue() {
+        //判断队列是否为空
+        if(isEmpty()) {
+            System.out.println('队列已空！');
+            return;
+        }
+        for(int i = 0; i < size; i ++) {//这里和普通队列有区别，因为此时font与rear之间大小并不确定
+            System.out.println("arr[%d] = %d", i , arr[i]);
+        }
+    }
+}
+~~~
 
 #### 阻塞队列
+
+阻塞队列与普通队列的区别在于：
+
+- 当队列是空的时，从队列中获取元素的操作将会被阻塞；
+- 当队列是满的时，往队列里添加元素的操作会被阻塞；
+
+试图在空的阻塞队列中获取元素的线程将会被阻塞，直到其他的线程往空的队列插入新的元素。
+
+同样，试图往已满的阻塞队列中添加新元素的线程同样也会被阻塞，直到其他线程使队列重新变得空闲起来。
+
+代码（java版）：
+
+~~~java
+//虽然懂了阻塞队列的大概原理，然鹅并不懂代码
+public class BlockingQueue {
+    private List queue = new LinkdList();
+    private int limit = 10;
+    
+    public BlockingQueue(int limit) {
+        this.limit = limit;
+    }
+    public synchronized void enqueue(Object item)
+        throws InterruptedException {
+        while(this.queue.size()) === this.limit) {
+            wait();
+        }
+        if(this.queue.size() == 0) {
+            notifyAll();
+        }
+        this.queue.add(item);
+    }
+    
+    public synchronized Object dequeue()
+        throws InterruptedException {
+        
+        while(this.queue.size() == 0) {
+            wait();
+        }
+        if(this.queue.size() == this.limit) {
+            notifyAll();
+        }
+        return this.queue.remove(0);
+    }
+}
+~~~
+
+ 必须注意到，在enqueue和dequeue方法内部，只有队列的大小等于上限（limit）或者下限（0）时，才调用notifyAll方法。如果队列的大小既不等于上限，也不等于下限，任何线程调用enqueue或者dequeue方法时，都不会阻塞，都能够正常的往队列中添加或者移除元素。 
 
 #### 并发队列
 

@@ -16,13 +16,152 @@
 - 最后元素除外，其余元素均有唯一“后继”
 - 第一元素除外，其余元素均有唯一“前驱”
 
-### 数组
+### 数组 √
+
+数组是我们在编程中用的最多的数据结构，一般都是定长数组。
 
 #### 动态数组
 
-动态数组就是不确定数组长度的时候要创建的数组。但是js并没有这个问题。
+很多时候定长的数组并不能很好的满足我们的需求，于是我们用动态数组。
 
-### 栈
+在java中有个API——ArrayList，就是一个动态数组，在C++中有一个vector也是动态数组，我们可以直接使用。
+
+但是有时候我们需要自己定制一个动态数组，以便更好的解决我们的问题。
+
+实现动态数组有两种方法：
+
+- 用定长数组实现（顺序表）
+- 用引用（链表）实现
+
+这里用定长数组实现：
+
+实现思路：
+
+​		首先申请一个定长的数组空间Original，定义一个int型的len，用来记录当前已使用的空间大小，也就是动态数组的长度。然后在增加元素的时候，先将len与Original.length比较，如果len < Original.length，则直接往Original中添加就好，然后len++；如果len >= Original.length，则新开辟一个为Original.length()*2大小的空间，先将Original中的数据依次放里面，然后将新添加的元素放到新开辟的空间中。
+
+定长数组长度不足时：
+
+![img](https://img-blog.csdn.net/20180707180201140?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FsZXh3eW0=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+定长数组长度足够时：
+
+![img](https://img-blog.csdn.net/20180707180416668?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FsZXh3eW0=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+细节：
+
+- 将待存储的数据定义为Object，因为Object是所有类的父类，因此我们就可以往这个数组中加入任何类型的数据。
+- 有时候我们要求数组中只能存储某一种数据类型，不能掺杂其他数据；有时候我们又希望要求数组中可以存储任何数据类型。    要满足这两个看似有些矛盾的要求就只能用java中的**泛型**了。泛型不是引用类型也不是基本数据类型；泛型是一种特殊符号，它**泛指Java中任何一种引用类型。**泛型起到了一个占位符的作用，之后在使用的过程中可以根据项目的具体需求来指定占位符的数据类型。
+
+动态数组需要实现哪些功能：
+
+- add()  添加数据
+- get()  获取任意位置的数据
+- length()  返回当前动态数组的长度
+- insert()  在任意位置插入数据
+- delet()  删除任意位置的数据
+- unite()  合并其他数组
+
+具体代码实现：
+
+~~~java
+public class DynamicArray<E> {
+	//申请一个数组，定长为100
+	Object[] original;
+	private int startLength = 100;
+	private int len = 0;//当前动态数组的长度
+
+	//构造方法，重载是否给长度两种情况
+	public DynamicArray() {
+		original = new Object[startLength];
+	}
+
+	public DynamicArray(int n) {
+		this.startLength = n;
+		original = new Object[startLength];
+	}
+	//判断数组是否已满 isFull
+	public boolean isFull () {
+		return len == original.length;
+	}
+	//判断数组是否为空 isEmpty
+	public boolean isEmpty () {
+		return len == 0;
+	}
+	//已满的情况下扩充数组 expand
+	public void expand() {
+		//创建新数组，长度为原数组的2倍，完全可以不是2倍，这里增大多少完全由于你的项目需求
+		Object[] newArray = new Object[original.length * 2];
+		//将原数组的数据放入新数组
+		for(let i = 0; i < len; i ++) {//这里用len而不是original.length 的原因是没必要每次都求一遍原数组的长度，浪费资源
+			newArray[i] = original[i];
+		}
+		//将新数组赋值给原数组
+		original = newArray;
+		//释放内存
+		newArray = null;
+	}
+	//添加数据的方法 add
+	public void add(E data) {
+		if(isFull()) {
+			//扩充数组
+			expand();
+		}
+		//将新数据放到新数组中
+		original[len] = data;
+		len ++;
+	}
+	//获得某一位置的数据 get
+	public E getData(int location) {
+		return original[location];
+	}
+	//输出动态数组大小 size
+	public int size() {
+		return len;
+	}
+	//在某一位置插入数据 insert
+	public void insertData(int location, int data) {
+		if(isFull()) {
+			//扩充数组
+			expand();
+		}
+		//将要插入的位置及其后面的元素均向后移动一位
+		for(int i = len - 1; i >= location; i --) {
+			original[i + 1] = original[i];
+		}
+		original[location] = data;
+		len ++;
+	}
+	//删除某一位置的数据
+	public void delData(int location) {
+		if(location < len) {
+			for(int i = location; i < len; i ++) {
+				original[i] = original[i + 1];
+			}
+		} else {
+			System.out.println('此位置没有数据！');
+		}
+	}
+	//合并另一个同类动态数组
+	public void merge (DynamicArray ArrayB) {
+		//如果当前数组装不下两个数组，就增大一定空间，若还小，继续增大 。。。
+		while(ArrayB.size() + len > original.length) {
+			expand();
+		}
+		//合并
+		private int ArrayBLen = ArrayB.length;
+		for(int i = 0; i < ArrayBLen; i ++) {
+			original[len] = ArrayB[i];
+			len ++;
+		}
+	}
+}
+~~~
+
+
+
+
+
+### 栈 √
 
 是一种**后进先出**的数据结构。
 
@@ -32,9 +171,62 @@
 
 **栈顶插入，删除元素；**
 
-栈底存储的是第一个入栈的元素。
+栈底存储的是最先入栈的元素。
 
-### 队列 Queue
+~~~java
+//java实现栈
+public class stack {
+	private int maxSize;//栈大小
+	private int top;//栈顶，插入和删除元素，总是指向最外面一个元素
+	private int[] arr;//用于存放数据，模拟栈
+
+	public stack(int maxSize) {
+		this.maxSize = maxSize;
+		top = -1;
+		arr = new Array(maxSize);
+	}
+	//是否满
+	public boolean isFull() {
+		return top == maxSize - 1;
+	}
+	//是否空
+	public boolean isEmpty() {
+		return top == -1;
+	}
+	//入栈
+	public void addStack(int n) {
+		if(isFull()) {
+			System.out.println('队列已满！');
+			return;
+		}
+		top ++;
+		arr[top] == n;
+	}
+	//出栈
+	public int delStack() {
+		if(isEmpty()) {
+			System.out.println('队列已空！');
+			return;
+		}
+		top --;
+		return arr[top + 1];
+	}
+	//输出栈中所有数据
+	public void showStack() {
+		if(isEmpty()) {
+			System.out.println('队列已空！');
+			return;
+		}
+		for(int i = 0; i <= top; i ++) {
+			System.out.println('arr[%d] = %d', i, arr[i]);
+		}
+	}
+}
+~~~
+
+
+
+### 队列 Queue √
 
 是一种**先进先出**的数据结构。
 
@@ -178,6 +370,10 @@ public class CircularQueue {
 }
 ~~~
 
+循环队列模型类似于生产——消费的关系，这也是很多消息队列的思想和应用。这种队列可以调节生产和消费的关系。
+
+当然，也可以生产一个产品被多个消费者消费，这又产生了线程并发的问题。我们如何保证线程安全呢？这就需要并发队列。基于数组的循环队列+CAS原子操作，可以很好的实现无锁并发队列。
+
 #### 阻塞队列
 
 阻塞队列与普通队列的区别在于：
@@ -227,9 +423,32 @@ public class BlockingQueue {
 
  必须注意到，在enqueue和dequeue方法内部，只有队列的大小等于上限（limit）或者下限（0）时，才调用notifyAll方法。如果队列的大小既不等于上限，也不等于下限，任何线程调用enqueue或者dequeue方法时，都不会阻塞，都能够正常的往队列中添加或者移除元素。 
 
-#### 并发队列
+#### 并发队列 qeque
 
-#### 双端队列
+（只是简单了解）
+
+ConcurrentLinkedQeque：是一个适用于高并发场景下的队列，通过无锁的方式，实现了高并发状态下的高性能，通常ConcurrentLinkedQueue性能好于BlockingQueue。它是一个基于链接节点的无界线程安全队列。该队列的元素遵循先进先出的原则。头是最先加入的，尾是最近加入的，该队列不允许null元素。
+
+#### 双端队列 deque
+
+双端队列是一种具有队列和栈性质的数据结构，即可在线性表的两端进行插入和删除操作。
+
+依然是front与rear两个指针变量分别指向两端，但是有了4种操作而非两种：
+
+- push  将元素插入表头 front--
+- pop  删除头部元素  front++
+- inject  将元素插入到表位 rear ++
+- eject  删除尾部元素 rear --
+
+我们初始化时，rear = front = 0；那push如何操作？front--呀，但不是出界了吗？
+
+别急，由于是循环队列，front = (front) % 数组大小，这样就不会出界了。由于这样的操作，我们第一次push，元素会在数组的尾部，举个例子：
+
+- 可以理解为中间站一个人
+- push和pop在他左边进行
+- inject和eject在他右边进行
+
+此外，我们有 -- 操作，可能会出现负值，所以需要+size再取余的操作！
 
 ### 链表
 
@@ -1803,4 +2022,211 @@ LSD从低位开始进行排序。
 ### 哈希表的删除
 
  首先链地址法是可以直接删除元素的，但是开放定址法是不行的，拿前面的双探测再散列来说，假如我们删除了元素1，将其位置置空，那 23就永远找不到了。正确做法应该是删除之后置入一个原来不存在的数据，比如-1 
+
+
+
+# Java——泛型
+
+## 一、Java泛型基本理解
+
+java泛型其实你可以将它理解为一种强大的工具，比如你要写一个排序方法，要求该方法能够同时对整型数组、字符型数组甚至别的任何类型进行排序，一个方法就要实现这样的不同类型的排序；按常理来说这个要求需要写多个方法，分别来对他们排序，但是不用，java泛型可以用一个方法就实现这些要求。
+
+字面理解就是：用户可以给出任意的参数类型，我都能有这个方法处理你的参数。
+
+## 二、java泛型之泛型方法
+
+### 1.普遍的泛型方法
+
+泛型方法可以接受用户提供的不同类型的参数，下面是定义泛型方法的规则：
+
+a. 所有泛型方法声明都有一个类型参数声明部分（由尖括号分隔），该类型参数声明部分在方法返回类型之前。
+
+b. 每一个类型参数声明部分把傲寒一个或多个类型参数，参数间用逗号隔开。一个泛型参数，也被称为一个类型变量，适用于指定一个泛型类型名称的标识符
+
+c. 类型参数能被用来声明返回值类型，并且能作为泛型方法得到的实际参数类型的占位符。
+
+d. 泛型方法体的声明和其他方法一样。注意类型参数只能代表引用型类型，不能是原始类型（如int，double，clar等），所以才有了之前看不懂的E，T之类的类型。
+
+实例：
+
+用泛型方法打印不同字符串的元素：
+
+~~~java
+//普遍的泛型方法
+public class test {
+	//泛型方法
+	public static < E > void printElement(E[] array) {//这里的E表示可以输入任何类型的数组
+		//输出数组元素
+		for(E element : array) {//E类型的element用来遍历array
+			System.out.println('%s', element);
+		}
+		System.out.println();
+	} 
+
+	public static void main (String[] args) {
+		//创建不同类型的数组
+		Integer[] intArray = {1,2,4,66,7,9};
+		Double[] doubleArray = {1.1,2.2,4.4,6.6,7.7,9.9};
+		Character[] charArray = {'H', 'E', 'L', 'L', 'O'};
+
+		//正常调用泛型方法
+		System.out.println('整型数组元素为：');
+		printElement(intArray);//传递一个整型数组
+
+		System.out.println('\n双精度型数组元素为：');
+		printElement(doubleArray);
+
+		System.out.println('\n字符型数组元素为：');
+		printElement(charArray);
+	}
+}
+~~~
+
+### 2.深入了解java泛型的泛型方法
+
+java泛型的泛型方法不仅是可以接受任何类型的参数，他还可以将泛型方法定义为只接收部分类型的参数，**这就是有界类型参数**。
+
+要声明一个有界类型参数，首先列出类型参数的名称（如T），然后名称后跟extends关键字后紧跟着这个参数的上界；如：<T extends Compareble>，它的意思是只接收那种可以用来比较的类型。
+
+下面用实例详细说明，下面的例子中的泛型方法返回三个可比较对象的最大值。
+
+~~~java
+//泛型有界类型参数
+pubic class MaxiumTest {
+	//比较三个值并返回最大值
+	public static <T extends Comparable<T>> maxium(T x, T y, T z) {
+		//它的意思是只接收那种可以比较大小的参数类型
+		//下面只是普通的比较算法
+		T max = x;
+		if(y.compareTo( max ) > 0) {//number.compareTo(number)判断参数与指定的数的大小，如果参数与指定的数相等返回0；参数比指定的数大则返回-1；参数比指定的数小则返回1；
+			max = y;
+		}
+		if(z.compareTo( max ) > 0) {
+			max = z;
+		}
+	}
+	public static void main (String[] args) {
+		System.out.pringln('%d,%d,%d中最大的数为：%d\n', 3,6,8,maxium(3,6,8));
+		System.out.pringln('%.1f,%.1f,%.1f中最大的数为：%.1f\n', 3.3,6.3,8.3,maxium(3,6,8));
+		System.out.pringln('%s,%s,%s中最大的数为：%s\n', 'apple','banana','orange',maxium('apple','banana','orange'));
+	}
+}
+~~~
+
+## 三、java泛型之泛型类
+
+### 1.基本的泛型类
+
+泛型类和非泛型类声明差不多，泛型类在非泛型类的声明基础之上添加了类型参数的声明。此类型参数的声明和泛型方法的参数声明方式一样。
+
+下面是泛型类的定义实例：
+
+~~~java
+//基本的泛型类
+public class GenericClass<T> {
+	private T t;
+
+	public void setValue(T t) {
+		this.t = t;
+	}
+	public T getValue() {
+		return t;
+	}
+
+	public static void main(String[] args) {
+		GenericClass<Integer> intValue = new GenericClass<Integer>();
+		GenericClass<String> strValue = new GenericClass<String>();
+
+		intValue.add(new Integer(3));
+		strValue.add(new String('hello'));
+
+		System.out.printf("整数类型实例化：%d\n",intValue.get());
+		System.out.printf("字符串类型实例化：%d\n", strValue.get());
+
+	}
+}
+~~~
+
+### 2.深入了解泛型类之类型通配符
+
+用问号"?"代替具体的类型参数，如List<?>.
+
+下面用实例展示类型通配符的用法：
+
+~~~java
+import java.util.*;
+
+public class GenericTest {
+	public static void main(String[] args) {
+		//用同一个方法实例化了三种不同类型的对象。因为getData()方法的参数是List类型，而name，age，number都是List的一种，所以三者都可以作为这个方法的实参，这就是类型通配符的好处。
+		List<String> name = new ArrayList<String>();
+		List<Integer> age = new ArrayList<Integer>();
+		List<Number> number = new ArrayList<Number>();
+
+		name.add('jignwei');
+		age.add(18);
+		number.add(15532779298);
+
+		getData(name);
+		getData(age);
+		getData(number);
+	}
+	
+	public static void getData(List<?> data) {//类型通配符的用法
+		System.out.println('data:' + data.get(0));
+	}	
+}
+~~~
+
+### 3.类型通配符的上下限
+
+和泛型方法的有界类型参数类似。
+
+类型通配符的上限用extends关键字，如List<? extends Number>，它的意思是通配符泛型值接收Number及其下层的子类类型（接收是有上限的，比接收Number的父类）；
+
+类型通配符的上限用super关键字来定义，如List<? super Number>，表示通配符泛型值只接收Number及其三层父类类型，如Object类型的实例。
+
+实例：
+
+~~~java
+public class GenericTest {
+	public static void main(String[] args) {
+		List<String> name = new ArrayList<String>();
+		List<Integer> age = new ArrayList<Integer>();
+		List<Number> number = new ArrayList<Number>();
+
+		name.add('jingwei');
+		age.add(18);
+		number.add(15532779298);
+
+		//getUperNumber(name);//该行代码会导致错误，因为String不是Number的子类型
+		getUperNumber(age);
+		getUperNumber(number);
+	}
+	public static void getData(List<?> data) {
+		System.out.pringln('data:' + data.get(0));
+	}
+
+	publilc static void getUperNumber(List<? extends Number> data) {
+		//List<? extends Number> 定义上限为Number类型
+		System.out.pringln("data:" + data.get(0));
+	}
+}
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

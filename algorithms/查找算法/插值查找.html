@@ -5,16 +5,20 @@
 </head>
 <body>
 	<script type="text/javascript">
-		let arr = [1,3,4,6,7,9,11,13,14,15,16];
-		let n = 2;
+		let arr = [4,5,3,2,8,90];//这种情况也找不出来。。。艾玛，我要这插值查找有何用，找不到0，找不到3
+		let n = 3;
 		function interpolationFind(arr, n) {
 			let time = 0;
 			let low, high, mid, len = arr.length;
 			low = 0, high = len - 1;
-			while(low < high) {
+			while(low <= high) {
 				console.log('比较次数：', ++ time);
-				mid = low + parseInt((n - arr[low]) / (arr[high] - arr[low]) * (high - low));
-				console.log(mid);2
+				if(low < high) {//在力扣中发现，插值查找算法不能用于数组中只有一个元素的情况，所以此情况要将mid值变为二分查找的mid值
+					mid = low + parseInt((n - arr[low]) / (arr[high] - arr[low]) * (high - low));
+				} else {
+					mid = low + parseInt((high - low) / 2);
+				}
+				console.log(mid);
 				// mid = low + parseInt((high - low) / 2);
 				if(arr[mid] == n) {
 					return mid;

@@ -979,6 +979,26 @@ Hash是一种典型的以空间换时间的算法。
 
 比如在有一个长度为100的数组，占用了100byte的空间，那么我们需要一个固定长度的Hash表，仍然是100byte的数组，假设我们需要的100byte用来记录键与位置的关系，那么总空间为200byte，而且用于记录规则的表大小会根据规则，大小可能是不定的。
 
+举例：
+
+~~~java
+//输入一个数组arr和一个数字num，找到该数组arr中的两个数之和为num的两个数
+//如果此题用暴力解决方法一定不是个好选择，哈希查找就是牺牲空间换取时间，时间复杂度在理想情况下是O(1)
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();//创建hash表
+        for(int i = 0; i < nums.length; i ++) {
+            int complement = target - nums[i];
+            if(map.containsKey(complement)) {//hash查找
+                return new int[] {map.get(complement), i};
+            }
+            map.put(nums[i], i);//向哈希表中插入key-value
+        }
+    }
+    throw new IllegalArgumentException("No two solution");
+}
+~~~
+
 
 
 

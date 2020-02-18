@@ -112,8 +112,12 @@ function interpolationFind(arr, n) {
     while(low < high) {
         console.log('比较次数：', ++ time);
         //这里的parseInt只能放这个位置，放其他位置会导致出错，亲测！
-        mid = low + parseInt((n - arr[low]) / (arr[high] - arr[low]) * (high - low));
-        console.log(mid);2
+        if(low < high) {//在力扣中发现，插值查找算法不能用于数组中只有一个元素的情况，所以此情况要将mid值变为二分查找的mid值
+					mid = low + parseInt((n - arr[low]) / (arr[high] - arr[low]) * (high - low));
+				} else {
+					mid = low + parseInt((high - low) / 2);
+				}
+        console.log(mid);
         // mid = low + parseInt((high - low) / 2);
         if(arr[mid] == n) {
             return mid;

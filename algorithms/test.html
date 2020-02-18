@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var twoSum = function(nums, target) {
+	    let hash = {};
+	    for(var i = 0; i < nums.length; i ++) {
+	    	let temp = target - nums[i];
+	        if(hash[i] != undefined) {
+	        	for(let j in hash) {
+	        		if(temp == j) {
+	        			return [j,i];
+	        		}
+	        	}
+	        }
+	        hash[nums[i]] = nums[i];
+	    }
+	    console.log(hash)
+	    return -1;
+	};
+
+	console.log(twoSum([0,4,3,0], 7));
+	</script>
+</body>
+</html>

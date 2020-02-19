@@ -452,13 +452,121 @@ ConcurrentLinkedQeque：是一个适用于高并发场景下的队列，通过�
 
 ### 链表
 
-#### 单链表
+#### 单链表 √
 
-#### 双向循环链表
+单链表的基本节点结构：
+
+![img](https://img-blog.csdnimg.cn/20190526100232806.png)
+
+![img](https://user-gold-cdn.xitu.io/2018/6/20/1641a579e288345c?w=668&h=87&f=png&s=8183)
+
+三个重要概念：
+
+- 头结点：
+  - 有时，在链表的第一个节点之前会额外增设一个节点，节点的数据域一般不存放数据（有些情况存放链表长度等信息），此点被称为头结点。
+  - 若头结点的指针域为空，则说明此链表是空表。
+  - 头结点不是必须的，但是有时候有头结点会使问题变简单。
+- 首元结点：
+  - 链表中第一个元素所在的节点，它是头结点后面的第一个节点
+- 头指针：
+  - 永远指向链表中第一个节点的位置（如果有头结点则指向头结点，如果没有则指向首元结点。
+
+![img](http://data.biancheng.net/uploads/allimg/170719/2-1FG915025H28.png)
+
+单链表中可以没有头结点，但是不能没有头指针。
+
+头结点的引入能使链表对第一个元素的删除和插入与其他元素相同，不用另外说明，使得代码更加简洁。
+
+代码实现单链表：
+
+~~~java
+//节点
+public class Node<AnyType> {
+	public AnyType data;
+	public Node<AnyType> next;
+
+	public Node (AnyType data, Node<AnyType> next) {
+		this.data = data;
+		this.next = next;
+	}
+}
+
+//单链表
+public class myLinkList<AnyType> {
+	//头结点
+	private Node<AnyType> first;
+	//头指针
+	private Node<AnyType> head;
+	//链表长度
+	private int size;
+
+	publilc myLinkList () {
+		this.first = new Node<>(null, null);
+		this.head = new Node<>(null, first);
+		this.size = 0;
+	}
+
+	//判断链表是否为空
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
+	//获取指定节点并返回
+	public Node<AnyType> getNode(AnyType data) {
+		Node<AnyType> rende = first;
+		while(rende.data != data) {
+			rende = rende.next;
+		}
+		return rende;
+	}
+
+	//向指定元素后面添加节点
+	public void addNode(AnyType data, AnyType addData) {
+		Node<AnyType> addData = new Node<>(null, addData);//新节点
+		Node<AnyType> node = getNode(data);//位置节点
+		addData.next = node.next;
+		node.next = addData;
+		size ++;
+	}
+
+	//删除指定节点
+	public void delNode(AnyType data) {
+		//找到指定节点的上一个节点
+		Node<AnyType> rende = first;
+		while(rende.next.data != data) {
+			rende = rende.next;
+		}
+		rende.next = rende.next.next;
+		size --;
+	}
+	//求链表长度
+	public int len() {
+		int length = 1;
+		Node<AnyType> node = first;
+		while(node.next != null) {
+			length ++;
+			node = node.next;
+		}
+		return length;
+	}
+}
+~~~
+
+
 
 #### 双向链表
 
+单链表有其局限性，它不能反向遍历，而且无法操作一个节点的前一个节点，所以，双向链表应运而生！
+
+![这里写图片描述](https://img-blog.csdn.net/20180403095812960?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dlaUppRmVuZ18=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+但它也有其
+
+
+
 #### 循环链表
+
+#### 双向循环链表
 
 ## 哈希表（散列表）√
 

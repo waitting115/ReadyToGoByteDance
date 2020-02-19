@@ -5,8 +5,8 @@
 </head>
 <body>
 	<script type="text/javascript">
-		let arr = [4,5,3,2,8,90];//这种情况也找不出来。。。艾玛，我要这插值查找有何用，找不到0，找不到3
-		let n = 3;
+		let arr = [-5,-2,0,0,4,8,10];//必须是有序序列！！！
+		let n = -2;
 		function interpolationFind(arr, n) {
 			let time = 0;
 			let low, high, mid, len = arr.length;
@@ -19,7 +19,6 @@
 					mid = low + parseInt((high - low) / 2);
 				}
 				console.log(mid);
-				// mid = low + parseInt((high - low) / 2);
 				if(arr[mid] == n) {
 					return mid;
 				} else if (arr[mid] > n) {

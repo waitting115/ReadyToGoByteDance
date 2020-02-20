@@ -23,6 +23,9 @@ public class doubleLinkList<T> {
 		while(node.data != data && node.data != null) {
 			node = node.next;
 		}
+		if(node.data == null) {
+			throw new Exception("未找到指定节点！");
+		}
 		return node;
 	}
 	//头插部插入节点

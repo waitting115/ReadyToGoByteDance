@@ -1,4 +1,4 @@
-## 线性表
+## 线性表 √
 
 线性表
 
@@ -548,7 +548,7 @@ public class myLinkList<AnyType> {
 
 
 
-#### 双向链表
+#### 双向链表 √
 
 单链表有其局限性，它不能反向遍历，而且无法操作一个节点的前一个节点，所以，双向链表应运而生！
 
@@ -639,21 +639,169 @@ public class doubleLinkList<T> {
 
 
 
-#### 循环链表
+#### 循环链表 √
 
 一张图就明白，实现机制和单链表无异样
 
 ![img](https://img2018.cnblogs.com/blog/1037399/201810/1037399-20181021190856316-1970840347.png)
 
-#### 双向循环链表
+##### 约瑟夫环问题
 
-![](https://www.yiibai.com/uploads/article/2018/11/08/111958_57028.png)
+约瑟夫环问题是一个经典的循环链表的问题，题意是：已知n个人（依次以1,2,3,4...,n排序）围坐在圆桌周围，以编号为k的人从1开始顺时针报数，数到m的那个人出列；他的下一个人还是从1开始顺时针报数，数到m的那个人又出列，依次重复下去，要求找到最后出列的那个人的编号。
+
+例如有5个人，要求从编号3的人开始数，数到2的那个人出列：
+
+![img](https://upload-images.jianshu.io/upload_images/16823531-c88b83feb6be6d66.png?imageMogr2/auto-orient/strip|imageView2/2/w/400/format/webp)
+
+~~~java
+//节点类
+public class Node {
+	public int data;
+	public Node next;
+
+	public Node (int data) {
+		this.data = data;
+	} 
+}
+
+//链表类
+public class Link {
+	Node head = new Node(null);
+	Node first = new Node(1);//第一个元素已经插入进去
+	head.next = first;
+	first.next = first;
+	int size = 1;
+
+	//找到对应节点
+	public Node findNode(Node node) {
+		Node nodeResult = first;
+		int time = 0
+		while(nodeResult != node && time < size) {
+			nodeResult = nodeResult.next;
+			time ++;
+		}
+		if(time == size) {
+			throw new Exception("未找到node节点！");
+		}
+		return nodeResult;
+	}
+
+	//删除指定节点
+	public void delNode(Node node) {
+		Node prevNode = first;//要删除的节点的上一个节点
+		int time = 0;
+		while(prevNode.next != node && time < size) {
+			prevNode = prevNode.next;
+		}
+		if(time == size) {
+			throw new Exception("未找到指定节点！");
+		}
+		prevNode.next = prevNode.next.next;
+	}
+
+	//解决问题的函数
+	public int lastNode(int n, int k, int m) {//一共n个人，以编号k的人开始，从1开始数，数到m，m的那个人出列，m+1的人继续从1开始数到m...
+		//构建k个循环链表
+		for(int i = 2; i <= n; i ++) {
+			Node lastNode = first;//代表最后一个节点
+			Node node = new Node(i);//要插入的节点
+			node.next = first;
+			lastNode.next = node;
+			lastNode = lastNode.next;
+			size ++;
+		}
+		while(size > 1) {//这个条件可以保证循环出来之后链表里就剩下一个节点，也就是我们所需的节点
+			Node kNode = findNode(int k);
+			for(int i = k; i < k + m - 1; k ++) {
+				kNode = kNode.next;
+			}
+			delNode(Node kNode);
+			size --;
+		}
+		return head.next.data;//此时首节点即为所求
+	}
+}
+~~~
+
+
+
+#### 双向循环链表 √
+
+![img](https://img2018.cnblogs.com/blog/1330328/201906/1330328-20190610181836026-1029124884.png)
+
+![img](https://img2018.cnblogs.com/blog/1330328/201906/1330328-20190610183040561-162080257.png)
 
 
 
 java代码实现：
 
 ~~~java
+//节点类
+public class Node {
+	public int data;
+	public Node next;
 
+	public Node (int data) {
+		this.data = data;
+	} 
+}
+
+//链表类
+public class Link {
+	Node head = new Node(null);
+	Node first = new Node(1);//第一个元素已经插入进去
+	head.next = first;
+	first.next = first;
+	int size = 1;
+
+	//找到对应节点
+	public Node findNode(Node node) {
+		Node nodeResult = first;
+		int time = 0
+		while(nodeResult != node && time < size) {
+			nodeResult = nodeResult.next;
+			time ++;
+		}
+		if(time == size) {
+			throw new Exception("未找到node节点！");
+		}
+		return nodeResult;
+	}
+
+	//删除指定节点
+	public void delNode(Node node) {
+		Node prevNode = first;//要删除的节点的上一个节点
+		int time = 0;
+		while(prevNode.next != node && time < size) {
+			prevNode = prevNode.next;
+		}
+		if(time == size) {
+			throw new Exception("未找到指定节点！");
+		}
+		prevNode.next = prevNode.next.next;
+	}
+
+	//解决问题的函数
+	public int lastNode(int n, int k, int m) {//一共n个人，以编号k的人开始，从1开始数，数到m，m的那个人出列，m+1的人继续从1开始数到m...
+		//构建k个循环链表
+		for(int i = 2; i <= n; i ++) {
+			Node lastNode = first;//代表最后一个节点
+			Node node = new Node(i);//要插入的节点
+			node.next = first;
+			lastNode.next = node;
+			lastNode = lastNode.next;
+			size ++;
+		}
+		while(size > 1) {//这个条件可以保证循环出来之后链表里就剩下一个节点，也就是我们所需的节点
+			Node kNode = findNode(int k);
+			for(int i = k; i < k + m - 1; k ++) {
+				kNode = kNode.next;
+			}
+			delNode(Node kNode);
+			size --;
+		}
+		return head.next.data;//此时首节点即为所求
+	}
+}
 ~~~
 

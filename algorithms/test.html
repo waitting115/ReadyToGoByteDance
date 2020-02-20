@@ -5,36 +5,28 @@
 </head>
 <body>
 	<script>
-            /* 鼠标特效 */
-            var a_idx = 0;
-            jQuery(document).ready(function ($) {
-                $("body").click(function (e) {
-                    var a = new Array("❤记得好评哦❤", "❤记得打赏哦❤", "❤记得关注哦❤", "❤赞一个❤");
-                    var $i = $("<span></span>").text(a[a_idx]);
-                    a_idx = (a_idx + 1) % a.length;
-                    var x = e.pageX,
-                        y = e.pageY;
-                    $i.css({
-                        "z-index": 99,
-                        "top": y - 20,
-                        "left": x,
-                        "position": "absolute",
-                        "font-weight": "bold",
-                        "color": "rgb(" + ~~(255 * Math.random()) + "," + ~~(
-                                255 * Math.random()) + "," + ~~(255 * Math.random()) +
-                            ")"
-                    });
-                    $("body").append($i);
-                    $i.animate({
-                            "top": y - 180,
-                            "opacity": 0
-                        },
-                        1500,
-                        function () {
-                            $i.remove();
-                        });
-                });
-            });
+            var maxAliveYear = function(birth, death) {
+            let arr = [], resultArr = [], num = 0;
+            for(let i = 0; i < birth.length; i ++) {
+                for(let j = birth[i]; j <= death[i]; j ++) {
+                    if(arr[j] == undefined) arr[j] = 0;
+                    arr[j] ++;
+                }
+            }
+            console.log(arr);
+            for(let i = 0; i < arr.length; i ++) {
+                if(arr[i] > num) {
+                    num = arr[i];
+                    resultArr = [];
+                    resultArr.push(i);
+                } else if(arr[i] == num) {
+                    resultArr.push(i);
+                }
+            }
+            return resultArr;
+        };
+        console.log(maxAliveYear([1972,1908,1915,1957,1960,1948,1912,1903,1949,1977,1900,1957,1934,1929,1913,1902,1903,1901]
+,[1997,1932,1963,1997,1983,2000,1926,1962,1955,1997,1998,1989,1992,1975,1940,1903,1983,1969]))
 	</script>
 </body>
 </html>

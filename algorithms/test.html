@@ -5,6 +5,7 @@
 </head>
 <body>
 	<script>
+        //返回的bc数组即是一个哈希表，用来快速查找坏字符是否在模式串中
         //求出pattern中的每一位的Unicode编码，然后以编码啊为下标位置存储pattern对应的元素，最后返回bc
         function generatebc(pattern) {
             const bc = new Array(265).fill(-1);//fill()固定值填充数组。

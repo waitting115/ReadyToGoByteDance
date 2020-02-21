@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		function matchingAtr(arr, sunArr) {
+			let i = 0, j = 0;//i表示arr匹配的元素位置，j为sunArr匹配的元素位置
+			while(i < arr.length && j < sunArr.length) {
+				if(arr[i] == sunArr[j]) {
+					i ++;
+					j ++;
+				} else {
+					i = i - j + 1;//因为要下一位，所以+1
+					j = 0;
+				}
+			}
+			if(j == sunArr.length) {
+				return i - j;
+			} else {
+				return -1;
+			}
+		}
+		console.log(matchingAtr('hello world', 'rld'));
+	</script>
+</body>
+</html>

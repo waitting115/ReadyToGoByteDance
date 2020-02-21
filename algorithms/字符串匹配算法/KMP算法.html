@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		function computePMV(str) {
+			let pmv = [0];
+			for(let i = 1; i < str.length;) {
+				let j = 0, time = 1;
+				if(str[i] != str[j]) {
+					pmv[i] = 0;
+					i ++;
+				} else {
+					while(str[i] == str[j]) {
+						pmv[i] = time;
+						i ++;
+						j ++;
+						time ++;
+					}
+				}
+			}
+			return pmv;
+		}
+		let bigArr = 'bbc abcdab abcdabcdabde'
+		let smallArr = 'abcdabd';
+		function KMP(bigArr,smallArr) {
+			let next = computePMV(smallArr);
+			for(let i = 0, j = 0; i < bigArr.length; ) {
+				if(bigArr[i] != smallArr[j] && j == 0) i ++;
+				while(bigArr[i] == smallArr[j]) {
+					i ++;
+					j ++;
+				}
+				if(j == smallArr.length) return i - j;
+				if(j != 0) j = next[j - 1];
+			}
+			return -1;
+		}
+		console.log(KMP(bigArr, smallArr));
+	</script>
+</body>
+</html>

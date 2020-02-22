@@ -153,6 +153,39 @@ console.log('say' in she);//true   实例可以访问原型属性
 console.log('shawanyi' in she);//false    实例和原型中都没有shawanyi属性
 ~~~
 
+**类的所有实例共享一个原型对象，就是Person.prototype，所以它们的\_proto\_属性相等。**
+
+~~~js
+console.log(me.__proto__ == you.__proto__);//true  注意是两横
+//都是Person类的实例
+~~~
+
+**也可以通过实例的\_proto\_属性为构造函数的原型添加属性，这样会改变原始class类，影响到所有实例，所以不推荐使用。**
+
+~~~js
+he.__proto__.add = function () {
+    console.log('这是在he上面加到构造函数原型的方法');
+}
+he.add();//这是在he上面加到构造函数原型的方法
+she.add();//这是在he上面加到构造函数原型的方法
+me.add();//这是在he上面加到构造函数原型的方法
+~~~
+
+**class不存在变量提升，所以需要先定义再使用。**
+
+因为ES6不会把类的声明提升到代码头部，但是ES5会这样做，它可以先使用后定义。
+
+~~~js
+let a = new A();
+function A () {
+
+}
+let b = new B();//Uncaught ReferenceError: Cannot access 'B' before initialization at test.html:86
+class B{
+
+}
+~~~
+
 
 
 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		class Person {
+			constructor (name, age) {
+				this.name = name;
+				this.age = age;
+			}
+			say() {
+				console.log('我的名字叫：' + this.name + '，年龄为：' + this.age);
+			}
+		}
+		let me = new Person ('jingwei', 18);
+		// me.say();
+		console.log(typeof Person);//function
+		console.log(Person == Person.prototype.constructor);//true
+		console.log(Person.prototype);//{constructor: calss Person; say: f say()}
+		Person.prototype.sayAge = function () {
+			return this.age;
+		}
+		let you = new Person ('zhangsan', 30);
+		console.log(you.sayAge());//30
+
+		Object.assign(Person.prototype,{
+			getName: function (){
+				return this.name;
+			},
+			getAge: function () {
+				return this.age;
+			}
+		})
+		let he = new Person('lisi', 20);
+		console.log(he.getName());//lisi
+		console.log(he.getAge());//20
+
+		class Test {
+			constructor () {
+				console.log('test test test');//当实例化对象时，该方法自动执行
+			}
+		}
+		let test = new Test();//test test test
+
+		class Desk {
+			constructor () {
+				console.log('我是Desk！');
+			}
+		}
+		class Box {
+			constructor () {
+				return new Desk();//这里直接返回一个全新的对象
+			}
+		}
+		let box = new Box();//我是Desk！
+		class Again {
+
+		}
+		let again = new Again();
+		console.log(again);//Again {}
+
+		//上面已经定义过Person类
+		let she = new Person('she', 16);
+		console.log(she.hasOwnProperty('name'));//true
+		console.log(she.hasOwnProperty('age'));//true
+		console.log(she.hasOwnProperty('say'));//false
+		console.log('name' in she);//true
+		console.log('age' in she);//true
+		console.log('say' in she);//true
+		console.log('shawanyi' in she);//false
+
+		console.log(me.__proto__ == you.__proto__);//true
+		he.__proto__.add = function () {
+			console.log('这是在he上面加到构造函数原型的方法');
+		}
+		he.add();//这是在he上面加到构造函数原型的方法
+		she.add();//这是在he上面加到构造函数原型的方法
+		me.add();//这是在he上面加到构造函数原型的方法
+
+		let a = new A();
+		function A () {
+
+		}
+		let b = new B();//Uncaught ReferenceError: Cannot access 'B' before initialization at test.html:86
+		class B{
+
+		}
+	</script>
+</body>
+</html>

@@ -1530,7 +1530,7 @@ public class Solution {
 
 
 
-## 字符串匹配 （ ！）
+## 字符串匹配（ ！）
 
 字符串匹配问题的形式定义：
 
@@ -1863,15 +1863,108 @@ console.log(KMP(bigArr, smallArr));
 
 
 
-代码实现：
+
+
+### Trid树（字典树）√
+
+- Trie树，也叫字典树、字母树、前缀树，它是一种树形结构。是一种专门处理字符串匹配的数据结构，**用来解决在一组字符串的集合中快速查找某字符串**
+- Trie树本质，利用字符串之间的公共前缀，将重复的前缀合在一起。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190624192438469.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxMjAxMjY3,size_16,color_FFFFFF,t_70)
+
+比如在 cod,  code,  cook,  five,  file,  fat   这个字符串集合中查找某个字符串是否存在。如果每次查找都依次比较的话，效率会很低，但是用Trid树来解决就会更高效。
+
+建树：
+
+![img](https://pic3.zhimg.com/80/v2-d82b7d102ad949dce0bfb92af3d41a11_hd.jpg)
+
+建树的过程中，将字符串的最后一个字符标记为**橙色**。
+
+然后查找的时候，查到最后要判断最后字符是否为橙色，如果不是橙色然后也查找到了，那就说明它只是一个单词的中间子串，所以结果为不存在此字符串。
+
+通过上图，可以发现**Trid树的三个特点**：
+
+- 根节点不包括字符，除根节点外，每一个节点都只包含一个字符；
+- 从根节点到某一节点，路径上字符连接起来，即为该节点的字符串；
+- 每个节点的所有子节点包含的字符都不相同。
+
+
+
+**Trie树的插入操作：**
+
+比如要插入新单词cook，就有下面几步：
+
+- 插入第一个字母 c，发现 root 节点下方存在子节点 c，则共享节点 c
+- 插入第二个字母 o，发现 c 节点下方存在子节点 o，则共享节点 o
+- 插入第三个字母 o，发现 o 节点下方不存在子节点 o，则创建子节点 o
+- 插入第三个字母 k，发现 o 节点下方不存在子节点 k，则创建子节点 k
+- 至此，单词 cook 中所有字母已被插入 Trie树 中，然后设置节点 k 中的标志位，
+
+
+
+**Trie树的删除操作：**
+
+- 从根节点开始查找第一个字符h
+- 找到h子节点后，继续查找h的下一个子节点i
+- i是单词hi的标志位，将该标志位去掉
+- i节点是hi的叶子节点，将其删除
+- 删除后发现h节点为叶子节点，并且不是单词标志位，也将其删除
+- 这样就完成了hi单词的删除操作
+
+**Trie树的局限性** 
+
+如前文所讲，**Trie的核心思想是空间换时间**，利用字符串的公共前缀来降低查询时间的开销以达到提高效率的目的。 假设字符的种数有m个，有若干个长度为n的字符串构成了一个 Trie树 ，则每个节点的出度为 m（即每个节点的可能子节点数量为m），Trie树 的高度为n。很明显我们浪费了大量的空间来存储字符，此时Trie树的最坏空间复杂度为O(m^n)。也正由于每个节点的出度为m，所以我们能够沿着树的一个个分支高效的向下逐个字符的查询，而不是遍历所有的字符串来查询，此时Trie树的最坏时间复杂度为O(n)。 这正是空间换时间的体现，也是利用公共前缀降低查询时间开销的体现。
+
+实现Trie树：
 
 ~~~js
-
+		//Trie树
+		let charArr = ['cod', 'code', 'cook', 'five', 'file', 'fat'];
+		let patternStr = 'cod';
+		//建Trie树
+		function insertHash(tree, patternStr) {//向Tree树中插入字符
+			// let hashHead = tree;
+			let pLen = patternStr.length;
+			let nowNode = tree;
+			for(let i = 0; i < pLen; i ++) {
+				let now = patternStr[i];//要比较的字符
+				if(nowNode[now] == undefined) {//不存在此字符
+					let  hash = {orange: false};
+					nowNode[now] = hash;//新建一个hash给patternStr
+				}
+				if(i == pLen - 1) //如果是字符的最后一位，则变为橙色
+					    nowNode[now].orange = true;
+				nowNode = nowNode[now];
+			}
+		}
+		//查找模式串是否在字符集中
+		function Trie(charArr,patternStr) {
+			//根据charArr建树
+			let TrieTree = {};//Trie树
+			let len = charArr.length;
+			for(let i = 0; i < len; i ++) {
+				insertHash(TrieTree, charArr[i]);
+			}
+			// console.log(TrieTree);//哈哈哈我真是太棒了！！
+			//根据Trie树查找模式串
+			let nowNode = TrieTree;//当前比较的
+			for(let i = 0; i < patternStr.length; i ++) {
+				let now = patternStr[i];
+				if(nowNode[now]  != undefined) //说明有这个字符
+					nowNode = nowNode[now];
+				else //没有这个字符则返回没找到，false
+					return false;
+			}
+			//循环完之后没有return，则说明Trie树中有此字符，但也有可能是其他字符的子串，所以要看字符最后一位的orange是否为true
+			if(nowNode.orange == false) 
+				return false;
+			else 
+				return true;
+		}
+		console.log(Trie(charArr, patternStr));
 ~~~
 
 
-
-### Trid
 
 ## 排序算法 √
 

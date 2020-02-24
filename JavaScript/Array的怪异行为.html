@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//两种实现二维数组的方法：
+		let twoDimension = [];
+		for(let i = 0; i < 8; i ++) {
+			let arr = [];
+			for(let j = 0; j < 8; j ++)
+				arr[j] = 0;
+			twoDimension[i] = arr;
+		}
+		twoDimension[5][5] = 1;
+		console.log(twoDimension);
+		//这样twoDimension就是一个8*8且每位都为0的二维数组了
+
+		//2.
+		let arr1 = new Array(8).fill(0);
+		let twoDimension2 = new Array(8).fill(arr1);
+		twoDimension2[5][5] = 1;
+		console.log(twoDimension2);
+		//这样看似没问题，但是运行的时候就会发现问题，大数组里面的每个小数组的第5个位置都变为了1.这是为什么呢？
+		//回看代码，arr1是一个数组实例，而twoDimension2声明的时候向里面填充了8个arr1，此时填充的是arr1的指针，所以说你填充的每一个元素都是同一个arr1的引用，所以每个都会发生变化
+	</script>
+</body>
+</html>

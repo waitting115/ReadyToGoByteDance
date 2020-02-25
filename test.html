@@ -5,19 +5,16 @@
 </head>
 <body>
 	<script type="text/javascript">
-		function queen(a,cur){
-		    if(cur==a.length){console.log(a);return};
-		    for(var i=0;i<a.length;i++){
-		        a[cur]=i;
-		                var flag=true;
-		        for(var j=0;j<cur;j++){
-		            var ab=i-a[j];
-		            if(a[j]==i||(ab>0?ab:-ab)==cur-j){flag=false;break};
-		        };
-		        if(flag){queen(a,cur+1)};
-		    };
+		var climbStairs = function(n) {
+		    //要理解，通往第i个元素的有两个，第i - 1个元素和第i - 2个元素，所以通往第i个元素的方法就是这通往这两个元素的方法之和。（和斐波那契数列一样）
+		    if(n < 3) return n;
+		    let Fibonacci = [0,1,2];
+		    for(let i = 3; i <= n; i ++) {
+		        Fibonacci.push(Fibonacci[i - 1] + Fibonacci[i - 2]);
+		    }
+		    return Fibonacci[n];
 		};
-		queen([1,1,1,1,1,1,1,1],0)
+		console.log(climbStairs(10))
 	</script>
 </body>
 </html>

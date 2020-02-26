@@ -5,16 +5,65 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var climbStairs = function(n) {
-		    //要理解，通往第i个元素的有两个，第i - 1个元素和第i - 2个元素，所以通往第i个元素的方法就是这通往这两个元素的方法之和。（和斐波那契数列一样）
-		    if(n < 3) return n;
-		    let Fibonacci = [0,1,2];
-		    for(let i = 3; i <= n; i ++) {
-		        Fibonacci.push(Fibonacci[i - 1] + Fibonacci[i - 2]);
+		class Solution {
+		    public boolean exist(char[][] board, String word) {
+		        char[] words = word.toCharArray();
+		        for(int i = 0; i < board.length; i++) {
+		            for(int j = 0; j < board[0].length; j++) {
+		                if(dfs(board, words, i, j, 0)) return true;
+		            }
+		        }
+		        return false;
 		    }
-		    return Fibonacci[n];
-		};
-		console.log(climbStairs(10))
+		    boolean dfs(char[][] board, char[] word, int i, int j, int k) {
+		        if(i >= board.length || i < 0 || j >= board[0].length || j < 0 || board[i][j] != word[k]) return false;
+		        if(k == word.length - 1) return true;
+		        char tmp = board[i][j];
+		        board[i][j] = '/';
+		        boolean res = dfs(board, word, i + 1, j, k + 1) || dfs(board, word, i - 1, j, k + 1) || 
+		                      dfs(board, word, i, j + 1, k + 1) || dfs(board, word, i , j - 1, k + 1);
+		        board[i][j] = tmp;
+		        return res;
+		    }
+		}
+
+
+
+		var exist = function(board, word) {
+    //这里可以采用分治算法思想
+    let xLen = board.length;
+    let yLen = board[0].length;
+    let wordi = 0;
+    for(let x = 0; x < xLen; x ++) {
+        for(let y = 0; y < yLen; y ++) {
+            if(board[x][y] == word[i]) {//找到第一个字符
+                findFun(board[x][y], word[i]);
+            }
+        }
+    }
+    function findFun(location,data) {//用于判断location位置的四个方向是否有data数据
+        if(x > 0 && board[x - 1][y] == word[i]) {//上
+                    board[x][y] = 0;
+                    findFun(board[x - 1][y],word[i+1]);
+                    board[x][y] = word[i];
+                }
+                if(y < yLen && board[x][y + 1] == word[i]) {//右
+                    board[x][y] = 0;
+                    findFun(board[x][y + 1],word[i +1]);
+                    board[x][y] = word[i];
+                }
+                if(x < xLen && board[x + 1][y] == word[i]) {//下
+                    board[x][y] = 0;
+                    findFun(board[x + 1][y], word[i + 1]);
+                    board[x][y] = word[i];
+                }
+                if(y > 0 && board[x][y - 1] == word[i]) {//左
+                    board[x][y] = 0;
+                    findFun(board[x][y - 1], word[i + 1]);
+                    board[x][y] = word[i];
+                }
+    }
+};
 	</script>
 </body>
 </html>

@@ -5,15 +5,13 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var hammingWeight = function(n) {
-		    let res = 0;
-		    while(n != 0) {
-		        res += n & 1;
-		        n >>>= 1
-		    }
-		    return res;
-		};
-		console.log(hammingWeight(00000000000000000000000000001011))
+		let isNumber = function (s) {
+			s = s.trim();
+			const reg = /^[+-\.]?\d+[\.]?[\d+]*[[eE]?[\d+]*]?$/;
+			return reg.test(s)
+		}
+
+		console.log(isNumber('0e'))
 	</script>
 </body>
 </html>

@@ -976,21 +976,103 @@ n+1>=2x(⌈m/2⌉)^(k-1),即
 
 
 
-
-
-
-
-
-
-#### 2-3-4树
-
 ### 堆
 
-#### 小顶堆
+堆就是用数组实现的二叉树，根据堆属性排序，堆属性决定了树中节点的位置。
 
-#### 大顶堆
+![img](https://img2018.cnblogs.com/blog/1590962/201903/1590962-20190318210706226-1501863648.png)
+
+
+
+#### 大顶堆 √
+
+代码实现：
+
+~~~js
+function bigPileTop(arr) {
+			//思路：首先找到最后一个有左子节点的节点，将以该节点为堆顶的堆变为大顶堆，然后向上找，直到找到最后一位
+			const len = arr.length;
+            if(len < 2) return arr;
+			let i;
+			for(i = len - 1; i >= 0; i --) {
+				if(arr[2 * i + 1] != undefined) break;
+			}
+			for(; i >= 0; i --) {
+				buildBigPileTop(i)
+			}
+			return arr;
+			
+			function buildBigPileTop(i) {
+				if(arr[2 * i + 1] == undefined) return;
+				let fatherNode = arr[i];
+				let leftChild = arr[i * 2 + 1];
+				let rightChild = arr[i * 2 + 2];//有肯能是undefined
+				if(leftChild > fatherNode) {
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 1];
+					arr[i * 2 + 1] = temp;
+					buildBigPileTop(i * 2 + 1);//由于变化后并不能保证下面的节点依然是大顶堆，所以要递归一下
+				}
+				if(rightChild != undefined && rightChild > fatherNode) {
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 2];
+					arr[i * 2 + 2] = temp;
+					buildBigPileTop(i * 2 + 2);
+				}
+			}
+		}
+		const arr = [2,7,5,8,1,10,4];
+		console.log(arr);
+~~~
+
+
+
+#### 小顶堆 √
+
+代码实现：
+
+~~~js
+function smallPileTop(arr) {
+			const arrLen = arr.length;
+			if(arrLen < 2) return arr;
+			let i = arr.length - 1;
+			for( ; i >= 0; i --) {
+				if(arr[i * 2 + 1] != undefined) break;
+			}
+			for(;i >= 0; i --) {
+				buildSmallPileTop(i);
+			}
+			return arr;
+
+			function buildSmallPileTop(i) {
+				if(arr[i * 2 + 1] == undefined) return;
+				let fatherNode = arr[i];
+				let leftChild = arr[i * 2 + 1];
+				let rightChild = arr[i * 2 + 2];
+				if(leftChild < fatherNode) {//唯一与大顶堆实现的区别就是 <
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 1];
+					arr[i * 2 + 1] = temp;
+					buildSmallPileTop(i * 2 + 1);
+				}
+				if(rightChild < fatherNode) {//唯一与大顶堆实现的区别就是 <
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 2];
+					arr[i * 2 + 2] = temp;
+					buildSmallPileTop(i * 2 + 2);
+				}
+			}
+		}
+		const arr = [2,7,5,8,1,10,4];
+		console.log(arr);
+		console.log(smallPileTop(arr))
+~~~
+
+
 
 #### 二项堆
+
+
 
 #### 优先队列
 

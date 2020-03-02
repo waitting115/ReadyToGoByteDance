@@ -2,16 +2,23 @@
 <html>
 <head>
 	<title></title>
+	<style type="text/css">
+		div {
+			width: 200px;
+			height: 200px;
+			background: red;
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			margin-left: -100px;
+			height: -100px;
+			z-index: 1000;
+		}
+	</style>
 </head>
 <body>
+	<div></div>
 	<script type="text/javascript">
-		let isNumber = function (s) {
-			s = s.trim();
-			const reg = /^[+-\.]?\d+[\.]?[\d+]*[[eE]?[\d+]*]?$/;
-			return reg.test(s)
-		}
-
-		console.log(isNumber('0e'))
 	</script>
 </body>
 </html>

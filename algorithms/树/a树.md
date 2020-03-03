@@ -1,4 +1,4 @@
-## 树
+## 树 √
 
 树是n个节点的有限集。
 
@@ -976,7 +976,7 @@ n+1>=2x(⌈m/2⌉)^(k-1),即
 
 
 
-### 堆
+### 堆 √
 
 堆就是用数组实现的二叉树，根据堆属性排序，堆属性决定了树中节点的位置。
 
@@ -1070,7 +1070,7 @@ function smallPileTop(arr) {
 
 
 
-#### 二项堆
+#### 二项堆 √
 
 介绍二项堆之前，先说一下二项树：
 
@@ -1182,7 +1182,133 @@ function merge(p, q)
 - 删除给定结点
 - 合并两个二项堆
 
-#### 优先队列
+#### 优先队列 √
+
+ 　优先队列是一种用来维护一组元素构成的结合S的数据结构，其中每个元素都有一个关键字key，元素之间的比较都是通过key来比较的。优先队列包括**最大优先队列**和**最小优先队列**，优先队列的应用比较广泛，比如作业系统中的调度程序，当一个作业完成后，需要在所有等待调度的作业中选择一个优先级最高的作业来执行，并且也可以添加一个新的作业到作业的优先队列中。Java中，PriorityQueue的底层数据结构就是堆（默认是小堆） 
+
+ **优先队列的实现中，我们可以选择堆数据结构**，最大优先队列可以选用大堆，最小优先队列可以选用小堆来实现。
+
+##### 插入
+
+ 插入操作是将一个元素插入到集合S中，**首先把该元素放入所有元素的下一位置，然后执行“上浮”操作**，如下图示例 
+
+![PriorityQueue_offer.png](https://images2015.cnblogs.com/blog/939998/201605/939998-20160512205600890-346195840.png)
+
+##### 删除
+
+ 优先队列中，在队列非空情况下移除集合中第一个元素，也就是下标为0的元素，然后**将集合中最后一个元素移到下标为0位置，在将下标为0的新元素执行“下沉”操作**。 
+
+![PriorityQueue_poll.png](https://images2015.cnblogs.com/blog/939998/201605/939998-20160512205634609-402016454.png)
+
+代码实现：
+
+~~~java
+package priorityheap;
+
+import java.util.Arrays;
+
+/**
+ * 优先队列类（最大优先队列）
+ */
+public class PriorityHeap {
+
+    // ------------------------------ Instance Variables
+
+    private int[] arr;
+    private int size;
+
+    // ------------------------------ Constructors
+
+    /**
+     * 优先队列数组默认大小为64
+     */
+    public PriorityHeap() {
+        this(64);
+    }
+
+    public PriorityHeap(int initSize) {
+        if (initSize <= 0) {
+            initSize = 64;
+        }
+        this.arr = new int[initSize];
+        this.size = 0;
+    }
+
+    // ------------------------------ Public methods
+
+    public int max() {
+        return this.arr[0];
+    }
+
+    public int maxAndRemove() {
+        int t = max();
+
+        this.arr[0] = this.arr[--size];
+        sink(0, this.arr[0]);
+        return t;
+    }
+    public void add(int data) {
+        resize(1);
+        this.arr[size++] = data;
+        pop(size - 1, data);
+    }
+
+    // ------------------------------ Private methods
+
+    /**
+     * key下沉方法
+     */
+    private void sink(int i, int key) {
+        while (2 * i <= this.size - 1) {
+            int child = 2 * i;
+            if (child < this.size - 1 && this.arr[child] < this.arr[child + 1]) {
+                child++;
+            }
+            if (this.arr[i] >= this.arr[child]) {
+                break;
+            }
+
+            swap(i, child);
+            i = child;
+        }
+    }
+
+    /**
+     * key上浮方法
+     */
+    private void pop(int i, int key) {
+        while (i > 0) {
+            int parent = i / 2;
+            if (this.arr[i] <= this.arr[parent]) {
+                break;
+            }
+            swap(i, parent);
+            i = parent;
+        }
+    }
+
+    /**
+     * 重新调整数组大小
+     */
+    private void resize(int increaseSize) {
+        if ((this.size + increaseSize) > this.arr.length) {
+            int newSize = (this.size + increaseSize) > 2 * this.arr.length ? (this.size + increaseSize) : 2 * this.arr.length;
+            int[] t = this.arr;
+
+            this.arr = Arrays.copyOf(t, newSize);
+        }
+    }
+
+    /**
+     * Swaps arr[a] with arr[b].
+     */
+    private void swap(int a, int b) {
+        int t = this.arr[a];
+        this.arr[a] = this.arr[b];
+        this.arr[b] = t;
+    }
+}
+~~~
 
 
 

@@ -1,5 +1,7 @@
 # 44道题
 
+ https://javascript-puzzlers.herokuapp.com/ 
+
 ## 1.考察map()与parseInt()
 
 这个表达式的结果是什么？（或多个）
@@ -47,7 +49,7 @@ Javascript中parseInt（）函数可以接收两个参数（string，radix）：
 | 参数   | 描述                                                         |
 | ------ | ------------------------------------------------------------ |
 | string | 必须。要被解析的字符                                         |
-| radix  | 可选。表示要解析的数字的基数。该值介于2~36之间。如果省略该参数或为0，则该数将以10为基础解析它。如果字符串以0X或0x开头，将以16为基数。如果该参数小于2或者大于36，则parseInt将返回NaN |
+| radix  | 可选。表示要解析的数字的基数。该值介于2~36之间。如果省略该参数**或为0**，则该数将以10为基础解析它。如果字符串以0X或0x开头，将以16为基数。如果该参数小于2或者大于36，则parseInt将返回NaN |
 
 ## 2.考察typeof与null
 
@@ -158,7 +160,488 @@ VM2315:3 cur 2
 1
 ~~~
 
-4.
+## 4.考察=与三目运算符的优先级
+
+这个表达式的结果是什么？
+
+> var val = 'smtg';
+>
+> console.log('Value is ' + (val === 'smtg') ? 'Something' : 'Nothing');
+
+- A.Value is Something
+- B.Value is Nothing
+- C.NaN
+- D.other
+
+我选的A，三目运算符判断肯定是true这毫无疑问，所以应该返回Value isSomething
+
+答案是D，因为 **+ 运算符的优先级高于三目运算符**；所以实际上js引擎会先计算‘Value is + （val === 'smtg')的值，它的值是‘Value is true’，非空字符串的布尔值是true，所以现在才执行三目运算符，所以只输出Something。
+
+## 5.考察声明提升与作用域
+
+这个表达式的结果是什么？
+
+> var name = 'World!';
+>
+> (function () {
+>
+> ​	if(typeof name === 'undefined') {
+>
+> ​		var name = 'Jack';
+>
+> ​		console.log('GoodeBye ' + name);
+>
+> ​	} else {
+>
+> ​		console.log('Hello ' + name);
+>
+> ​	}
+>
+> })();
+
+- A.GoodBye Jack
+- B.Hello Jack
+- C.Hello undefined
+- D.Hello world!
+
+我选的D，因为typeof优先级肯定是大于===的，所以typeof   ’World!‘ 的结果是string，不等于undefined，所以走else，输出Hello World！
+
+答案是A，因为**立即执行函数是一个独立的作用域**，if里面有var name = ’Jack'；所以会**声明提升**，提升到这个立即执行函数作用域的最顶端，所以当if里面检查name的类型的时候，由于自己作用域里面有name，所以就不会用外部的name，但是此时只是声明提升，name的值是undefined，所以走if语句，最终输出GoodBye Jack。
+
+~~~js
+var name = 'World!';
+undefined
+
+(function () {
+    if(typeof name === 'undefined') {
+        var name = 'Jack';
+        console.log('Goodobye ' + name);
+    } else {
+        console.log('Hello ' + name);
+    };
+})();
+VM3356:4 Goodobye Jack
+undefined
+
+(function () {
+    console.log(name);//undefined，用的是自己作用域里面var的name
+    if(typeof name === 'undefined') {
+        var name = 'Jack';//声明提升
+        console.log('Goodobye ' + name);
+    } else {
+        console.log('Hello ' + name);
+    };
+})();
+VM3415:2 undefined		//看到这里了就一目了然了吧
+VM3415:5 Goodobye Jack
+undefined
+
+(function () {
+    console.log(name);
+    if(typeof name === 'undefined') {
+        console.log('Goodobye ' + name);//name声明提升，但else语句没有执行，所以值为undefined
+    } else {
+        var name = 'Jone';//无论是if还是else语句里面声明的name，都会声明提升
+        console.log('Hello ' + name);
+    };
+})();
+VM3447:2 undefined
+VM3447:4 Goodobye undefined
+undefined
+~~~
+
+## 嗯
+
+[freecodecamp.cn](https://freecodecamp.cn/)
+
+[freecodecamp.com](http://www.lixuejiang.me/2016/11/01/JavaScript的练习网站收集/freecodecamp.com)的中文版，可以学习前端，后端，数据可视化等知识
+
+[es6katas.org/](http://es6katas.org/)
+
+一个用tdd学习es6的网站，学完之后对es6的各种特性会有深入的了解
+
+牛客网的练习题
+
+[leetcode.com/](https://leetcode.com/)
+
+有名的oj系统，听说有人通过这个网站刷题进了google
+
+[nodeschool.io](https://nodeschool.io/zh-cn/#workshoppers)
+
+nodeschool,有很多js和es6以及web相关的教程
+
+[www.hackerrank.com](https://www.hackerrank.com/)
+
+一个英文的学习网站，类似oj的形式，有数据结构算法的课程，也有正则表达式等课程，质量还不错
+
+## 6.考察JS的Math最大数字
+
+这个表达式的结果是什么？
+
+>var end = Math.pow(2,53);
+>
+>var start = end - 100;
+>
+>var count = 0;
+>
+>for(var i = start ; i <= end; i ++) {
+>
+>​	count ++;
+>
+>}
+>
+>console.log(count);
+
+- A.0
+- B.100
+- C.101
+- D.other
+
+我选的A，认为for循环不会执行
+
+答案是D，在JavaScript中，Number.MAX_SAFE_INTEGER常量表示最大的安全整数，也就是2**53 - 1。
+
+因为JavaScript的数字存储使用了IEEE 754中规定的 双精度浮点数 数据类型，而这一数据类型能够安全存储-(2\*\*53 - 1)到(2\*\*53 - 1)之间的数值（包含边界值）
+
+这里安全存储的意思是指能够准确区分两个不相同的值，例如：
+
+~~~js
+ Number.MAX_SAFE_INTEGER + 1 === Number.MAX_SAFE_INTEGER + 2
+true
+~~~
+
+所以上述题目会进入无限循环，因为2^53是js中的最大数字，2^53 + 1给出 2^53，所以i永远不会变的更大。
+
+## 7.考察filter()的执行细节
+
+这个表达式的结果是什么？
+
+> var arr = [0,1,2];
+>
+> arr[10] = 10;
+>
+> arr.filter(function (x) { return  x === undefined;});
+
+- A.[undefined * 7]
+- B.[0,1,2,10]
+- C.[]
+- D.[undefined]
+
+我选的A，这题没什么思路
+
+答案是C
+
+arr.filter()函数传参一个函数，将arr里面的数据依次传入函数，**执行函数返回true 的元素放到一个新数组中，最后返回这个新的数组，如果没有任何数组元素通过了函数，则返回一个空数组**。函数接收3个参数（element，index，arr）。**这个函数只会在已经赋值的索引上被调用，对于那些已经删除或从未被赋值的索引不会被调用**。
+
+本题中，arr前三位都不满足函数，都会返回false，所以都没有进去新数组，第四位到第十位都是undefined，函数直接跳过，到arr[10]，函数也会返回false ，所以最后返回了空数组。
+
+
+
+所以arr.filter()函数可以**用来过滤JSON中的无效条目**：
+
+~~~js
+var arr = [
+	{ id : 10 },
+    { id : 5 },
+    { id : 0 },
+    { id : -1 },
+    { id : null },
+    { },
+    { id : undefined },
+    { id : NaN }
+]
+function isNumber(obj) {
+    return obj !== undefined && typeof obj === 'number' && !isNaN(obj);
+}
+
+function filterById (item) {
+    if(isNumber(item.id) && item.id != 0) {
+        return true;
+    }
+    return false;
+}
+
+var arrByID = arr.finter(filterById);
+
+console.log(arrByID);
+//[{ id : 10 },{ id : 5 },{ id : -1 },]
+~~~
+
+## 8.考察精确数字
+
+这个表达式的结果是什么？
+
+> var one = 0.1;
+>
+> var two = 0.2;
+>
+> var six = 0.6;
+>
+> var eight = 0.8;
+>
+> [two - one == one , eight - six == two]
+
+- A[true, true]
+- B.[false ,fasle]
+- C.[true, fasle]
+- D.[other]
+
+我选的B，因为不要相信任何js中的浮点数的运算，因为我知道0.1 + 0.2 = 0.3000000000004
+
+答案是C，JavaScript中没有精确的数学，尽管它有时候可以正确运行
+
+~~~js
+0.2 - 0.1
+0.1
+0.8 - 0.6
+0.20000000000000007
+0.1 + 0.2
+0.30000000000000004
+~~~
+
+## 9.考察switch-case原理
+
+这个表达式的结果是什么？
+
+~~~js
+function showCase (value) {
+    switch (value) {
+        case 'A':
+            console.log('A');
+            break;
+        case 'B':
+            console.log('B');
+            break;
+        case undefined:
+            console.log('undefined');
+            break;
+        default:
+            console.log('Do not know');
+    }
+}
+showCase(new String('A'));
+~~~
+
+- A. A
+- B. B
+- C. undefined
+- D. Do not know
+
+我选的C，这题思路并不清晰
+
+答案是D，**因为switch内部是===全等运算符，不发生隐式转换**；new String('A')是一个对象，它不全等于‘A'，也不是undefined。
+
+~~~js
+let arr = new String('A');
+undefined
+
+arr
+String {"A"}
+
+let arr2 = 'A'
+undefined
+
+arr  == arr2;
+true
+
+arr === arr2;//答案在这里
+false
+
+typeof arr;
+"object"
+
+typeof arr2;
+"string"
+~~~
+
+## 10.考察String（）
+
+What is the result of this expression?
+
+~~~js
+function showCase (value) {
+    switch (value) {
+        case 'A':
+            console.log('A');
+            break;
+        case 'B':
+            console.log('B');
+            break;
+        case undefined:
+            console.log('undefined');
+            break;
+        default:
+            console.log('Do not know');
+    }
+}
+showCase(String('A'));
+~~~
+
+- A. A
+- B. B
+- C. undefined
+- D. Do not know
+
+我选的A，因为String（）不会创建对象，只是创建了个基本数据类型String。
+
+答案是A
+
+~~~js
+et arr3 = String('A');
+undefined
+
+arr3 == 'A'
+true
+
+arr3 === 'A'
+true
+
+typeof arr3
+"string"
+~~~
+
+## 11考察取模%
+
+What is the result of this expression?
+
+~~~js
+function isOdd(num) {
+    return num % 2 == 1;
+}
+function isEven(num) {
+    return num % 2 == 0;
+}
+function isSane(num) {
+    return isOdd(num) || isEven(num);
+}
+let value = [7,4,'13',-9,Infinity];
+value.map(isSane);
+~~~
+
+- A.[true,true,true,true,true]
+- B.[true, true, true, true, false]
+- C.[true, true, true, false,false]
+- D.[false, false, false, false , false]
+
+我选的B，我以为取模是忽略正负号的
+
+答案是C，**取模运算符保留符号**，因此结果仅与0相比是可靠的
+
+~~~js
+'13' % 2
+1
+
+-9 % 2
+-1
+
+Infinity % 2
+NaN
+~~~
+
+## 12.考察parseInt()
+
+What is the result of this expression?
+
+~~~js
+parseInt(3,8);
+parseInt(3,2);
+parseInt(3,0);
+~~~
+
+- A.3, 3, 3
+- B.3, 3, NaN
+- C. 3, NaN, NaN
+- D.other
+
+我选的C，因为基数为2的里面没有3，只有01；基数为0的更会是NaN了
+
+答案是D，parseInt()函数的第二个参数是可选的，不传参或为0，js引擎都会按10进制来处理。
+
+~~~js
+parseInt(3,8)
+3
+
+parseInt(3,2)
+NaN
+
+parseInt(3,0);//按10进制处理
+3
+~~~
+
+## 13.array的prototype
+
+What is the result of this expression?
+
+~~~js
+Array.isArray(Array.prototype);
+~~~
+
+- A.true
+- B.false
+- C.error
+- D.other
+
+我选的B，因为数组的原型肯定是个对象呀
+
+答案是A，**数组的原型是数组！**
+
+~~~js
+//鲜为人知的事实：Array.prototype本身也是个Array
+Array.isArray(Array.prototype);
+true;
+~~~
+
+- Array.prototype.constructor
+  - 所有的数组实例都继承了这个属性，它的值就是Array，表明了所有数组都是有Array构造出来的。
+- Array.prototype.length
+  - 因为Array.prototype也是个数组，所以它也有length属性，这个值为0，因为它是个空数组。
+
+~~~js
+let arr = [1,2,3];
+undefined
+
+arr.__proto__
+[constructor: ƒ, concat: ƒ, copyWithin: ƒ, fill: ƒ, find: ƒ, …]//看吧是个数组
+
+arr.__proto__.length//这个数组里面有个length属性，它的值为0
+0
+
+let str = 'qwe';
+undefined
+
+str.__proto__
+String {"", constructor: ƒ, anchor: ƒ, big: ƒ, blink: ƒ, …}//str 的就是对象了
+~~~
+
+## 14.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

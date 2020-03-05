@@ -2,23 +2,24 @@
 <html>
 <head>
 	<title></title>
-	<style type="text/css">
-		div {
-			width: 200px;
-			height: 200px;
-			background: red;
-			position: absolute;
-			top: 40%;
-			left: 50%;
-			margin-left: -100px;
-			height: -100px;
-			z-index: 1000;
-		}
-	</style>
 </head>
 <body>
-	<div></div>
 	<script type="text/javascript">
+		var distributeCandies = function(candies, num_people) {
+		    let childrens = new Array(num_people).fill(0);
+		    const allChildrensNum = childrens.length - 1;
+		    let nowCandies = 1;
+		    let boy = 0;
+		    while(candies !== 0) {
+		        candyNum = (candies >= nowCandies) ? nowCandies : candies;
+		        candies -= candyNum;
+		        childrens[boy] += candyNum;
+		        boy = (boy === allChildrensNum) ? 0 : boy + 1;
+		        console.log(candies)
+		    }
+		    return childrens;
+		};
+		console.log(distributeCandies(7,4));
 	</script>
 </body>
 </html>

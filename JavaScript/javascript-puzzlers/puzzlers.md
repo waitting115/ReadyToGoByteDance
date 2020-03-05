@@ -568,7 +568,7 @@ parseInt(3,0);//按10进制处理
 3
 ~~~
 
-## 13.array的prototype
+## 13.考察array的prototype
 
 What is the result of this expression?
 
@@ -613,9 +613,276 @@ str.__proto__
 String {"", constructor: ƒ, anchor: ƒ, big: ƒ, blink: ƒ, …}//str 的就是对象了
 ~~~
 
-## 14.
+## 14.考察 [0]
+
+What is the result of this expression?
+
+~~~js
+let arr = [0];
+if([0]) {
+    console.log(arr == true)
+} else {
+    console.log('wut')
+}
+~~~
+
+- A.true
+- B.false
+- C.wut
+- D.other
+
+我选的A，**[0]转化为布尔值是true**，那么arr==true一定会成立
+
+答案是B，这是我怎么也想不到的答案。**在比较中使用它时，它会以不同的方式转换。**
+
+~~~js
+!![0]
+true
+
+[0] == true;
+false
+
+[0] == true;
+false
+[1] == true//就这里返回了true
+true
+[] == true
+false
+[2] == true
+false
+[3] == true
+false
+~~~
+
+## 15.考察==与[]
+
+What is the result of this expression?
+
+~~~js
+[] == []
+~~~
+
+- A.true
+- B.false
+- C.error
+- D.other
+
+我选的A，因为==会有隐式类型转换
+
+答案是B，那么请看下面：
+
+~~~js
+[] == []
+false
+//数组是引用数据类型，是对象，所以这个比的是两个空数组的内存地址是否相等，自然是不等的
+
+[] == ![]
+true
+//这里就有一点复杂了，涉及到==不同类型值的比较，由下表可知，由于!将[]转换为布尔值false，所以该问题转化为对象与布尔值的比较，所以要将对象和布尔值都转换为数字，方法就是先使用toString（）方法将对象转化为str，然后用Number（）方法将字符串转化为数字；然后将第二个布尔值用Number()转化为数字进行比较
+//[] == false
+//'' == false
+//0 == false
+//0 == 0
+//true
+
+[] == {}//原理与第一个相同
+false
+~~~
+
+**不同类型之间的==比较**
+
+| 类型           | 类型      | 比较方式                                                     |
+| -------------- | --------- | ------------------------------------------------------------ |
+| 对象           | 对象      | 比较内存地址是否相同                                         |
+| 对象           | 字符串    | 用toString（）将对象转化为字符串与另一个字符串比较是否相等   |
+| 对象           | 布尔值    | 二者都要转化为数字进行比较，用toString（）将对象转化为字符串，然后用Number（）将字符串转化为数字；然后将布尔值用Number（）转化为数字。二者进行数字上的比较 |
+| 对象           | 数字      | 将对象转化为数字进行比较（toString（），Number（））         |
+| 数字           | 布尔值    | 布尔值转数字（true1，false0），进行数字上的比较              |
+| 数字           | 字符串    | 字符串转数字（Number（）），进行数字上的比较                 |
+| 布尔值         | 字符串    | 都转换为数字（Number（）），进行数字上的比较                 |
+| null           | undefined | true（原因是null是衍生自undefined 的）                       |
+| null/undefined | 其他类型  | 都是false                                                    |
+| NaN            | NaN       | false（两个非数字也是不相等的）                              |
+
+**自身做布尔运算时（ ！），除了 “ ”、0、NaN、null、undefined、false为false，其余的都为true。**
+
+## 16.考察String/Number + -
+
+What is the result of this exppression?
+
+~~~js
+'5' + 3
+'5' - 3
+~~~
+
+- A.'53' 2
+- B.8  2
+- C.error
+- D.other
+
+我选的B，我以为都会转为字符串
+
+答案是A，**字符串知道+并会使用它，但它是不认识 - ，因此str会转为num。**
+
+## 17.考察1+ - + + + - + 1
+
+What is the result of this expression?
+
+~~~js
+1 + - + + + - + 1
+~~~
+
+- A. 2
+- B. 1
+- C. error
+- D. other
+
+我选的A，我以为+-就会抵消，最后剩下1 +++ 1，自然是2
+
+答案是A，虽然我选对了，但是我还是错了。
+
+~~~js
+1 + - 1
+0
+
+1 + - + 1
+0
+
+1 + - + - 1
+2
+
+1 + + -  + + - + + - + -1
+2
+~~~
+
+实践证明，这样的式子中，**- 与- 会抵消，+的多少不影响结果，所以结果取决于-是奇数个还是偶数个**，奇数个，就是二者相减，偶数个就是二者相加。
+
+## 18.考察arr.map()
+
+What is the result of this expression?
+
+~~~js
+let arr = new Array(3);
+arr[2] = 10;
+arr.map(function (elem) { return '1' })
+~~~
+
+- A. [2,1,1]
+- B.['1',1'1']
+- C.[2,'1','1']
+- D.other
+
+我选的D，因为**map（）不会对没有初始化的值调用函数**，所以结果应该是['1',undefined*2]
+
+答案是D，我的思路是对的。
+
+map()会为每一个已初始化的数组元素调用回调函数，将函数返回的结果放进一个新数组并返回。
+
+## 19.考察arguments
+
+What is the result of this expression?
+
+~~~js
+function sidEffection (arr) {
+    arr[0] = arr[2];
+}
+function bar(a,b,c) {
+    c = 10;
+    sideEffection(arguments);
+    return a + b + c;
+}
+bar(1,1,1);
+~~~
+
+- A. 3
+- B.12
+- C.error
+- D.other
+
+我选的A，我认为改变了c不会改变arguments
+
+答案是D，结果是21，**因为JavaScript中变量与arguments关联，因此即使arguments与变量不在同一范围，更改变量后arguments也会更改，，更改参数也会更改全局变量。**
+
+## 20.考察js数字精度
+
+What is the result of this expression?
+
+~~~js
+var a = 111111111111111111110000,
+    b = 1111;
+a + b;
+~~~
+
+- A.1111111111111111111
+- B.1111111111111110000
+- C.NaN
+- D.Infinity
+
+我选的D，因为a已经超出了2^53 - 1(js中最大的有效数字)，所以会返回Infinity
+
+答案是B，**JavaScript中数字的精度不足会影响大小数字。**
 
 
+
+~~~js
+var a = 111111111111111110000,
+    b = 1111;
+a + b;//在js中一个超出精度的数字进行加减运算无效，结果依然是自己。
+111111111111111110000
+
+var c = 123;
+undefined
+
+a + c
+111111111111111110000
+
+a * 2
+222222222222222230000//进行乘除运算会失去精度，结果并不可靠！
+a
+111111111111111110000
+a * 3
+333333333333333400000
+~~~
+
+## 21.考察x = [].reverse
+
+What is the result of this expression?
+
+~~~js
+var x = [].reverse;
+x();
+~~~
+
+- A. []
+- B.undefined
+- C.error
+- D.other
+
+我选的C，因为第一行reverse调用没有()，也就是说没有立即执行它，所以**x指向的是数组的reverse函数**；第二行调用了reverse方法，但是没有在数组上调用，自然会报错
+
+答案是C，我是对的
+
+## 22.考察Number.MIN_VALUE
+
+What is the result of this expression?
+
+~~~js
+Number.MIN_VALUE > 0
+~~~
+
+- A.false
+- B.true
+- C.error
+- D.other
+
+我选的A，因为最小值肯定比0小呀
+
+答案是B，因为**Number.MIN_VALUE代表大于零的最小值**，-Number.MIN_VALUE也就是小于0 的最大值
+
+~~~js
+-1 < -Number.MIN_VALUE
+true
+~~~
 
 
 

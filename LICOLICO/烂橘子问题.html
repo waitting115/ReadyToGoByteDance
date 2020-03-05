@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div></div>
+	<script type="text/javascript">
+		var orangesRotting = function(grid) {
+		    //思路，首先遍历网格找到所有的烂橘子2，存到一个二维数组中[x,y]，并且将好橘子的个数存到number;定义时间变量time = 0；
+		    //如果没有烂橘子2返回-1，如果没有好橘子返回0，
+		    //开始循环烂橘子数组，每循环1次time++，将每个烂橘子的上下左右的好橘子变为烂橘子并放到烂橘子数组中，然后将上一批烂橘子删除，因为在二维网格中每个烂橘子只有一次机会去感染好橘子。
+		    //当烂橘子数组为空了，就说明上一次感染有一个也没成功，就说明能感染的都已经感染了.
+		    //最后一步判断number是否为0，若是则返回time，若否则返回-1
+		    const len = grid.length, 
+		          len2 = grid[0].length;
+		    let number = 0;
+		    let time = 0;
+		    let badOrangeArr = [];
+		    let assistArr = [];
+		    for(let i = 0; i < len; i ++) {
+		        for(let j = 0; j < len2; j ++) {
+		            if(grid[i][j] === 1) {
+		                number ++;
+		            } else if (grid[i][j] === 2) {
+		                badOrangeArr.push(i);
+		                badOrangeArr.push(j);
+		            }
+		        }
+		    }
+		    // console.log(number);
+		    if(number === 0) return 0;
+		    if(badOrangeArr.length === 0) return -1;
+
+		    while(badOrangeArr.length != 0) {
+		        let x = badOrangeArr[0];
+		        let y = badOrangeArr[1];
+		        if(x - 1 >= 0 && grid[x - 1][y] === 1) {//上
+		            grid[x - 1][y] = 2;//变坏橘子了
+		            assistArr.push(x - 1);//加入坏橘子大军
+		            assistArr.push(y);
+		            number --;//好橘子--
+		        } 
+		        if(y + 1 < len2 && grid[x][y + 1] === 1) {//右
+		            grid[x][y + 1] = 2;
+		            assistArr.push(x);
+		            assistArr.push(y + 1);
+		            number --;
+		        }
+		        // console.log(y)
+		        if(x + 1 < len && grid[x + 1][y] === 1) {
+		            grid[x + 1][y] = 2;
+		            assistArr.push(x + 1);
+		            assistArr.push(y);
+		            number --;
+		        }
+		        if(y + 1 >= 0 && grid[x][y - 1] === 1) {
+		            grid[x][y - 1] = 2;
+		            assistArr.push(x);
+		            assistArr.push(y - 1);
+		            number --;
+		        }
+		        badOrangeArr.shift();//删掉第一个元素
+		        badOrangeArr.shift();
+		        // console.log(number)
+		        // console.log(badOrangeArr)
+		        if(badOrangeArr.length === 0) {
+		        	if(assistArr.length !== 0) {
+		        		badOrangeArr = assistArr;
+		        		assistArr = [];
+		        		time ++;
+		        		// console.log(badOrangeArr);
+		        	} else {
+		        		break;
+		        	}
+		        }
+		    }
+		    // console.log(grid)
+		    if(number > 0) return -1;
+		    return time;
+		};
+		console.log(orangesRotting([[1],[2]]))
+	</script>
+</body>
+</html>

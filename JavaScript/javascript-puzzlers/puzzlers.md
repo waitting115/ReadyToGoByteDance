@@ -696,7 +696,7 @@ false
 | 对象           | 对象      | 比较内存地址是否相同                                         |
 | 对象           | 字符串    | 用toString（）将对象转化为字符串与另一个字符串比较是否相等   |
 | 对象           | 布尔值    | 二者都要转化为数字进行比较，用toString（）将对象转化为字符串，然后用Number（）将字符串转化为数字；然后将布尔值用Number（）转化为数字。二者进行数字上的比较 |
-| 对象           | 数字      | 将对象转化为数字进行比较（toString（），Number（））         |
+| 对象           | 数字      | 将对象转化为数字进行比较（toString（），Number（）），数组对象直接用Number（） |
 | 数字           | 布尔值    | 布尔值转数字（true1，false0），进行数字上的比较              |
 | 数字           | 字符串    | 字符串转数字（Number（）），进行数字上的比较                 |
 | 布尔值         | 字符串    | 都转换为数字（Number（）），进行数字上的比较                 |
@@ -883,6 +883,234 @@ Number.MIN_VALUE > 0
 -1 < -Number.MIN_VALUE
 true
 ~~~
+
+## 23.考察1<2<3连比
+
+What is the result of this expression?
+
+~~~js
+[1<2<3,3<2<1]
+~~~
+
+- A.true,true
+- B.true,false
+- C.error
+- D.other
+
+我选的B，因为我觉得是从左向右比的
+
+答案是A，上式相当于：[(1<2)<3,(3<2)<1]，
+
+- 第一个先比较1<2返回true，true=1，然后是1<3，又是true；
+- 第二个先比较3<2返回false，false = 0，然后是0<1，又是true
+
+~~~js
+1<2<0<1
+true
+//1<2==>true->1
+//1<0==>false->0
+//0<1==>true
+//所以最终结果为true
+~~~
+
+## 24.考察2==[[[2]]]
+
+What is the result of this expression?
+
+~~~js
+2 == [[[2]]]
+~~~
+
+- A.true
+- B.false
+- C.undefined
+- D.other
+
+我选的B，因为2是number，[[[2]]]是数组，二者怎么可能相等呢
+
+答案是A，[[[2]]]是一个数组，数组是引用类型，是对象，所以问题就转化为对象与数组比较，根据15题里面提供的表，这二者比较要将对象转化为数字后与数字进行比较
+
+~~~js
+2 == [[[2]]]
+//Number([[[2]]])-->2
+2 == 2
+//true
+~~~
+
+## 25.考察3..toString()   ?
+
+What is the result of this expression?
+
+~~~js
+3.toString()
+3..toString()
+3...toString()
+~~~
+
+- A.'3',error,error
+- B.'3','3.0',error
+- C.error,'3',error
+- D.other
+
+我选的A，这题没什么思路
+
+答案是C， `3.x`是定义尾数为的“ 3”的有效语法`x`，`toString`不是有效数字，但空字符串为。 （这是官方解释，本人也没弄明白为什么）
+
+## 26.考察var a=b=1
+
+What is the result of this expression?
+
+~~~js
+(function () {
+    var a = b = 1;
+})()
+console.log(b);
+console.log(a);
+~~~
+
+- A.1,1
+- B.error,error
+- C.1,error
+- D.other
+
+我选的B，我自认为（）（）里面的变量外部是访问不到的
+
+答案是C，因为a是局部变量，b是全局变量，var a = b = 1可表示为
+
+~~~js
+var a = b = 1;
+//var a;（a确实是局部变量，外部访问不到）
+//b = 1;-->js中未声明的变量都会变成全局变量
+//a = b;
+~~~
+
+## 27.考察reg == reg
+
+What is the result of this expression?
+
+~~~js
+var a = /abc/,
+    b = /abc/;
+a == b;
+a === b;
+~~~
+
+- A.true,true
+- B.true,false
+- C.false,false
+- D.other
+
+我选的C，因为a，b都是正则对象，两个不同的对象是不会相等的，哪怕它们的内容相同。
+
+答案是C，没错我做对了，哈哈哈哈！
+
+## 28.考察数组比较大小
+
+What is the result of this expression?
+
+~~~js
+var a = [1,2,3],
+	b = [1,2,3],
+	c = [1,2,4];
+a == b;
+a === b;
+a > c;
+a < c;
+~~~
+
+- A.false,false,false,true
+- B.false,false,false,false
+- C.true,true,false,true
+- D.other
+
+我选的B，前两个毫无疑问false，因为两个数组对象不可能相等；后两个呢，数组怎么比较大小？false吧
+
+答案是A，前两个毫无疑问false，后两个。。。数组还真能比较大小，比较大小的方法就是将每一位都转化为字符串，按位比较大小（注意，不是比较数字大小，如‘2’就是大于‘11’）。
+
+~~~js
+[1,2,3] > [1,2,3]//二者相等
+false
+
+[1,2,3] < [1,2,4]//因为‘1’=‘1’，‘2’=‘2’，‘3’<'4'  true
+true
+
+[2,2,3] > [10,20,40]//因为'2' > '10'   true
+true
+
+[2,2,3] > [21,1,1]//因为‘2’ < '21'   false
+false
+~~~
+
+## 29.考察Object.prototype
+
+~~~js
+var a = {},b = Object.prototype;
+[a.prototype === b, Object.getPrototypeOf(a) === b]
+~~~
+
+- A.false,true
+- B.true,true
+- C.fale,false
+- D.other
+
+我选的B，感觉任何一个对象的原型都是Object的原型，而且a的原型也是Object.prototype。
+
+答案是A，一个对象实例的prototype是唯一的，这是它定义的时候就带的，并不是Object.prototype；
+
+**Object.getPrototypeOf()方法返回给定对象的原型**
+
+var a = {}  === var a = new Object();
+
+所以a 的原型就是Object.prototype
+
+## 30.考察function.prototype
+
+What is the result of this expression?
+
+~~~js
+function f() {};
+var a = f.prototype, b = Object.getPrototypeOf(f);
+a === b
+~~~
+
+- A.true
+- B.false
+- C.null
+- D.other
+
+我选的B，因为这道题绝不会那么容易！（就是蒙的）
+
+答案是B，首先我们要明白：**f.prototype不是用来创建f的，换句话说，f不是f.prototype创建来的，而是它的父类创建了f，而f.prototype是用来创建f的子类的（对象）；Object.getPrototypeOf(f)函数返回f继承层次中的父类。**
+
+这真的太厉害了！听君一席话胜读十年书！
+
+## 31.考察function.name
+
+What is the result of this expression?
+
+~~~js
+function foo () {};
+var oldName = foo.name;
+foo.name = 'bar';
+[oldName, foo.name]
+~~~
+
+- A.error
+- B.' ',' '
+- C.'foo', 'foo'
+- D.'foo', 'bar'
+
+我选的D，因为函数本身就有name属性，就是函数名，所以oldName为foo毫无疑问，后面将foo.name='bar'，所以foo.name变为了‘bar'
+
+答案是C，因为**函数的name是只读属性！！**
+
+## 32.
+
+
+
+
+
+
 
 
 

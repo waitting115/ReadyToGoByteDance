@@ -5,10 +5,42 @@
 </head>
 <body>
 	<script type="text/javascript">
+		// var permutation = function(S) {
+		//   let ans = [];
+		  
+		//   function dfs(curr, store) {
+		//   	console.log(curr, store)
+		//     if (store === '') {
+		//       return ans.push( curr );
+		//     }
+		    
+		//     for (let i = 0, len = store.length; i < len; i++) {
+		//       if (i > 0 && store[i] === store[i - 1]) continue; // 去重
+		//       curr += store[i];
+		//       dfs(curr, store.slice(0, i).concat( store.slice(i + 1) ));
+		//       curr = curr.slice(0, curr.length - 1);
+		//     }
+		//   }
+		  
+		//   // 先排序。为了去重
+		//   S = S.split('');
+		//   S.sort((a, b) => {
+		//     if (a > b) return 1;
+		//     return -1;
+		//   });
+		//   S = S.join('');
+		//   dfs('', S);
+		  
+		//   return ans;
+		// };
+		// console.log(permutation('abca'))
+
 		function f() {}
-		var a = f.prototype, b = Object.getPrototypeOf(f);
-		console.log(a)
-		console.log(b)
+		var parent = Object.getPrototypeOf(f);
+		console.log(f.name) // ?
+		console.log(parent.name) // ?
+		console.log(typeof eval(f.name)) // ?
+		console.log(typeof eval(parent.name)) //  ?
 	</script>
 </body>
 </html>

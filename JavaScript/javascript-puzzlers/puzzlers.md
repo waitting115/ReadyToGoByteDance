@@ -1104,13 +1104,177 @@ foo.name = 'bar';
 
 答案是C，因为**函数的name是只读属性！！**
 
-## 32.
+## 32.考察str.replace()
+
+What is the result of this expression?
+
+~~~js
+'1 2 3'.replace(/\d/g, parseInt);
+~~~
+
+- A.'1 2 3'
+- B.'0 1 2'
+- C.'NaN 2 3'
+- D.'1 NaN 3'
+
+我选的A，众所周知replace()函数会找到匹配的str然后替换掉，很明显会找到1 2 3三个str，parseInt（3/2/1）都是本身，所以A
+
+答案是D，**replace()并不是你想像的那么简单**，它接收2个参数（**str/Reg，str/Fun）**
+
+- 第一个参数是str，就是查找字符串中首次出现的str，然后用第二个参数将它替换掉
+
+- 第一个参数是reg，找到字符串中匹配正则的字符串，然后用第二个参数将它替换掉
+
+- 第二个参数是str，替换掉第一个参数找到的字符串
+
+- **第二个参数是Fun，这是重头戏**
+
+  - **replace（）的第二个参数如果是函数，那么会给它传5个参数，然后用函数的返回值替换掉第一个参数找到的字符串**：
+
+    - | 变量名            | 代表的值                                                     |
+      | ----------------- | ------------------------------------------------------------ |
+      | `match`           | 匹配的子串。（对应于上述的$&。）                             |
+      | `p1,p2, ...`      | 假如replace()方法的第一个参数是一个[`RegExp`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/RegExp) 对象，则代表第n个括号匹配的字符串。（对应于上述的$1，$2等。）例如，如果是用 `/(\a+)(\b+)/` 这个来匹配，`p1` 就是匹配的 `\a+`，`p2` 就是匹配的 `\b+`。 |
+      | `offset`          | 匹配到的子字符串在原字符串中的偏移量。（比如，如果原字符串是 `'abcd'`，匹配到的子字符串是 `'bc'`，那么这个参数将会是 1） |
+      | `string`          | 被匹配的原字符串。                                           |
+      | NamedCaptureGroup | 命名捕获组匹配的对象                                         |
+
+    - ~~~js
+      '1 2 3'.replace(/\d/g,function () {console.log(arguments);return 0;});
+      
+      VM2271:1 Arguments(3) ["1", 0, "1 2 3", callee: ƒ, Symbol(Symbol.iterator): ƒ]
+      
+      VM2271:1 Arguments(3) ["2", 2, "1 2 3", callee: ƒ, Symbol(Symbol.iterator): ƒ]
+      
+      VM2271:1 Arguments(3) ["3", 4, "1 2 3", callee: ƒ, Symbol(Symbol.iterator): ƒ]
+      
+      "0 0 0"
+      ~~~
+
+    - **看arguments可以看出，第一个参数就是匹配到的字符串，第二个参数是该字符串在原字符串中出现的位置（类似数组下标），第三个参数是原数组**
+
+    - 所以原题中，parseInt（）函数被传进的参数依次是
+
+      - parseInt（’1‘， 0，’1 2 3‘）
+      - parseInt（’2‘， 2，’1 2 3‘）
+      - parseInt（’3‘， 4，’1 2 3‘）
+
+    - 但是parseInt只会利用前两个参数
+
+      - ~~~js
+        parseInt('1',0)//10进制的1
+        1
+        
+        parseInt('2',2)//2进制中没有2，所以NaN
+        NaN
+        
+        parseInt('3',4)//4进制的3
+        3
+        ~~~
 
 
 
+## 33.考察eval()
 
+What is the result of this expression?
 
+~~~js
+function f() {};
+var parent = Object.getPrototypeOf(f);
+console.log(f.name)
+console.log(parent.name)
+console.log(typeof eval(f.name));
+console.log(typeof eval(parent.name))
+~~~
 
+答案是:
+
+> "f"
+>
+> ""
+>
+> "function"
+>
+> undefined 
+
+~~~js
+f
+ƒ f() {}//f是个函数
+
+eval(f.name);//和上面一样的执行
+ƒ f() {}
+
+typeof eval(f.name);//自然是function
+"function"
+
+parent//构造f（）的函数，可以看到它是个匿名函数，没有name属性
+ƒ () { [native code] }
+
+parent.name//空
+""
+
+""
+""
+
+eval("")//执行“”
+undefined
+
+eval()//执行 empty，二者都是undefined，在以前是报错的
+undefined
+
+typeof eval("");//undefined的类型自然是undefined
+"undefined"
+
+typeof eval(parent.name)//同上一个效果
+"undefined"
+~~~
+
+## 34.考察reg.test()
+
+What is the result of this expression?
+
+~~~js
+var reg = /^[a-z]+$/;
+reg.test(null);
+reg.test();
+~~~
+
+答案是 true true
+
+为什么呢？因为**test（）函数会先调用toString（）方法将参数变为字符串**，所以就变成了：toString（null） === “null”，toString（undefined） === ‘undefined’，所以都是true。
+
+## 35.考察[,,,].join(',')
+
+What is the result of this expression?
+
+~~~js
+[,,,].join(',')
+~~~
+
+答案是    ",,"
+
+为什么呢？因为JavaScript在定义数组时允许逗号结尾，因此[,,,]里面只有3个empty。
+
+~~~js
+[,,,].join(",")
+",,"
+
+[0,0,0,].join(",")//0就是可视化了上面的empty
+"0,0,0"
+~~~
+
+## 36.考察保留字
+
+What is the result of this expression?
+
+~~~js
+var a = {class: "Animal", name: 'Fido'};
+a.class
+~~~
+
+这道题答案**因浏览器而异**，**因为class是保留字，IE8及其以下版本并不允许这样做**，甚至第一行就会报错（亲测），但是**其他浏览器如Chrome，Firefox，IE8及其以上版本会正确返回 "Animal"**。
+
+## 37.
 
 
 

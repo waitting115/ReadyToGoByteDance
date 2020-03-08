@@ -937,7 +937,7 @@ What is the result of this expression?
 //true
 ~~~
 
-## 25.考察3..toString()   ?
+## 25.考察3..toString()   √
 
 What is the result of this expression?
 
@@ -954,7 +954,32 @@ What is the result of this expression?
 
 我选的A，这题没什么思路
 
-答案是C， `3.x`是定义尾数为的“ 3”的有效语法`x`，`toString`不是有效数字，但空字符串为。 （这是官方解释，本人也没弄明白为什么）
+答案是C， `3.x`是定义尾数为的“ 3”的有效语法`x`，`toString`不是有效数字，但空字符串为。 这是官方解释
+
+经过查资料，最后搞懂了这道题：
+
+**在JavaScript中呢，3  3.   .3都是合法数字**
+
+**3.toString()这个表达式中的3.是表示什么呢？是数字！！因为js中3.是合法数字，这个表达式也就相当于3toString()，这不出错哪跑！**
+
+**3..toString()这个表达式呢，因为3.是合法数字，但3..不是，这就相当于3.这个数字调用了toString()，这没毛病**
+
+**3...toString()，这是个啥玩意！**
+
+还有个有趣的情况：
+
+~~~js
+let a = 3;
+undefined
+
+a.toString()
+"3"
+
+3.toString()
+VM491:1 Uncaught SyntaxError: Invalid or unexpected token
+~~~
+
+这是不是很无奈？哈哈哈 ！
 
 ## 26.考察var a=b=1
 
@@ -1274,7 +1299,341 @@ a.class
 
 这道题答案**因浏览器而异**，**因为class是保留字，IE8及其以下版本并不允许这样做**，甚至第一行就会报错（亲测），但是**其他浏览器如Chrome，Firefox，IE8及其以上版本会正确返回 "Animal"**。
 
-## 37.
+## 37.考察new Date()
+
+What is the result of this expression?
+
+~~~js
+var a = new Date('epoch');
+~~~
+
+答案是：**“Invalid Date”**，这是一个实际的Date对象（a instanceof Date  is  true）。但是无效，这是因为时间在内部保留为“Number”，在这种情况下为NaN。
+
+~~~js
+var a = new Date('epoch')//传入一个磨磨唧唧字符串
+undefined
+
+a
+Invalid Date//a的值为Invalid Date   （无效的Date）
+
+a instanceof Date//Invalid Date依然是Date对象
+true
+
+a.getTime();//但是它的值为NaN
+NaN
+
+var b = new Date();//一个正常的Date对象
+undefined
+
+b
+Sun Mar 08 2020 09:10:50 GMT+0800 (中国标准时间)//如new Date()不传参数则返回当前日期
+
+b instanceof Date;//理所当然b是date对象
+true
+
+b.getTime()//返回1970年1月1日0:0:0到现在的毫秒数（格林威治时间数值）
+1583629850806
+
+var c = Date();//没有new操作符
+undefined
+
+c
+"Sun Mar 08 2020 09:11:55 GMT+0800 (中国标准时间)"//返回时间的字符串形式
+
+typeof c//对的它是个str
+"string"
+
+c.getTime()//str怎么会有getTime方法呢，所以这里报错了
+VM868:1 Uncaught TypeError: c.getTime is not a function
+    at <anonymous>:1:3
+~~~
+
+## 38.考察Function.length
+
+~~~js
+var a = Function.length,
+    b = new Function().length;
+a === b
+~~~
+
+答案是false，因为**Function.length 被定义为1，而function实例的length被定义为0.**
+
+~~~js
+Function.length//Function构造函数的长度是1
+1
+
+new Function().length//function实例的长度是0，这肯定很有趣
+0
+
+function fun() {};//一个函数实例
+undefined
+
+fun.length//看吧，是0！
+0
+~~~
+
+## 39.考察new Date()与Date()
+
+What is the result of this expression?
+
+~~~js
+var a = Date(0);
+var b = new Date(0);
+var c = new Date();
+a === b;
+a === c;
+b === c;
+~~~
+
+答案是：false，false，false
+
+~~~js
+Date(0)
+"Sun Mar 08 2020 09:25:09 GMT+0800 (中国标准时间)"//返回当前时间的字符串形式
+
+new Date(0)
+Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间)//返回元年时间
+
+new Date()
+Sun Mar 08 2020 09:26:06 GMT+0800 (中国标准时间)//返回当前时间的Data对象
+~~~
+
+## 40.考察Math.min()与Math.max()
+
+What is the result of this expression?
+
+~~~js
+var min = Math.min(),max = Math.max();
+min < max;
+~~~
+
+答案是：false
+
+~~~js
+Math.min()
+Infinity//Math.min()返回正无穷
+
+Math.max()
+-Infinity//Math.max()返回负无穷
+
+Math.min() < Math.max()
+false
+
+Math.max() < Math.min()//这才是对的
+true
+~~~
+
+其实这里的结果很匪夷所思，但是经过查资料，谜团终于揭开：
+
+**首先我们不能望文生义，Math.min()方法是返回参数中的最小值，Math.max()是返回参数中的最大值，如果我们手写一个Math.min()我们要怎么写？或者说，下面的空你应该怎么填？**
+
+~~~js
+function max(arr) {
+    var max = ____;
+    arr.forEach((a) => {
+        if(a > max) {
+            max = a;
+        }
+    })
+    return max;
+}
+~~~
+
+**这里填什么最合理呢？很容易就想到要填一个比任何数都小的数，也就是-Infinity，这才能保证第一次比较无论第一个数字多么小也会将值赋值给max。	这样一想呢，Math.max()返回-Infinity也就很合理了！**
+
+## 41.考察正则/g  √
+
+What is the result of this expression?
+
+~~~js
+function captureOne(re, str) {
+    var match = re.exec(str);
+    return match && match[1];
+}
+var numRe = /num = (\d+)/ig,
+    wordRe = /word = (\w+)/i,
+    a1 = captureOne(numRe, 'num=1'),
+    a2 = captureOne(wordRe, 'word=1'),
+    a3 = captureOne(numRe, 'NUM=1'),
+    a4 = captureOne(wordRe, 'WORD=1');
+a1 === a2
+a3 === a4
+~~~
+
+答案是：true，false
+
+**regexp.exec(string)方法返回正则在string中查找到的字符，若没找到则返回null。**
+
+\d   一个数字字符
+
+\w	一个大写字符、小写字符、数字、_   相当于[a-zA-Z0-9_]
+
+\+	一个或多个前面的字符   相当于{1，}
+
+\*	0个或多个前面的字符     相当于{0，}
+
+?	0或1个前面的字符			相当于{0,1}
+
+i	ignoreCase  表示忽略大小写
+
+g	global 表示全局匹配
+
+m	multiline  表示多行匹配
+
+~~~js
+function captureOne(re, str) {
+    var match = re.exec(str);
+    return match && match[1];
+}
+var numRe = /num=(\d+)/ig,
+    wordRe = /word=(\w+)/i,
+    a1 = captureOne(numRe, 'num=1'),
+    a2 = captureOne(wordRe, 'word=1'),
+    a3 = captureOne(numRe, 'NUM=1'),
+    a4 = captureOne(wordRe, 'WORD=1');
+undefined
+
+a1
+"1"
+
+a2
+"1"
+
+a3//why? 看下面
+null
+
+a4
+"1"
+~~~
+
+如果使用/g标志定义JavaScript中的正则表达式，**那么它将在整个匹配项中携带这个g的状态，即使它们实际用于不同的字符串(lastIndex属性)**。这意味着**a3将为空**，**因为正则表达式是从最后一个匹配字符串的索引开始应用的，即使它是一个不同的字符串。**
+
+~~~js
+var reg = /num=(\d+)/ig;//init reg
+undefined
+
+reg.lastIndex//now lastIndex = 0
+0
+
+reg.exec('num=1')// The first time find true
+(2) ["num=1", "1", index: 0, input: "num=1", groups: undefined]
+
+reg.lastIndex//now lastIndex = 5,so next time will 从5开始往后面找
+5
+reg.exec('num=1')//再找就找不到了
+null
+
+reg.lastIndex//当它找不到一次之后呢，lastIndex属性就自己归零，这就很神奇！
+0
+
+reg.exec('num=1')//诶，再找就又找到了
+(2) ["num=1", "1", index: 0, input: "num=1", groups: undefined]
+
+reg.lastIndex//看，找到一次之后lastIndex就变了
+5
+
+reg.exec('NUM=1')//这就找不到了，因为是从5之后开始找到，此时reg.lastIndex为5，哪怕查找的不是同一个str
+null
+
+reg.lastIndex//找不到一次之后就又变为了0
+0
+~~~
+
+## 42.考察new Date()
+
+What is the result of this expression?
+
+~~~js
+var a = new Date('2014-03-19');
+var b = new Date(2014, 03, 19);
+a.getDay() === b.getDay();
+a.getMonth() === b.getMonth();
+~~~
+
+答案是：false，false
+
+~~~js
+new Date(2014, 03, 19);//这个表达式是创建了一个年份为2014，月份为03，日期为19的Date对象，但我们不要忘了，Date对象中month是以0开始计数的，也就是说三月是2，一月是0，所以说该表达式创建了一个‘2014-4-19’，这很重要，所以：
+
+new Date('2014-03-19')
+Wed Mar 19 2014 08:00:00 GMT+0800 (中国标准时间)
+
+new Date(2014,03,19)
+Sat Apr 19 2014 00:00:00 GMT+0800 (中国标准时间)
+
+new Date('2014-03-19').getDay()//返回星期
+3
+
+new Date(2014,03,19).getDay()//返回星期，不同月份的同一天基本不会是同一个星期
+6
+
+new Date('2014-03-19').getMonth()
+2
+
+new Date(2014,03,19).getMonth()
+3
+~~~
+
+## 43.考察string.match()
+
+What is the result of this expression?
+
+~~~js
+if('http://giftwrapped.com/picture.jpg'.match('.gif')) {
+    console.log('a gif file')
+} else {
+    console.log('not a gif file')
+}
+~~~
+
+答案是：'a gif file'
+
+因为String.prototype.match(reg)方法要传入正则表达式做参数，**如果传入字符串，则隐式调用new RegExp(str)**，所以原式中传入的'.gif'会变为 /.gif/，而在正则中.是匹配任意单个字符（除了换行和行结束符）的元字符，这自然可以匹配到  '/gif'。
+
+## 44.考察arguments
+
+What is the result of this expression?
+
+~~~js
+function foo(a) {
+    var a;
+    return a;
+}
+function bar(a) {
+    var a = 'bye';
+    return a;
+}
+foo('hello');
+bar('hello';)
+~~~
+
+答案是：hello，bye
+
+**因为a在foo和bar中都已经隐式声明，所以var a会被删除。  而 var a = 'bye'中var a依然会被删除，但是a = 'bar'赋值保留。**
+
+~~~js
+var c = 'cc';
+undefined
+
+c
+"cc"
+
+var c;//并不会起作用，更不会用undefined将'cc'给替换掉
+undefined
+
+c
+"cc"//c依然是'cc'
+
+var c = 'd';
+undefined
+
+c
+"d"
+~~~
+
+ **悬挂了变量声明，但是在这种情况下，由于变量已经存在于作用域中，因此将它们完全删除。在`bar()`变量声明中已删除，但赋值仍然保留，因此它起作用。** 
+
+
 
 
 

@@ -5,42 +5,53 @@
 </head>
 <body>
 	<script type="text/javascript">
-		// var permutation = function(S) {
-		//   let ans = [];
-		  
-		//   function dfs(curr, store) {
-		//   	console.log(curr, store)
-		//     if (store === '') {
-		//       return ans.push( curr );
-		//     }
-		    
-		//     for (let i = 0, len = store.length; i < len; i++) {
-		//       if (i > 0 && store[i] === store[i - 1]) continue; // 去重
-		//       curr += store[i];
-		//       dfs(curr, store.slice(0, i).concat( store.slice(i + 1) ));
-		//       curr = curr.slice(0, curr.length - 1);
-		//     }
-		//   }
-		  
-		//   // 先排序。为了去重
-		//   S = S.split('');
-		//   S.sort((a, b) => {
-		//     if (a > b) return 1;
-		//     return -1;
-		//   });
-		//   S = S.join('');
-		//   dfs('', S);
-		  
-		//   return ans;
-		// };
-		// console.log(permutation('abca'))
-
-		function f() {}
-		var parent = Object.getPrototypeOf(f);
-		console.log(f.name) // ?
-		console.log(parent.name) // ?
-		console.log(typeof eval(f.name)) // ?
-		console.log(typeof eval(parent.name)) //  ?
+		var maxProfit = function(prices) {
+		    //计算出所有可能获得的利润段，找到最大的两个求和返回。
+		    let len = prices.length;
+		    let profits = [];
+		    let buy = Infinity;
+		    let buyArr = [];
+		    let buyLen;
+		    let i = 1;
+		    for( ; i < len; i ++) {
+		        if(prices[i] > prices[i - 1]) {
+		            buy = prices[i - 1];
+		            buyArr.push(buy);
+		            break;
+		        }
+		    }
+		    console.log(buy)
+		    for( ; i < len; i ++) {
+		        if(prices[i] < prices[i - 1]) {//找到卖点
+		        	buyLen = buyArr.length;
+		        	for(let j = 0; j < buyLen; j ++) {
+		        		profits.push(prices[i - 1] - buyArr[j]);
+		        	}
+		            if(buyArr.indexOf(prices[i] === -1)) {
+		            	buyArr.push(prices[i])
+		            }
+		        }
+		    }
+		    if(prices[i - 1] > buy) {
+		    	buyLen = buyArr.length;
+	        	for(let j = 0; j < buyLen; j ++) {
+	        		profits.push(prices[i - 1] - buyArr[j]);
+	        	}
+	            // if(buyArr.indexOf(prices[i] === -1)) {
+	            // 	buyArr.push(prices[i])
+	            // }
+		    }
+		    if(profits.length === 1) {
+		    	return profits[0]
+		    }
+		    if(profits.length === 0) {
+		        return 0;
+		    }
+		    profits.sort((a,b) => b - a);
+		    console.log(profits)
+		    return profits[0] + profits[1];
+		};
+		console.log(maxProfit([1,2,4,2,5,7,2,4,9,0]))
 	</script>
 </body>
 </html>

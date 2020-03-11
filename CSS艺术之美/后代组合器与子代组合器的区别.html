@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.div1 span {
+			color: red;
+		}
+		.div1>span {
+			border: 1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+	<div class="div1">
+		<span>这是儿子，我有边框，因为我是div1的儿子，我也有颜色，因为我在div1里面</span><br><br>
+		<span>
+			<span>
+				这是孙子1，我没有边框，因为我不是div1的儿子(你所看到的边框是我父亲的，它是div1的儿子)
+			</span>
+			<span>
+				这是孙子2，我没有边框，因为我不是div1的儿子
+			</span>
+		</span>
+	</div>
+</body>
+</html>

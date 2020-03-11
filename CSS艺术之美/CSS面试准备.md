@@ -244,7 +244,7 @@ span, div {
 
 **但是由于:is()会影响优先级的计算公式，这样做的代价就是其中所有的选择器都恢复拥有相同的优先级**
 
-#### 7.组合器
+#### 7.组合器    > ~ +
 
 - 后代组合器：
 
@@ -264,9 +264,51 @@ span, div {
     }
     ~~~
 
-- 
+- 一般兄弟选择器
 
+  - ~~~html
+    <!DOCTYPE html>
+    <html>
+    <head>
+    	<title></title>
+    	<style>
+            /*code元素后面的所有span兄弟元素*/
+    		code~span {
+    			color: red;
+    		}
+    	</style>
+    </head>
+    <body>
+    	<div>
+    		<p>here is some code</p>
+    		<span>this is not red</span>
+    		<code>here is some code</code>
+    		<span>me is red!</span>
+    	</div>
+    </body>
+    </html>
+    ~~~
 
+- 紧邻兄弟选择器
+
+  - ~~~css
+    /*p元素的后一个紧邻元素，二者共享同一个父节点*/
+    p+span {
+        color: blue;
+    }
+    ~~~
+
+#### 8.伪选择器
+
+- 伪类选择器
+  - ：active
+    - 匹配被用户激活的元素（如被用户正在点击的a链接）
+  - ：checked
+    - 匹配处于选中状态的元素（如被用户选中的radio单选按钮）
+  - ：default
+    - 表示一组相关元素中的默认表单元素
+  - 
+- 伪元素选择器
 
 
 

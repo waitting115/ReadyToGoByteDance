@@ -2,53 +2,65 @@
 <html>
 <head>
 	<title></title>
+	<style>
+		code~span {
+			color: red;
+		}
+	</style>
 </head>
 <body>
+	<div>
+		<p>here is some code</p>
+		<span>this is not red</span>
+		<code>here is some code</code>
+		<span>here is span</span>
+	</div>
+
 	<script type="text/javascript">
-		var maxProfit = function(prices) {
-		    //计算出所有可能获得的利润段，找到最大的两个求和返回。
-		    let len = prices.length;
-		    let profits = [];
-		    let buy = Infinity;
-		    let buyArr = [];
-		    let buyLen;
-		    let i = 1;
-		    for( ; i < len; i ++) {
-		        if(prices[i] > prices[i - 1]) {
-		            buy = prices[i - 1];
-		            buyArr.push(buy);
-		            break;
-		        }
-		    }
-		    console.log(buy)
-		    for( ; i < len; i ++) {
-		        if(prices[i] < prices[i - 1]) {//找到卖点
-		        	buyLen = buyArr.length;
-		        	for(let j = 0; j < buyLen; j ++) {
-		        		profits.push(prices[i - 1] - buyArr[j]);
-		        	}
-		            if(buyArr.indexOf(prices[i] === -1)) {
-		            	buyArr.push(prices[i])
-		            }
-		        }
-		    }
-		    if(prices[i - 1] > buy) {
-		    	buyLen = buyArr.length;
-	        	for(let j = 0; j < buyLen; j ++) {
-	        		profits.push(prices[i - 1] - buyArr[j]);
-	        	}
-		    }
-		    if(profits.length === 1) {
-		    	return profits[0]
-		    }
-		    if(profits.length === 0) {
-		        return 0;
-		    }
-		    profits.sort((a,b) => b - a);
-		    console.log(profits)
-		    return profits[0] + profits[1];
-		};
-		console.log(maxProfit([1,2,4,2,5,7,2,4,9,0]))
+		// var maxProfit = function(prices) {
+		//     //计算出所有可能获得的利润段，找到最大的两个求和返回。
+		//     let len = prices.length;
+		//     let profits = [];
+		//     let buy = Infinity;
+		//     let buyArr = [];
+		//     let buyLen;
+		//     let i = 1;
+		//     for( ; i < len; i ++) {
+		//         if(prices[i] > prices[i - 1]) {
+		//             buy = prices[i - 1];
+		//             buyArr.push(buy);
+		//             break;
+		//         }
+		//     }
+		//     console.log(buy)
+		//     for( ; i < len; i ++) {
+		//         if(prices[i] < prices[i - 1]) {//找到卖点
+		//         	buyLen = buyArr.length;
+		//         	for(let j = 0; j < buyLen; j ++) {
+		//         		profits.push(prices[i - 1] - buyArr[j]);
+		//         	}
+		//             if(buyArr.indexOf(prices[i] === -1)) {
+		//             	buyArr.push(prices[i])
+		//             }
+		//         }
+		//     }
+		//     if(prices[i - 1] > buy) {
+		//     	buyLen = buyArr.length;
+	 //        	for(let j = 0; j < buyLen; j ++) {
+	 //        		profits.push(prices[i - 1] - buyArr[j]);
+	 //        	}
+		//     }
+		//     if(profits.length === 1) {
+		//     	return profits[0]
+		//     }
+		//     if(profits.length === 0) {
+		//         return 0;
+		//     }
+		//     profits.sort((a,b) => b - a);
+		//     console.log(profits)
+		//     return profits[0] + profits[1];
+		// };
+		// console.log(maxProfit([1,2,4,2,5,7,2,4,9,0]))
 	</script>
 </body>
 </html>

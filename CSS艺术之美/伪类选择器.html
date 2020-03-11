@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>weilei</title>
+	<style>
+		/*点击a链接时生效*/
+		a:active {
+			color: red;
+		}
+		div,
+		select {
+			margin: 8px;
+		}
+		/*input和紧邻的下一个labe元素，当input受到点击后，二者都变红*/
+		input:checked + label {
+			color: red;
+		}
+		/*type='radio'的input元素受到点击后出现阴影*/
+		input[type='radio']:checked {
+			box-shadow: 0 0 0 3px orange;
+		}
+		input[type='checkbox']:checked {
+			box-shadow: 0 0 0 3px hotpink;
+		}
+		option:checked {
+			box-shadow: 0 0 0 3px lime;
+			color: red;
+		}
+	</style>
+	<style>
+		#expand-toggle {
+			display: none;
+		}
+		.expandable {
+			/*属性规定元素是否可见：visible可见；hidden隐藏；collapse（当在表格元素中使用时，此值可删除一行或一列，但它不影响表格布局。被行或列占据的空间会留给其他内容使用。如果此值被用在其他元素上，会表现为hidden）；inherit规定从父元素中继承*/
+			visibility: collapse;
+			background: #bbb;
+		}
+		#expand-btn {
+			display: inline-block;
+			margin-top: 12px;
+			padding: 5px 11px;
+			background-color: #ff7;
+			border: 1px solid;
+			border-radius: 3px;
+		}
+		/*#expand-toggle后面的所有兄弟元素里面的.expandable子元素*/
+		#expand-toggle:checked~* .expandable {
+			visibility: visible;
+		}
+		#expand-toggle:checked ~#expand-btn {
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<a href="https://www.baidu.com">百度首页</a><br>
+
+	<div>
+		<input type="radio" id="yes" name="my-input">
+		<label for="yes">yes</label>
+
+		<input type="radio" id="no" name="my-input">
+		<label for="no">no</label>
+	</div>
+
+	<div>
+		<input type="checkbox" id="opt-in" name="my-checkbox">
+		<label for="opt-in">Click Me!</label>
+	</div>
+
+	<select name="my-select" id="fruit">
+		<option value="opt1">Apple</option>
+		<option value="opt2">Grapes</option>
+		<option value="opt3">Pears</option>
+	</select>
+
+<br>
+<br>
+<br>
+
+	<input type="checkbox" id="expand-toggle">
+
+	<table>
+		<thead>
+			<tr>
+				<th>Column #1</th>
+				<th>Column #2</th>
+				<th>Column #3</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="expandable">
+				<td>[more text]</td>
+				<td>[more text]</td>
+				<td>[more text]</td>
+			</tr>
+			<tr>
+				<td>[cell text]</td>
+				<td>[cell text]</td>
+				<td>[cell text]</td>
+			</tr>
+			<tr class="expandable">
+				<td>[more text]</td>
+				<td>[more text]</td>
+				<td>[more text]</td>
+			</tr>
+		</tbody>
+
+		<label for="expand-toggle" id="expand-btn">Toggle hidden rows</label>
+
+	</table>
+</body>
+</html>

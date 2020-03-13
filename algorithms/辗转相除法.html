@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>求最大公因数</title>
+</head>
+<body>
+	辗转相除法，又名欧几里得算法。
+	求3139和2117的最大公因数
+	1.用大的数除以小的数所得余数
+	2.用小的数除以余数求得余数2
+	3.用余数除以余数2求得余数3
+	4.。。。
+	5.直到余数为0，那么最后一个小余数就是最大公因数！
+	实例：
+	3139 % 2117 = 1022
+		   2117 % 1022 = 73
+		          1022 % 73 = 0
+		          余数为   73
+
+		          3139 / 73 = 43
+		          2117 / 73 = 29
+	代码实现：
+	<script>
+		const a1 = 3139,a2 = 2117;
+		function gcd (a1, a2) {
+			let num = a1 > a2 ? a1 % a2 : a2 % a1;
+			let min = a1 > a2 ? a2 : a1;
+			res = 0;//这里有一个全局变量，是一个不足之处
+			if(num) {
+				gcd(min, num);
+			} else {
+				res = min;
+			}
+			return res;
+		}
+
+		function gcd2 (a1, a2) {
+			//保证第一个参数大于第二个参数
+			if(a1 < a2) {
+				return gcd2(a2, a1);
+			}
+			if(a1 % a2 === 0) {
+				return a2;
+			} else {
+				return gcd2(a2, a1 % a2);
+			}
+		}
+		console.log(gcd(a1, a2))
+		console.log(gcd2(a1, a2))
+	</script>
+</body>
+</html>

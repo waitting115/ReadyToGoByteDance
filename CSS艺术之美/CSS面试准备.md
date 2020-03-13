@@ -301,13 +301,195 @@ span, div {
 #### 8.伪选择器
 
 - 伪类选择器
+
   - ：active
+
     - 匹配被用户激活的元素（如被用户正在点击的a链接）
+
   - ：checked
+
     - 匹配处于选中状态的元素（如被用户选中的radio单选按钮）
+
   - ：default
+
     - 表示一组相关元素中的默认表单元素
-  - 
+
+  - ：defined
+
+    -  https://developer.mozilla.org/zh-CN/docs/Web/CSS/:defined 
+
+    - 它会抓取任何已定义的元素，可以给它作用到某个元素上面，控制该元素未定义和已定义时的两种状态，如下例的自定义组件。
+
+    - 在自定义元素或组件时会用到，防止你的组件没有加载到当前页面时出现未知的难看元素
+
+    - ~~~css
+      simple-custom:not(:defined) {
+          display: none;
+      }
+      simple-custom:defined {
+          display: block;
+      }
+      ~~~
+
+    - 在simple-custom组件加载完成之前都是不可见的，直到它加载完成才可见
+
+  - ：disable
+
+    - 表示任何被禁用的元素，比如购物付款界面，如果不勾选协议无法付款，此时的付款按钮就是禁用的状态。
+    - 它与   ：enabled 相反
+
+  - ：empty
+
+    - 代表没有子元素的元素，这里的子元素只可以是元素节点或文本（包括空格！）
+
+    - ~~~html
+      <!DOCTYPE html>
+      <html>
+      <head>
+      	<title></title>
+      	<style>
+      		.box {
+      			width: 80px;
+      			height: 80px;
+      			background: pink;
+      		}
+      		.box:empty {
+      			background: lime;
+      		}
+      	</style>
+      </head>
+      <body>
+      	<div class="box"><!-- I will be lime --></div>
+      	<div class="box">I will be pink</div>
+      	<div class="box">
+      		<!-- I will be red because of the whitespace around this comment -->
+      	</div>
+      	<script type="text/javascript">
+      		
+      	</script>
+      </body>
+      </html>
+      ~~~
+
+  - ：enable
+
+    - 表示任何被启用的元素。
+
+    - 如果一个元素能够被激活（如选择、点击或文本输入），或者能够获取焦点，则该元素是启用的。
+
+    - 它与 ：disable相反
+
+    - ~~~css
+      /*选择任何被启用的div*/
+      input:enabled {
+          color: pink;
+      }
+      ~~~
+
+  - ：first-child
+
+    - 表示一组兄弟元素中的第一个元素
+
+    - ~~~html
+      <!DOCTYPE html>
+      <html>
+      <head>
+      	<title></title>
+      	<style>
+      		p:first-child {
+      			color: lime;
+      			background-color: black;
+      			padding: 5px;
+      		}
+      	</style>
+      </head>
+      <body>
+      	<div>
+      		<p>This text is selected!</p>
+      		<p>This text is not selected!</p>
+      	</div>
+      	<div>
+      		<h2>This text is not selected, because it's nt 'p'</h2>
+      		<p>This text is not selected</p>
+      	</div>
+      </body>
+      </html>
+      ~~~
+
+  - ：first-of-type
+
+    - 表示一组兄弟元素中其类型的第一个元素。
+
+    - ~~~html
+      <!DOCTYPE html>
+      <html>
+      <head>
+      	<title></title>
+      	<style>
+      		article :first-of-type {
+      			color: red;
+      		}
+      	</style>
+      </head>
+      <body>
+      	<article>
+      		<div>This `div` is first div!</div>
+      		<div>This<span>nested `span` is first</span>!</div>
+      		<div>This<em>nested `em` is first</em>, but this <em>nested `em` is last</em>!</div>
+      		<div>This<span>nested `span` gets styled</span>!</div>
+      		<b>This `b` qualifies!</b>
+              <span>This `span` is first!</span>
+      		<div>This is the final `div`</div>
+      	</article>
+      </body>
+      </html>
+      ~~~
+
+    - 这很有趣
+
+  - ：focus
+
+    - 表示获得焦点的元素（如表单输入）。当用户点击或触摸元素或通过键盘的tab键选择时它会触发
+
+  - ：focus-within
+
+    - 表示一个元素获得焦点，或其后代获得焦点。换句话说，元素自身或者某个后代匹配：focus伪类。
+
+    - ~~~html
+      <!DOCTYPE html>
+      <html>
+      <head>
+      	<title></title>
+      	<style>
+      		form {
+      			border: 1px solid #000;
+      			color: gray;
+      			padding: 4px;
+      		}
+      		form:focus-within {
+      			background: #ff8;
+      			color: #000;
+      		}
+      		input {
+      			margin: 4px;
+      		}
+      	</style>
+      </head>
+      <body>
+      	<p>试试在这个表单中输入点什么！</p>
+      	<form action="">
+      		<label for="given_name">Given Name:</label>
+      		<input type="text" id="given_name">
+      		<br>
+      		<label for="falimy_name">Family Name;</label>
+      		<input type="text" id="family_name">
+      	</form>
+      </body>
+      </html>
+      ~~~
+
+    - 
+
 - 伪元素选择器
 
 

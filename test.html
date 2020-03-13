@@ -3,28 +3,17 @@
 <head>
 	<title></title>
 	<style>
-		form {
-			border: 1px solid #000;
-			color: gray;
-			padding: 4px;
-		}
-		form:focus-within {
-			background: #ff8;
-			color: #000;
-		}
-		input {
-			margin: 4px;
+		div {
+			width: 0;
+			height: 0;
+			border-top: 100px solid transparent;
+			border-left: 100px solid transparent;
+			border-right: 100px solid transparent;
+			border-bottom: 100px solid #f40;
 		}
 	</style>
 </head>
 <body>
-	<p>试试在这个表单中输入点什么！</p>
-	<form action="">
-		<label for="given_name">Given Name:</label>
-		<input type="text" id="given_name">
-		<br>
-		<label for="falimy_name">Family Name;</label>
-		<input type="text" id="family_name">
-	</form>
+	<div class="div1"></div>
 </body>
 </html>

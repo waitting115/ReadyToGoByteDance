@@ -494,6 +494,177 @@ span, div {
 
 
 
+## 6.居中问题
+
+如何居中div？
+
+~~~css
+border: 1px solid;
+width: 100px;
+height: 100px;
+margin: 0 auto;/*左右外边距auto是重点*/
+~~~
+
+如何居中一个浮动元素？（上下左右居中）
+
+~~~css
+border: 1px solid;
+width: 200px;
+height: 100px;
+float: left;
+position: absolute;/*绝对定位*/
+top: 50%;
+left: 50%;
+margin-top: -50px ;
+margin-left: -100px;
+~~~
+
+如何居中一个div里面的元素？（上下左右居中）
+
+~~~css
+.div1 {
+    width: 300px;
+    height: 300px;
+    border: 1px solid;
+}
+.div2 {
+    border: 1px solid;
+    width: 200px;
+    height: 100px;
+    position: relative;/*相对定位*/
+    top: 50%;
+    left: 50%;
+    margin-top: -50px ;
+    margin-left: -100px;
+}
+
+<div class="div1">
+	<div class="div2"></div>
+</div>
+~~~
+
+绝对定位的左右居中？
+
+~~~css
+width: 200px;
+height: 100px;
+border: 1px solid;
+position: absolute;
+left: 0;
+right: 0;
+margin: 0 auto;
+~~~
+
+还有更优雅的居中方式，就是flexbox，以后会写相关的笔记。
+
+## 7.display值及作用
+
+display有两个作用：
+
+- 一是定义元素类型（块级元素或行内元素），规定元素的流式布局；
+- 二是控制其子元素的布局（grid或flex）
+
+
+
+
+
+- inline——内联
+- none——隐藏（从DOM树中将其移除）
+- block——块显示
+- table——表格显示
+- list-item——项目列表
+- inline-block——行内块元素
+
+## 8.position值
+
+- static——默认值，按照正常文档流进行排列
+- relative——相对定位，不脱离文档流，参考自身静态位置通过top，bottom，left，right定位
+- absolute——绝对定位，参考最近的一个不为static的父级元素通过top，bottom，left，right定位
+- fixed——固定定位，所固定的参考对象是可视窗口
+
+## 9.CSS3新特性
+
+1. RGBA和透明度
+2. - background-image 
+   - background-origin(content-box/padding-box/border-box)
+     - 该属性规定background-position属性相对于什么来定位
+     - padding-box：（默认值）背景图像相对于内边距框来定位
+     - border-box：背景图像相对于边框盒来定位
+     - content-box：背景图像相对于内容框来定位
+   - background-size
+   - background-repeat
+
+3. - word-wrap：允许长单词或url地址换到下一行
+     - normal：默认值，只在允许的断字点处换行
+     - break-word：在长单词或url地址内部进行换行
+
+4. 文字阴影：text-shadow：5px 5px 5px #F00;(水平阴影，垂直阴影，模糊距离，阴影颜色)
+5. font-face属性：定义自己的字体
+6. 圆角：border-radius
+7. 边框图片：border-image：url(border.png) 30 30 round;(用图片做边框)
+8. 盒子阴影：box-shadow：10px 10px 5px #888;
+9. 媒体查询：定义两套css，当浏览器尺寸变化时会采用不同的属性
+
+## 10.flex布局
+
+请介绍一下flex布局以及适用场景，这个会单独介绍。
+
+适用场景：适用于移动前端开发，在Android和ios上也完美契合。
+
+## 11.css创建三角形
+
+用纯css创建三角形的原理是什么？
+
+把元素宽高设为0，然后设置边框样式。
+
+~~~css
+width: 0;
+height: 0;
+border-top: 100px solid transparent;/*透明*/
+border-left: 100px solid transparent;
+border-right: 100px solid transparent;
+border-bottom: 100px solid #f40;
+~~~
+
+## 12.满屏品字布局设计
+
+第一种真正的品字
+
+- 三块的宽高是固定的
+- 上面那块用margin(0 auto)居中
+- 下面两块用float或inline-block使其不换行
+- 用margin调整位置使其居中
+
+第二种全屏的品字布局
+
+- 上面那块宽度100%
+- 下面两块宽度50%，然后用float或inline-block使其不换行
+
+## 13.常见的兼容性问题
+
+1. 不同浏览器默认标签默认的margin和padding不一样。*{margin:0; padding:0}
+
+2. IE6双边距bug：块属性标签float后，又有横行的margin情况下，在IE6显示margin比设置的大。 解决： display：inline；将其转化为行内属性。
+
+3. 渐进识别方式，从总体中逐渐排出局部。首先，巧妙的使用“9”这一标记，将IE浏览器从所有情况中分离出来。
+
+   1. ~~~css
+      {
+      background-color:#f1ee18;/*所有识别*/
+      .background-color:#00deff\9; /*IE6、7、8识别*/
+      +background-color:#a200ff;/*IE6、7识别*/
+      _background-color:#1e0bd1;/*IE6识别*/
+      }
+      ~~~
+
+4. 设置较小高度标签（一般小于10px），在IE6/7中高度会超出自己预设的高度。解决：给超出高度的标签设置overflow：hidden或者设置行高line-height小于你设置的高度。
+
+5. IE下可以使用常规方法获取自定义属性，也可以使用getAttribute()方法获取；FireFox只能用getAttribute()获取。解决：统一使用getAttribute()获取自定义属性。
+
+6. Chrome中文界面下会将小于12px的文本强制按照12px显示。解决：加入css属性：-webkit-text-size-adjust:none可解决。
+
+7. 超链接访问过后hover样式就不出现了，被点击访问过的链接样式不再具有hover和active了。解决：改变CSS属性的排列顺序：L-V-H-A：a:link{}; a:visited{}; a:hover{};  a:active{}.
+
 
 
 

@@ -5,21 +5,42 @@
 </head>
 <body>
 	<script>
-		var removeDuplicateLetters = function (s) {
-		  var stack = []
-		  for (var i = 0; i < s.length; i++) {
-		    var char = s[i]
-		    if (stack.indexOf(char) > -1) continue
-		    // 使用indexOf(xx, i)取代 lastIndexOf(xx)减少遍历次数会更快
-		    while (stack.length > 0 && stack[stack.length - 1] > char && s.indexOf(stack[stack.length - 1], i) > i) {
-		      stack.pop()
+		var maxSlidingWindow = function(nums, k) {
+		    let n = nums.length;
+		    class slideWindow{
+		        constructor(){
+		            this.data = [];
+		        }
+		        push(val){
+		            let data = this.data;
+		            while(data.length > 0 && data[data.length - 1] < val){
+		                data.pop();
+		            }
+		            data.push(val);
+		        }
+		        pop(val){
+		            let data = this.data;
+		            if(data.length > 0 && data[0] === val){
+		                data.shift();
+		            }
+		        }
+		        max(){
+		            return this.data[0];
+		        }
 		    }
-		    stack.push(char)
-		    console.log(stack)
-		  }
-		  return stack.join('')
-		}
-		console.log(removeDuplicateLetters('bcab'))
+		    let res = [];
+		    let windows = new slideWindow();
+		    for(let i = 0;i < n;i++){
+		        if(i < k - 1){
+		            windows.push(nums[i]);
+		        }else{
+		            windows.push(nums[i]);
+		            res.push(windows.max());
+		            windows.pop(nums[i - k + 1]);
+		        }
+		    }
+		    return res;
+		};
 	</script>
 </body>
 </html>

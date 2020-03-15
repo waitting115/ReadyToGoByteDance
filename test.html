@@ -5,23 +5,21 @@
 </head>
 <body>
 	<script>
-		var jump = function(nums) {
-		    // dp
-		    // dp[i] = min(dp[i], dp[j] + 1),0<=j<i,j为能通往i的所有位置
-		    const len = nums.length;
-		    let dp = new Array(len).fill(Infinity);
-		    dp[0] = 0;
-		    for(let i = 0; i < len; i ++) {
-		        for(let j = nums[i]; j > 0; j --) {
-		            if(i + j >= len) j = len - i - 1;
-		            console.log(dp)
-		            dp[i + j] = Math.min(dp[i + j], dp[i] + 1);
-		        }
+		var removeDuplicateLetters = function (s) {
+		  var stack = []
+		  for (var i = 0; i < s.length; i++) {
+		    var char = s[i]
+		    if (stack.indexOf(char) > -1) continue
+		    // 使用indexOf(xx, i)取代 lastIndexOf(xx)减少遍历次数会更快
+		    while (stack.length > 0 && stack[stack.length - 1] > char && s.indexOf(stack[stack.length - 1], i) > i) {
+		      stack.pop()
 		    }
-		    console.log(dp);
-		    return dp[len - 1];
-		};
-		console.log(jump([2,3,1,1,4]));
+		    stack.push(char)
+		    console.log(stack)
+		  }
+		  return stack.join('')
+		}
+		console.log(removeDuplicateLetters('bcab'))
 	</script>
 </body>
 </html>

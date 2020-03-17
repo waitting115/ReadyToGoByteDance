@@ -283,8 +283,8 @@ class Button extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this.$button = this._shadowRoot.querySelector('button');
     this.$button.addEventListener('click', () => {
-      this.dispatchEvent(
-        new CustomEvent('onClick', {
+      this.dispatchEvent(//自定义事件
+        new CustomEvent('onClick', {//该接口表示由应用程序出于任何目的初始化的事件
           detail: 'Hello from within the Custom Element',
         })
       );
@@ -321,7 +321,7 @@ class Button extends HTMLElement {
     this.$button = this._shadowRoot.querySelector('button');
     ...
   }
-  connectedCallback() {
+  connectedCallback() {//组件首次被调用时调用
     if (this.hasAttribute('as-atom')) {
       this.$container.style.padding = '0px';
     }
@@ -454,7 +454,11 @@ class Dropdown extends HTMLElement {
 window.customElements.define('my-dropdown', Dropdown);
 ```
 
-这里有几件事要注意：首先，在我们的样式中，我们可以使用选择器为我们的自定义元素设置*全局样式*`:host`。其次，模板使用我们的自定义按钮元素，但尚未为其提供label属性。第三，每个属性/属性都有getter和setter，但是，`options`属性/属性反射的getter和setter 会将对象从JSON解析到JSON。
+这里有几件事要注意：
+
+- 首先，在我们的样式中，我们可以使用选择器为我们的自定义元素设置*全局样式*`:host`。
+- 其次，模板使用我们的自定义按钮元素，但尚未为其提供label属性。
+- 第三，每个属性/属性都有getter和setter，但是，`options`属性/属性反射的getter和setter 会将对象从JSON解析到JSON。
 
 *注意：除上述所有内容外，您还可能注意到所有关于属性/属性反射的getter和setter方法的样板。同样，属性的生命周期回调看起来是重复的，并且构造函数与自定义按钮元素中的构造函数相同。稍后您可能会了解到，在Web组件之上可以使用各种轻量级库（例如，带有LitHTML的LitElement）来为我们消除这种重复性。*
 
@@ -501,7 +505,7 @@ class Dropdown extends HTMLElement {
     this.$label.innerHTML = this.label;
     this.$button.setAttribute('label', 'Select Option');
     this.$dropdownList.innerHTML = '';
-    Object.keys(this.options || {}).forEach(key => {
+    Object.keys(this.options || {}).forEach(key => {//Object.keys(obj)返回由obj自身可枚举属性组成的数组。
       let option = this.options[key];
       let $option = document.createElement('li');
       $option.innerHTML = option.label;

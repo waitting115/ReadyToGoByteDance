@@ -400,6 +400,10 @@ Shell排序虽然快，但毕竟是插入排序，其数量级并没有快排快
 
 ![img](https://upload-images.jianshu.io/upload_images/7789414-4b8f4cb3cb5f0a9f.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
 
+另一种流程图：
+
+![图片 1.png](https://pic.leetcode-cn.com/f6ce6814cfdd54942615711d1c3a2e90592dd53deff0a48bd5db537cc578261e-%E5%9B%BE%E7%89%87%201.png)
+
 代码展示：
 
 ~~~js
@@ -426,7 +430,7 @@ Shell排序虽然快，但毕竟是插入排序，其数量级并没有快排快
 				result[index] = leftArr[i ++];
 			} else if (leftArr[i] > rightArr[j]) {
 				result[index] = rightArr[j ++];
-			} else(rightArr[j] > leftArr[i]) {
+			} else if (rightArr[j] > leftArr[i]) {
 				result[index] = leftArr[i ++];
 			}
 		}

@@ -46,7 +46,45 @@ web components技术用来用原生js写组件。
 使用：
 
 ~~~html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>slot</title>
+</head>
+<body>
+	<better-button>
+		<!-- 具名插槽 -->
+		<img src="img/a.jpg" slot='icon' alt="">
+		<span>Setting</span>
+	</better-button>
 
+	<template id="myTemplate">
+		<style>
+			
+		</style>
+		<!-- 具名插槽	 -->
+		<slot name='icon'></slot>
+		<span id="wrapper">
+			<!-- 默认插槽 -->
+			<slot>Button</slot>
+		</span>
+	</template>
+
+	<script>
+		class BetterButton extends HTMLElement {
+			constructor () {
+				super ();
+				let shadowRoot = this.attachShadow( { mode: 'closed' } );
+				let template = document.querySelector('#myTemplate')
+
+				shadowRoot.appendChild(template.content.cloneNode(true));
+			}
+		}
+		window.customElements.define('better-button', BetterButton);
+	</script>
+</body>
+</html>
 ~~~
 
 

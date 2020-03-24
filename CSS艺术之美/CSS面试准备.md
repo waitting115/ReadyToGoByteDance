@@ -504,7 +504,55 @@ span, div {
     
       - 代表一个<input>元素，其当前值处于属性min和max的限定范围之内。
       - 该伪类可以给用户一个可视化提示，表示输入域的当前值是否处于允许范围内。
-      - 
+      
+    - ：invalid
+    
+      - 表示任意内容未通过验证的\<input>或其他的\<form>元素。
+      - 这个伪类对于突出显示用户的字段错误非常有用
+    
+    - ：lang()
+    
+      - 基于元素语言来匹配页面元素
+    
+    - ：last-child
+    
+      - 代表父元素的最后一个子元素
+    
+    - ：last-of-type
+    
+      - 表示在（它父元素）的子元素列表中，最后一个给定类型的元素。
+    
+      - ~~~html
+        p em:last-of-type {
+          color: lime;
+        }
+        
+        <p>
+          <em>我没有颜色 :(</em><br>
+          <strong>我没有颜色 :(</strong><br>
+          <em>我有颜色 :D</em><br>
+          <strong>我也没有颜色 :(</strong><br>
+        </p>
+        
+        <p>
+          <em>我没有颜色 :(</em><br>
+          <span><em>我有颜色!</em></span><br>
+          <strong>我没有颜色 :(</strong><br>
+          <em>我有颜色 :D</em><br>
+          <span>
+            <em>我在子元素里，但没有颜色!</em><br>
+            <span style="text-decoration:line-through;"> 我没有颜色 </span><br>
+            <em>我却有颜色！</em><br>
+          </span><br>
+          <strong>我也没有颜色 :(</strong>
+        </p>
+        ~~~
+    
+    - ：link
+    
+      -  `:link`伪类选择器是用来选中元素当中的链接。它将会选中所有尚未访问的链接，包括那些已经给定了其他伪类选择器的链接（例如[`:hover`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:hover)选择器，[`:active`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:active)选择器，[`:visited`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:visited)选择器）。为了可以正确地渲染链接元素的样式，:link伪类选择器应当放在其他伪类选择器的前面，并且遵循LVHA的先后顺序，即：`:link` — `:visited` — `:hover` — `:active`。`:focus`伪类选择器常伴随在`:hover`伪类选择器左右，需要根据你想要实现的效果确定它们的顺序。 
+    
+    - 
 
 - 伪元素选择器
 
@@ -625,6 +673,9 @@ display有两个作用：
 
 请介绍一下flex布局以及适用场景，这个会单独介绍。
 
+该布局模型的目的是提供一种更加高效的方式来对容器中的条目进行布局、对齐和分配空间。在传统的布局方式中，block 布局是把块在垂直方向从上到下依次排列的；而 inline 布局则是在水平方向来排列。弹性盒布局并没有这样内在的方向限制，可以由开发人员自由操作。
+试用场景：弹性布局适合于移动前端开发，在Android和ios上也完美支持。
+
 适用场景：适用于移动前端开发，在Android和ios上也完美契合。
 
 ## 11.css创建三角形
@@ -680,6 +731,179 @@ border-bottom: 100px solid #f40;
 6. Chrome中文界面下会将小于12px的文本强制按照12px显示。解决：加入css属性：-webkit-text-size-adjust:none可解决。
 
 7. 超链接访问过后hover样式就不出现了，被点击访问过的链接样式不再具有hover和active了。解决：改变CSS属性的排列顺序：L-V-H-A：a:link{}; a:visited{}; a:hover{};  a:active{}.
+
+## 14.为什么要初始化CSS样式
+
+因为浏览器的兼容性问题，不同浏览器对有些标签的默认值是不同的，如果没对css初始化往往会出现浏览器之间页面的显示差异。
+
+## 15.position  &  Containing Block
+
+ https://www.cnblogs.com/starof/p/4617776.html 
+
+## 16visibility：collapse？
+
+当一个元素的visibility属性被设置为collapse后，对于一般的元素，它的表现和hidden是一样的。
+
+1. Chrome中，使用collapse与overflow：hidden没有区别；
+2. firfox、IE与Opera中，使用collapse与display：none没有区别。
+
+## 17.display：none与overflow：hidden的区别？
+
+display：none不显示对应元素，在文档布局中不再分配空间（回流+重绘）
+
+overflow：hidden隐藏对应元素，在文档不居中仍保留原来的空间（重绘）
+
+## 18.position和display、overflow、float这些特性相互叠加后会怎样？
+
+display属性规定了元素应该生成的框架类型；
+
+position属性规定了元素的定位类型；
+
+float属性是一种布局方式，定义元素在哪个方向浮动；
+
+overflow属性规定元素是否隐藏起来。
+
+类似于优先级机制：position：fixed/absolute优先级最高，有它们在时，float不起作用，display值需要调整。
+
+float或absolute定位的元素，只能是块级元素或表格。
+
+## 19.对BFC的理解？
+
+BFC规定了内部的Block Box如何布局。
+
+定位方案：
+
+1. 内部的BOX会垂直挨个放置。
+2. BOX垂直方向的距离由margin决定，属于同一个BFC的两个相邻的BOX的margin会发生重叠（外边距垂直塌陷）
+3. 每个元素的margin box的左边，与包含块border box的左边相接触。
+4. BFC的区域不会与float box重叠
+5. BFC是一个页面上的隔离的独立容器，容器里面的元素不会影响到外面的元素。
+6. 计算BFC高度时，浮动元素也会以参与计算
+
+满足下列条件之一就可触发BFC
+
+1. 根元素，即html
+2. float的值不为none（默认）
+3. overflow的值不为visible（默认）
+4. display的值为inline-block、table-cell、table-caption
+5. position的值为absolute或fixed
+
+## 20.浮动？
+
+为什么会出现浮动？什么时候需要清除浮动？清除浮动的方法？
+
+ 浮动元素碰到包含它的边框或者浮动元素的边框停留。由于浮动元素不在文档流中，所以文档流的块框表现得就像浮动框不存在一样。浮动元素会漂浮在文档流的块框上。 
+
+浮动带来的问题：
+
+1. 父元素的高度无法被撑开，影响与父元素同级的元素。
+2. 与浮动元素同级的非浮动元素会跟随其后
+3. 若非第一个元素浮动，那么该元素之前的元素也需要浮动，否则会影响页面的显示结构。
+
+清除浮动的方式：
+
+1. 父级的div定义height
+2. 最后一个浮动元素后面添加一个空的div，并添加样式clear:both。
+3. 包含浮动元素的父标签添加样式overflow为hidden或auto。
+4. 父级元素定义zoom
+
+## 21.上下margin重合问题
+
+在重合元素外包裹一层容器，并触发该容器生成一个BFC
+
+~~~html
+<div class="aside"></div>
+<div class="text">
+    <div class="main"></div>
+</div>
+<!--下面是css代码-->
+ .aside {
+            margin-bottom: 100px;  
+            width: 100px;
+            height: 150px;
+            background: #f66;
+        }
+        .main {
+            margin-top: 100px;
+            height: 200px;
+            background: #fcc;
+        }
+         .text{
+            /*盒子main的外面包一个div，通过改变此div的属性使两个盒子分属于两个不同的BFC，以此来阻止margin重叠*/
+            overflow: hidden;  //此时已经触发了BFC属性。
+        }
+~~~
+
+## 22.设置浮动后display为多少？
+
+自动变成display：block
+
+## 23. 移动端的布局用过媒体查询吗？
+
+通过媒体查询可以为不同大小和尺寸的媒体定义不同的css，适应相应的设备的显示。
+
+<head>里边<link rel=”stylesheet” type=”text/css” href=”xxx.css” media=”only screen and (max-device-width:480px)”>
+CSS : @media only screen and (max-device-width:480px) {/css样式/}
+
+## 24.css预处理器
+
+less sass
+
+## 25.CSS优化方法有哪些？
+
+1. 避免过度约束
+2. 避免后代选择符
+3. 避免链式选择符
+4. 使用紧凑的语法
+5. 避免不必要的命名空间
+6. 避免不必要的重复
+7. 名字语义化，一个好的类名应该描述它是什么而不是像什么
+8. 避免！import，可以选择其他的选择器
+9. 尽量精简规则，合并不同类里的重复规则
+
+## 26.浏览器是如何解析CSS选择器的？
+
+​	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*
+
+
+
+
+
+
 
 
 

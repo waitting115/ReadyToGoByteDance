@@ -6,11 +6,36 @@
 </head>
 <body>
 	<script>
-		var strToInt = function(str) {
-		    let regexp = /\s*[+-]?\d+/;
-		    return str.match(regexp)[0].trim();
-		};
-		console.log(strToInt("4193 with words"))
+		var isStraight = function(nums) {
+    // 首先判断元素是否有非零重复
+    // 然后判断最大值与最小值之差是否小于等于4
+    nums.sort((a,b) => a - b);
+    // let i;
+    for(let i = 1; i < 5; i ++) {
+        if(nums[i] === nums[i - 1] && nums[i] !== 0) {
+            // break;
+            return 'false';
+        }
+    };
+    // console.log(i)
+    // if(i < 5) {
+    //     return 'false';
+    // }
+    let max = nums[nums.length - 1];
+    let min;
+    for(let j of nums) {
+        if(j !== 0) {
+            min = j;
+            break;
+        }
+    }
+    if(max - min <= 4) {
+        return 'true';
+    } else {
+        return 'false';
+    }
+};
+console.log(isStraight([0,0,2,2,5]))
 	</script>
 </body>
 </html>

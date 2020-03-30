@@ -19,7 +19,7 @@ public class Link {
 	//找到对应节点
 	public Node findNode(Node node) {
 		Node nodeResult = first;
-		int time = 0
+		int time = 0;
 		while(nodeResult != node && time < size) {
 			nodeResult = nodeResult.next;
 			time ++;

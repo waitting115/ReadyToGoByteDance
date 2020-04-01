@@ -647,52 +647,46 @@ Shell排序虽然快，但毕竟是插入排序，其数量级并没有快排快
 
 ![img](https://pic1.zhimg.com/50/v2-c411339b79f92499dcb7b5f304c826f4_hd.webp)
 
-一篇好文章：
-
 代码实现：
 
 ~~~js
+let arr = [ 8, 4, 36, 20, 88, 12, 7, 1, 2, 8, 22, 18];
 //快速排序
-	function fastSort(arr, low ,high) {
-		if(arr.length == 0) return arr;
-		//思路：看上面的链接
-		//处理一下只有一个参数的情况，也就是最底下调用的时候
-		if(low == undefined && high == undefined) {
-			low = 0;
-			high = arr.length - 1;
-		}
-		if(low < high) {
-			//寻找基准数据的索引位置，返回回来
-			let index = getIndex(arr, low ,high);
+function fastSort(arr, low = 0 ,high = arr.length - 1) {
+    if(arr.length == 0) return;
+    //思路：看上面的链接
+    //处理一下只有一个参数的情况
+    if(low < high) {
+        //寻找基准数据的索引位置，返回回来
+        let index = getIndex(arr, low ,high);
 
-			fastSort(arr, 0, index - 1);//此时调用是3个参数
-			fastSort(arr, index + 1, high);
-		}
+        fastSort(arr, low, index - 1);
+        fastSort(arr, index + 1, high);
+    }
 
-		return arr;
-	}
-	function getIndex(arr, low, high) {//寻找基准数据的索引位置
-		let tmp = arr[low];//把基准的值保存下来
-		while(low < high) {
-			//先从后向前筛选high数据；当队尾的元素大于等于基准数据时，向前挪动hight指针
-			while(low < high && arr[high] >= tmp) {
-				high --;
-			}
-			//循环出来时的high位置的数字就是小于基准的数字，需要直接与low位置数据交换（此时low位置的数据已保存了）
-			arr[low] = arr[high];
-			//然后开始从前向后筛选low的数据
-			while(low < high && arr[low] <= tmp) {
-				low ++;
-			}
-			//循环出来时的low位置的数字就是大于基准的数字，需要直接与high位置数据交换
-			arr[high] = arr[low]
-		}
-		//循环结束后的low和high相等，此时的low或high的位置就应该是基准的位置
-		arr[low] = tmp;//将基准放在它该在的地方
-		return low;//最后别忘了把基准的位置返回出去
-	}
-
-	console.log('快速排序算法升序序列结果：',fastSort(arr));
+    return arr;
+}
+function getIndex(arr, low, high) {//寻找基准数据的索引位置
+    let tmp = arr[low];//把基准的值保存下来
+    while(low < high) {
+        //先从后向前筛选high数据；当队尾的元素大于等于基准数据时，向前挪动hight指针
+        while(low < high && arr[high] >= tmp) {
+            high --;
+        }
+        //循环出来时的high位置的数字就是小于基准的数字，需要直接与low位置数据交换（此时low位置的数据已保存了）
+        arr[low] = arr[high];
+        //然后开始从前向后筛选low的数据
+        while(low < high && arr[low] <= tmp) {
+            low ++;
+        }
+        //循环出来时的low位置的数字就是大于基准的数字，需要直接与high位置数据交换
+        arr[high] = arr[low]
+    }
+    //循环结束后的low和high相等，此时的low或high的位置就应该是基准的位置
+    arr[low] = tmp;//将基准放在它该在的地方
+    return low;//最后别忘了把基准的位置返回出去
+}
+console.log('快速排序算法升序序列结果：',fastSort(arr));
 ~~~
 
 **算法分析：**

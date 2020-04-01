@@ -5,21 +5,17 @@
 </head>
 <body>
 	<script type="text/javascript">
-		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+		let arr = [ 8, 4, 36, 20, 88, 12, 7, 1, 2, 8, 22, 18];
 		//快速排序
-		function fastSort(arr, low ,high) {
-			if(arr.length == 0) return arr;
+		function fastSort(arr, low = 0 ,high = arr.length - 1) {
+			if(arr.length == 0) return;
 			//思路：看上面的链接
 			//处理一下只有一个参数的情况
-			if(low == undefined && high == undefined) {
-				low = 0;
-				high = arr.length - 1;
-			}
 			if(low < high) {
 				//寻找基准数据的索引位置，返回回来
 				let index = getIndex(arr, low ,high);
 
-				fastSort(arr, 0, index - 1);
+				fastSort(arr, low, index - 1);
 				fastSort(arr, index + 1, high);
 			}
 

@@ -6,49 +6,39 @@
 </head>
 <body>
 	<script>
-var maxDistance = function (grid) {
-    if (grid.length < 2) return -1
-    let n = grid.length;
-    // 创建 dp 状态矩阵
-    let dp = new Array(n);
-    for (let i = 0; i < n; i++) {
-        dp[i] = new Array(n);
+var sortArray = function(nums, low = 0, hight = nums.length - 1) {
+    // return nums.sort((a,b) => a - b);
+    //快排
+    if(!nums.length) return;
+
+    if(low < hight) {
+        let index = getIndex(nums, low, hight);
+
+        sortArray(nums, low, index - 1);
+        sortArray(nums, index + 1, hight);
     }
 
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            dp[i][j] = (grid[i][j] ? 0 : Infinity);
-        }
-    }
-    // 从左上向右下遍历
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            if (grid[i][j]) continue
-            if (i - 1 >= 0) dp[i][j] = Math.min(dp[i][j], dp[i - 1][j] + 1);
-            if (j - 1 >= 0) dp[i][j] = Math.min(dp[i][j], dp[i][j - 1] + 1);
-        }
-    }
-    // 从右下向左上遍历
-    for (let i = n - 1; i >= 0; i--) {
-        for (let j = n - 1; j >= 0; j--) {
-            if (grid[i][j]) continue
-            if (i + 1 < n) dp[i][j] = Math.min(dp[i][j], dp[i + 1][j] + 1);
-            if (j + 1 < n) dp[i][j] = Math.min(dp[i][j], dp[i][j + 1] + 1);
-        }
-    }
-    let ans = -1;
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            if (!grid[i][j]) ans = Math.max(ans, dp[i][j]);
-        }
-    }
-    if (ans === Infinity) {
-        return -1
-    } else {
-        return ans
-    }
+    return nums;
 };
-console.log(maxDistance([[1,0,0],[0,0,0],[0,0,0]]))
+
+function getIndex(nums, low, hight) {
+   	let temp = nums[low];
+
+    while(low < hight) {
+        while(low < hight && nums[hight] >= temp) {
+        	hight --;
+        }
+        nums[low] = nums[hight];
+
+        while(low < hight && nums[low] <= temp) {
+            low ++;
+        }
+        nums[hight] = nums[low]; 
+    }
+    nums[low] = temp;
+    return low;
+}
+console.log(sortArray([5,2,3,1]))
 	</script>
 </body>
 </html>

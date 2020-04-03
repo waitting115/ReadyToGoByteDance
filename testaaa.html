@@ -3,42 +3,32 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style>
+		 div {
+		 	border: 1px solid #ccc;
+		 }
+		 .parent {
+		 	width: 300px;
+		 	height: 60px;
+		 }
+		 .son {
+		 	width: 100px;
+		 	height: 40px;
+		 }
+		 /*.parent::after, .son{
+		    display:inline-block;
+		    vertical-align:middle;指定行内元素或表格元素的垂直对齐方式
+		}
+		.parent::after{
+		    content:'';
+		    height:100%;
+		}*/
+	</style>
 </head>
 <body>
-	<script>
-var sortArray = function(nums, low = 0, hight = nums.length - 1) {
-    // return nums.sort((a,b) => a - b);
-    //快排
-    if(!nums.length) return;
-
-    if(low < hight) {
-        let index = getIndex(nums, low, hight);
-
-        sortArray(nums, low, index - 1);
-        sortArray(nums, index + 1, hight);
-    }
-
-    return nums;
-};
-
-function getIndex(nums, low, hight) {
-   	let temp = nums[low];
-
-    while(low < hight) {
-        while(low < hight && nums[hight] >= temp) {
-        	hight --;
-        }
-        nums[low] = nums[hight];
-
-        while(low < hight && nums[low] <= temp) {
-            low ++;
-        }
-        nums[hight] = nums[low]; 
-    }
-    nums[low] = temp;
-    return low;
-}
-console.log(sortArray([5,2,3,1]))
-	</script>
+	<div class="parent">
+		<div class="son"></div>
+	</div>
+</style>
 </body>
 </html>

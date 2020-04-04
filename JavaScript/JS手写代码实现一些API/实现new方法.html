@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>new</title>
+</head>
+<body>
+	<script>
+		function create() {
+			//1.创建一个空对象
+			let obj = {};
+			// 2.获取构造函数
+			let constructor = [].shift.call(arguments);
+			console.log(arguments)
+			// 3.链接到原型
+			obj.__proto__ = constructor.prototype;
+			// 4.绑定this
+			let result = constructor.apply(obj,arguments);//使用apply，将构造函数中的this指向新对象，这样新对象就可以访问构造函数中的属性和方法
+  			//5.返回新对象
+  			return typeof result === "object" ? result : obj;//如果返回值是一个对象就返回该对象，否则返回构造函数的一个实例对象
+		}
+		function Person(name, age) {
+			this.name = name;
+			this.age = age;
+		}
+		let person = create(Person,'jingwei',20);
+		console.log(person)
+	</script>
+</body>
+</html>

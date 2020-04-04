@@ -7,28 +7,62 @@
 		 div {
 		 	border: 1px solid #ccc;
 		 }
-		 .parent {
-		 	width: 300px;
-		 	height: 60px;
-		 }
-		 .son {
-		 	width: 100px;
-		 	height: 40px;
-		 }
-		 /*.parent::after, .son{
-		    display:inline-block;
-		    vertical-align:middle;指定行内元素或表格元素的垂直对齐方式
-		}
-		.parent::after{
-		    content:'';
-		    height:100%;
-		}*/
+		
 	</style>
 </head>
 <body>
-	<div class="parent">
-		<div class="son"></div>
-	</div>
+	<script>
+		/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var trap = function(height) {
+    // 首先创建一个queue类，有que=[],max
+    // 1.找到第一个非0的数，放入队列中
+    // 2.向后循环，遇到0直接放入队列，找到第二个非0的数x
+    // 3.然后从该位置向前while遍历，条件是当前数值小于x，并且小于max
+    // 4.每次遍历，res都+= x - queue[i];
+    // 5.小循环结束后，将x放入队列，同时更新max
+    let len = height.length;
+    // if(!len) return -1;
+    let res = 0;
+    let max = 0;
+    // class Queue {
+    //     constructor () {
+    //         this.que = [];
+    //         this.max = 0;
+    //     }
+    //     upDateMax (num) {
+    //         if(num > this.max) {
+    //             this.max = num;
+    //         }
+    //     }
+    //     add(num) {
+    //         this.que.push(num);
+    //         this.upDateMax(num);
+    //     }
+    // }
+    // let queue = new Queue();
+
+    for(let i = 0; i < len; i ++) {
+        if(height[i] !== 0) {
+            for(let j = i - 1; height[j] < height[i] && height[j] < max && j >= 0; j --) {
+            	console.log((max > height[i]) ? height[i] - height[j] : max - height[j])
+            	console.log(j)
+            	let temp = (max > height[i]) ? height[i] - height[j] : max - height[j];
+                res += temp;
+                height[j] += temp; 
+            }
+        }
+        max = Math.max(max, height[i]);
+        console.log('----')
+        // queue.add(height[i]);
+    }
+
+    return res;
+};
+console.log(trap([0,1,0,2,1,0,1,3,2,1,2,1]))
+	</script>
 </style>
 </body>
 </html>

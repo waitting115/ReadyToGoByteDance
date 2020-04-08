@@ -1,46 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<style>
-		 div {
-		 	border: 1px solid #ccc;
-		 }
-		
-	</style>
+    <meta charset="UTF-8">
+    <title>Document</title>
 </head>
 <body>
-	<script>
-		/**
- * @param {number[]} height
- * @return {number}
- */
-var trap = function(height) {
-    // 首先创建一个queue类，有que=[],max
-    // 1.找到第一个非0的数，放入队列中
-    // 2.向后循环，遇到0直接放入队列，找到第二个非0的数x
-    // 3.然后从该位置向前while遍历，条件是当前数值小于x，并且小于max
-    // 4.每次遍历，res都+= x - queue[i];
-    // 5.小循环结束后，将x放入队列，同时更新max
-    let len = height.length;
-    let res = 0;
-    let max = 0;
-
-    for(let i = 0; i < len; i ++) {
-        if(height[i] !== 0) {
-            for(let j = i - 1; height[j] < height[i] && height[j] < max && j >= 0; j --) {
-            	let temp = (max > height[i]) ? height[i] - height[j] : max - height[j];
-                res += temp;
-                height[j] += temp; 
-            }
-        }
-        max = Math.max(max, height[i]);
-    }
-    return res;
-};
-console.log(trap([0,1,0,2,1,0,1,3,2,1,2,1]))
-	</script>
-</style>
+    <div id="div1"></div>
+    
 </body>
 </html>

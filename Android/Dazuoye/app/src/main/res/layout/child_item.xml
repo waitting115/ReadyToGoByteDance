@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/freljord"
+    android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="代表英雄：弗雷尔卓德之心，丽桑卓。。。" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="背景故事" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineHeight="25dp"
+            android:textSize="14dp"
+            android:text="背景故事.。。。。" />
+
+</LinearLayout>

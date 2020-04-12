@@ -8,7 +8,7 @@
 <body>
 	<div id="app">
 		<todo-item
-			v-for="item in list"
+			v-for="item in data2"
 			v-bind:todo="item"
 			v-bind:key="item.id"
 		></todo-item>
@@ -19,6 +19,9 @@
 			props: ['todo'],
 			template: '<li>{{ todo.text }}</li>'
 		})
+		let data2 = [
+			{ id: 4, text: '火锅'}
+		]
 
 		let app = new Vue({
 			el: '#app',
@@ -27,7 +30,8 @@
 					{ id: 1, text: '蔬菜' },
 					{ id: 2, text: '水果' },
 					{ id: 3, text: '烤肉' }
-				]
+				],
+				data2
 			}
 		})
 	</script>

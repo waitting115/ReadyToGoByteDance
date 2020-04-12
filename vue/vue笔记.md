@@ -1,5 +1,7 @@
 所有的vue组件都是vue实例。
 
+## vue响应系统
+
 当一个 Vue 实例被创建时，它将 `data` 对象中的所有的属性加入到 Vue 的**响应式系统**中。当这些属性的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
 
 ```js
@@ -62,9 +64,43 @@ new Vue({
 </div>
 ```
 
+vue阻止冒泡
 
+.stop
 
+## 计算属性缓存 vs 方法
 
+计算属性（computed）会缓存，适用于需要大量计算且重复使用的数据；
+
+方法（methods）没有缓存，比较轻量级。
+
+## 计算属性的setter
+
+计算属性默认只有setter，但必要的时候也可以为它加上getter：
+
+~~~js
+computed: {
+	fullName: {
+		//getter
+		get: function () {
+			return this.firstName + " " + this.lastName
+		},
+		//setter
+         set: function (newValue) {
+			this.firstName = newValue;
+         }
+	}
+}
+
+//运行下面代码时setter会被调用，相关数据也会对应更新
+vm.fullName = 'jignwei';
+~~~
+
+## v-for与v-if 的优先级
+
+当它们处于同一个节点时，**v-for的优先级比v-if更高**，这意味着v-if将重复运行于每个v-for中。
+
+但不推荐二者同时作用于同一个元素。
 
 
 

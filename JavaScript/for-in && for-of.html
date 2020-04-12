@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//for-in遍历key  ES5
+		//for-of遍历值   ES6
+		let arr = ['a','b','c','d'];
+		let obj = {
+			name: 'jingwei',
+			age: 18
+		}
+
+		console.log('for-in  arr');
+		for(let i in arr) {
+			console.log(i);
+		}
+
+		console.log('for-of  arr');
+		for(let i of arr) {
+			console.log(i);
+		}
+
+		console.log('for-in  obj');
+		for(let i in obj) {
+			console.log(i);
+		}
+
+		console.log('for-of  obj 会报错');
+		// for(let i of obj) {
+		// 	console.log(i);
+		// }
+		console.log('用for-in实现所需效果')
+		for(let i in obj) {
+			console.log(obj[i])
+		}
+
+		console.log('一个有趣的例子：')
+		Object.prototype.objCustom = function () {};
+		Array.prototype.arrCustom = function () {};
+		let array = [1,2,3,4,5];
+
+		console.log('for-in array');
+		for(let i in array) {
+			console.log(i);
+		}
+
+		console.log('for-of array');
+		for(let i of array) {
+			console.log(i);
+		}
+	</script>
+</body>
+</html>

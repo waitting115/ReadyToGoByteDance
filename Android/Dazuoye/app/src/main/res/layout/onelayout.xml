@@ -26,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="25dp"
-        android:text="背景故事" />
+        android:text="背景故事"
+        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/content"

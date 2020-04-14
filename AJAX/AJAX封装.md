@@ -11,6 +11,7 @@ function ajax (method, url, data, success) {
         xhr.send();
     } else if (method === 'POST' || method === 'post') {
         xhr.open('post', url, true);
+        xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
         if(data) {
             xhr.send(data);
         } else {

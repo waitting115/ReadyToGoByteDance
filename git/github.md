@@ -2,7 +2,7 @@
 
 ### 分布式版本控制软件
 
-### 自己代码--( git add ) -->暂存区--(git commit)-->版本库（分支）--(git push)-->git hub--(git pull)-->版本库（分支）
+自己代码--( git add ) -->暂存区--(git commit)-->版本库（分支）--(git push)-->git hub--(git pull)-->版本库（分支）
 
 **下载网站**：<https://git-scm.com/downloads>
 

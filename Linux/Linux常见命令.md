@@ -102,7 +102,25 @@ Linux中7位最高权限
 
 tab
 
+#### 查看某端口被什么进程占用
 
+lsof -i:端口号
+
+#### 查看进程
+
+比如说我想查看我的python运行了哪些进程程序
+
+在命令行敲入此命令：ps -ef |grep python
+
+![img](https://img-blog.csdn.net/20180607092058665?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyNTAyNTEx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+这样就可以查看到了当前python正在运行的程序
+
+同理要查看其它的进程也是一样的 ps -ef |grep 进程名
+
+#### 结束进程
+
+结束进程的话直接 kill -9 进程id就可以了
 
 
 

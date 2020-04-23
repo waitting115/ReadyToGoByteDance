@@ -76,13 +76,7 @@ display: inline-flex
 
 ## flex
 
-`flex`属性是`flex-grow`, `flex-shrink` 和 `flex-basis`的简写，默认值为`0 1 auto`。后两个属性可选。
-
-> ```css
-> .item {
->   flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
-> }
-> ```
+ `flex`属性是`flex-grow`, `flex-shrink` 和 `flex-basis`的简写，默认值为`0 1 auto`。后两个属性可选。 
 
 该属性有两个快捷值：`auto` (`1 1 auto`) 和 none (`0 0 auto`)。
 

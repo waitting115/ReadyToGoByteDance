@@ -77,7 +77,7 @@ w.terminate();
 
 　　创建的计数脚本，该脚本存储于 "demo_workers.js" 文件中
 
-```html
+```js
 var i=0;
 
  function timedCount()

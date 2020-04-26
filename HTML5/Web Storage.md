@@ -1,6 +1,6 @@
 # Weh Storage
 
-使用HTML5可以在本地存储用户的浏览数据。早些时候,本地存储使用的是cookies。但是Web 存储需要更加的安全与快速. 这些数据不会被保存在服务器上，但是这些数据只用于用户请求网站数据上.它也可以存储大量的数据，而不影响网站的性能。数据以 键/值 对存在, web网页的数据只允许该网页访问使用。
+**使用HTML5可以在本地存储用户的浏览数据。**早些时候,本地存储使用的是cookies。但是Web 存储需要更加的安全与快速. 这些数据不会被保存在服务器上，但是这些数据只用于用户请求网站数据上.它也可以存储大量的数据，而不影响网站的性能。数据以 键/值 对存在, web网页的数据只允许该网页访问使用。
 
 客户端存储数据的两个对象为：
 
@@ -23,7 +23,7 @@ if(typeof(Storage)!=="undefined")
 
  
 
-　　不管是 localStorage，还是 sessionStorage，可使用的API都相同，常用的有如下几个（以localStorage为例）：
+　　不管是 localStorage，还是 sessionStorage，其使用的API都相同，常用的有如下几个（以localStorage为例）：
 
 - - 保存数据：localStorage.setItem(key,value);
   - 读取数据：localStorage.getItem(key);

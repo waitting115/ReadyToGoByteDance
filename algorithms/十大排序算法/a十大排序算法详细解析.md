@@ -430,7 +430,7 @@ Shell排序虽然快，但毕竟是插入排序，其数量级并没有快排快
 				result[index] = leftArr[i ++];
 			} else if (leftArr[i] > rightArr[j]) {
 				result[index] = rightArr[j ++];
-			} else if (rightArr[j] > leftArr[i]) {
+			} else {
 				result[index] = leftArr[i ++];
 			}
 		}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../lodash/lodash.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    无防抖：<br>
+    <input type="text" id="input1">
+    <div id="div1"></div>
+    <br>
+    简单防抖：<br>
+    <input type="text" id="input2">
+    <div id="div2"></div>
+    <br>
+    借用lodash实现防抖：<br>
+    <input type="text" id="input3">
+    <div id="div3"></div>
+    <br>
+
+    <script>
+        let input = document.getElementById('input1');
+        let div = document.getElementById('div1');
+
+        input.addEventListener('keyup', fun);
+
+        function fun () {
+            console.log(this);
+            div.innerHTML = input.value;
+        }
+    </script>
+
+    <script>
+        let input2 = document.getElementById('input2');
+        let div2 = document.getElementById('div2');
+
+        input2.addEventListener('keyup', debounce(fun2, 1000));
+        
+        function fun2 (arg) {
+            console.log(arg);
+            div2.innerHTML = input2.value;
+        }
+
+        function debounce (fn, wait = 1000) {
+            let timeout = null;
+            return function () {
+                let that = this;
+                let arg = arguments;
+                if(!timeout) clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    fn.apply(that, arg);
+                },wait);
+            }
+        }
+    </script>
+
+    <script>
+        let input3 = document.getElementById('input3');
+        let div3 = document.getElementById('div3');
+
+        input3.addEventListener('keyup', _.debounce(fun3, 500));
+
+        function fun3 () {
+            console.log(this);
+            div3.innerHTML = input3.value;
+        }
+    </script>
+</body>
+</html>

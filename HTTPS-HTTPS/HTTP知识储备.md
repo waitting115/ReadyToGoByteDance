@@ -199,7 +199,7 @@ HTTP（Hyper Text Transfer Protocol，超文本传输协议）被用于在web浏
 
 HTTPS（Hyper Text Transfer Protocol over Secure Socket Layer，安全套接字超文本传输协议），为了数据传输的安全，**HTTPS在HTTP的基础上加入了SSL/TLS，依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。**其中SSL（Secure Socket Layer，安全套接层），TLS（Transport Layer Securit，传输层安全协议），SSL 3.0和TLS 1.0差别很小，在HTTPS通信中具体使用哪一个还要看客户端和服务端的支持程度，二者在网络模型中位于哪一层？
 
-
+![img](https://img-blog.csdn.net/20180412083522227?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTIxOTQ5NTY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 **区别：**
 
@@ -281,7 +281,7 @@ HTTPS（Hyper Text Transfer Protocol over Secure Socket Layer，安全套接字�
 **域名相同**
 **端口相同**
 
-
+![img](https://img-blog.csdn.net/20180314223218492?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L3UwMTIxOTQ5NTY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 
 （2）同源策略的目的是为了保证用户信息的安全，防止恶意的网站窃取数据。不同源的客户端脚本在没有明确授权的情况下，不能读写对方的资源。

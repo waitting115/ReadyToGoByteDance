@@ -24,7 +24,7 @@ CORS标准描述了新的HTTP标头，这些标头为浏览器提供了一种仅
 
 ## CORS的流程
 
-，浏览器将请求分为两类，一类是简单请求，一类是非简单请求，满足下列条件的就是简单请求，否则即使非简单请求：
+浏览器将请求分为两类，一类是简单请求，一类是非简单请求，满足下列条件的就是简单请求，否则即使非简单请求：
 
 ```
 条件：
@@ -62,4 +62,24 @@ CORS标准描述了新的HTTP标头，这些标头为浏览器提供了一种仅
         Access-Control-Request-Headers
 ```
 
-*
+## CORS的使用
+
+服务器添加以下头文件然后重启服务器：
+
+~~~js
+response.setHeader("Access-Control-Allow-Origin","http://localhost:9105");//允许哪一个域进行访问，若有多个用逗号隔开
+response.setHeader("Access-Control-Allow-Gredentials","true");//是否开启跨域
+~~~
+
+然后在前端js的ajax请求处添加：
+
+~~~js
+{'withGredentials':true}
+~~~
+
+如jquery中这样使用：
+
+~~~
+$http.get('http://tangchaolizi.club?name=jingwei',{'withGredentials':true}).success..
+~~~
+

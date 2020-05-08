@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 20, 88, 12, 2, 8, 22, 18];
+		//归并排序
+		function mergeSort (arr) {
+			//思路：两步，第一步将数组一分为二，再将每一个一分为二。。。以此类推，最后分到每一部分只有一个数；第二部将两个部分排序，将另外两部分排序，将这两个有序的序列排序，以此类推，直到将整个数组排序
+			if(arr.length < 2) {
+				return arr;
+			}
+			let mid = parseInt(arr.length / 2);
+			let left = arr.slice(0, mid);
+			let right = arr.slice(mid, arr.length);
+			return merge(mergeSort(left), mergeSort(right));
+		}
+		function merge(leftArr, rightArr) {
+			let result = [];//一个空间复杂度就在这里
+			let leftLen = leftArr.length;
+			let rightLen = rightArr.length;
+			let len = leftLen + rightLen;//总长度
+			for(let index = 0, i = 0, j = 0; index < len; index ++) {//index为result数组的下标，i为leftArr数组的下标，j为rightArr数组的下标；用来将left、right两数组中的数字按顺序放到result中
+				if(i >= leftLen) {//如果满足这个条件说明只剩下最后一个元素没有添加到result中了，而且这个元素就是rightArr中的最后一个元素
+					result[index] = rightArr[j ++];
+				} else if (j >= rightLen) {
+					result[index] = leftArr[i ++];
+				} else if (leftArr[i] > rightArr[j]) {
+					result[index] = rightArr[j ++];
+				} else {
+					result[index] = leftArr[i ++];
+				}
+			}
+			return result;
+		}
+
+	console.log('归并排序算法升序排序结果：', mergeSort(arr));
+	</script>
+</body>
+</html>

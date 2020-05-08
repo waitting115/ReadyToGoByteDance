@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var isPalindrome = function(x) {
+			//思路：将一数字的后一半反转，然后判断反转之后的值或反转之后 / 10的数值是否与前一半相等（因为奇数位的后一半会多出一位）；而是否反转到一半的条件就是反转后的数何时大于前一半，即反转完毕
+		    if(x < 0 || (x % 10 == 0 || x != 0))
+		        return false;
+		    let reverseNum = 0;
+		    while(x > reverseNum) {
+		        reverseNum = reverseNum * 10 + x % 10;
+		        x = parseInt(x / 10);
+		    }
+		    console.log(x)
+		    console.log(reverseNum)
+		    return x == reverseNum || x == parseInt(reverseNum / 10);
+		};
+		console.log(isPalindrome(121));
+	</script>
+</body>
+</html>

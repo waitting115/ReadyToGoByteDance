@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>web components</title>
+	<script src="my-button.js"></script>
+	<script src="my-dropdown.js"></script>
+</head>
+<body>
+	<my-dropdown
+		label='Dropdown'
+		option='option2'
+	></my-dropdown>
+	<script>
+		//下面这些属性将作为JSON格式传递给自定义元素，如我们所知，将对象和数组作为属性传递会更方便
+		document.querySelector('my-dropdown').options = {
+			option1 : { label : 'Option 1' },
+			option2 : { label : 'Option 2' },
+			option3 : { label : 'Option 3' }
+		};
+		document
+			.querySelector('my-dropdown')
+			.addEventListener('onChange', event => console.log(event.detail));//组件内部的api
+
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- <my-button
+		label='Click Me'
+	></my-button>
+	<script>
+		document.querySelector('my-button').onClick = (val) => {
+			alert(val);
+		}
+		// 或者直接从外部为组件添加事件监听器
+		// document
+		// 	.querySelector('my-button')
+		// 	.addEventListener('click', () => {
+		// 		console.log('a')
+		// 	});
+
+		// 或者从外部调用组件内部的API
+		document
+			.querySelector('my-button')
+			.addEventListener('onClick', val => {//onClick为内部自定义的api
+				alert(val);
+			})
+
+	</script> -->
+</body>
+</html>

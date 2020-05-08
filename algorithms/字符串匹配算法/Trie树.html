@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//Trie树
+		let charArr = ['cod', 'code', 'cook', 'five', 'file', 'fat'];
+		let patternStr = 'cod';
+		//建Trie树
+		function insertHash(tree, patternStr) {//向Tree树中插入字符
+			// let hashHead = tree;
+			let pLen = patternStr.length;
+			let nowNode = tree;
+			for(let i = 0; i < pLen; i ++) {
+				let now = patternStr[i];//要比较的字符
+				if(nowNode[now] == undefined) {//不存在此字符
+					let  hash = {orange: false};
+					nowNode[now] = hash;//新建一个hash给patternStr
+				}
+				if(i == pLen - 1) //如果是字符的最后一位，则变为橙色
+					    nowNode[now].orange = true;
+				nowNode = nowNode[now];
+			}
+		}
+		//查找模式串是否在字符集中
+		function Trie(charArr,patternStr) {
+			//根据charArr建树
+			let TrieTree = {};//Trie树
+			let len = charArr.length;
+			for(let i = 0; i < len; i ++) {
+				insertHash(TrieTree, charArr[i]);
+			}
+			// console.log(TrieTree);//哈哈哈我真是太棒了！！
+			//根据Trie树查找模式串
+			let nowNode = TrieTree;//当前比较的
+			for(let i = 0; i < patternStr.length; i ++) {
+				let now = patternStr[i];
+				if(nowNode[now]  != undefined) //说明有这个字符
+					nowNode = nowNode[now];
+				else //没有这个字符则返回没找到，false
+					return false;
+			}
+			//循环完之后没有return，则说明Trie树中有此字符，但也有可能是其他字符的子串，所以要看字符最后一位的orange是否为true
+			if(nowNode.orange == false) 
+				return false;
+			else 
+				return true;
+		}
+		console.log(Trie(charArr, patternStr));
+		// insertHash(TrieTree,'cod');
+		// insertHash(TrieTree, 'code');
+		// console.log(TrieTree)
+
+		//最后的结果应该是：['cod', 'code', 'cook', 'five', 'file', 'fat']
+		// {
+		// 	'c':{
+		// 		'o':{
+		// 			'd':{
+		// 				'e': {
+		// 					orange: true
+		// 				},
+		// 				orange: true
+		// 			},
+		// 			'o': {
+		// 				'k': {
+		// 					orange: true
+		// 				}
+		// 				orange: false
+		// 			}
+		// 			orange: false
+		// 		},
+		// 		orange: false
+		// 	},
+		// 	'f':{
+		// 		'i': {
+		// 			'v': {
+		// 				'e': {
+		// 					orange: true
+		// 				}
+		// 				orange: false
+		// 			},
+		// 			'l': {
+		// 				'e': {
+		// 					orange: true
+		// 				}
+		// 				orange: false
+		// 			}
+		// 			orange: false
+		// 		},
+		// 		'a': {
+		// 			't': {
+		// 				orange: true
+		// 			}
+		// 			orange: false
+		// 		}
+		// 		orange: false
+		// 	}
+		// }
+	</script>
+</body>
+</html>

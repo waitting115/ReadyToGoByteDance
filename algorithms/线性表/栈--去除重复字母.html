@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		给你一个仅包含小写字母的字符串，请你去除字符串中重复的字母，使得每个字母只出现一次。需保证返回结果的字典序最小（要求不能打乱其他字符的相对位置）。
+
+		示例 1:
+
+		输入: "bcabc"
+		输出: "abc"
+
+		var removeDuplicateLetters = function(s) {
+		    // 思路：用栈，首先遍历s，判断当前元素在栈中是否存在，若存在则直接continue
+		    // 如果不存在，则判断栈顶元素与该元素的大小，若该元素小于栈顶元素
+		    // 那么进入一个for循环（栈是否为空 && 栈顶元素是否大于该元素 && 栈顶元素是否在s的i位置后面还有）{删除栈顶元素}
+		    // 该元素入栈
+		    // 最后将栈子自底向上输出。
+		    let stack = [];
+		    const len = s.length;
+		    for(let i = 0; i < len; i ++) {
+		        let char = s[i];
+		        if(stack.indexOf(char) > -1) continue;
+		        while(stack.length && stack[stack.length - 1] > char && s.indexOf(stack[stack.length - 1], i) > i) {
+		            stack.pop();
+		        }
+		        stack.push(char);
+		    }
+		    return stack.join("");
+		};
+	</script>
+</body>
+</html>

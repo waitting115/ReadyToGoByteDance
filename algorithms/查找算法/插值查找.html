@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [-5,-2,0,0,4,8,10];//必须是有序序列！！！
+		let n = -2;
+		function interpolationFind(arr, n) {
+			let time = 0;
+			let low, high, mid, len = arr.length;
+			low = 0, high = len - 1;
+			while(low <= high) {
+				console.log('比较次数：', ++ time);
+				if(low < high) {//在力扣中发现，插值查找算法不能用于数组中只有一个元素的情况，所以此情况要将mid值变为二分查找的mid值
+					mid = low + parseInt((n - arr[low]) / (arr[high] - arr[low]) * (high - low));
+				} else {
+					mid = low + parseInt((high - low) / 2);
+				}
+				console.log(mid);
+				if(arr[mid] == n) {
+					return mid;
+				} else if (arr[mid] > n) {
+					high = mid - 1;
+				} else {
+					low = mid + 1;
+				}
+			}
+			return -1;
+		}
+
+		console.log('n的位置：', interpolationFind(arr, n));
+	</script>
+</body>
+</html>

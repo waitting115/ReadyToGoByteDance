@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let array = [10, 1, 25678, 108, 155, 2718, 888, 6666, 125,67890];
+		//基数排序
+		function radixSort(arr) {
+			//思路：首先找到arr中最大数，并取得其位数N；创建辅助数组B，其内容为0~9十个数字；循环arr，从个位开始，用每个数字的位数来计数排序，个位循环完，按顺序放回arr中，然后开始十位循环，以此类推，最大数位数N决定此循环的次数；整个循环完成后，排序也就完成了。
+
+			let N = 0,//最大数的位数
+				max = 0,
+				len = arr.length;
+				//取得最大值
+			for(let i = 0; i < len; i ++) {
+				if(arr[i] > max) {
+					max = arr[i];
+				}
+			}
+			//取得最大值的位数
+			while(max > 0) {
+				N ++;
+				max = parseInt(max / 10);//这里要注意，要取整
+			}
+			
+			let num = 1;//用于取余
+			for(let i = 0; i < N; i ++) {
+				//B(要保证每次大循环的时候B是空的，所以它放里面)
+				let arrB = [];
+				for(let i = 0; i < 10; i ++) {
+					arrB[i] = [];
+				}
+				//A-->B
+				for(let j = 0 ;j < len; j ++) {
+					arrB[parseInt(arr[j] / num) % 10].push(arr[j]);
+				}
+				//B-->A(先进的后出)
+				let index = 0;
+				for(let j = 0; j < 10; j ++) {
+					if(arrB[j].length > 0) {
+						for(let k = 0; k < arrB[j].length; k ++) {
+							arr[index] = arrB[j][k];
+							index ++;
+						}
+					}
+				}
+				num *= 10;
+			}
+			return arr;
+		}
+		console.log(array);
+		console.log('基数排序算法的升序排序结果：', radixSort(array));
+	</script>
+</body>
+</html>

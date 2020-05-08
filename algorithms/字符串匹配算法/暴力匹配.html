@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = 'hello world';
+		let sunArr = 'ld';
+		function matchingStr (arr, sunArr) {
+			for(let i = 0; i < arr.length - sunArr.length + 1; i ++) {
+			//如任意个长度的查找3个长度的子串，大字符串的最后3-1个长度没必要比的
+				let j = 0;//用来判断查找的长度
+				while(j < sunArr.length) {//只要查找长度不大于子串长度就可以继续比
+					if(arr[i + j] != sunArr[j]) break;//循环的过程中只要有一个字符不符合，就退出循环
+					j ++;//下一位
+				}
+				if(j == sunArr.length) return i;//完全符合
+			}
+			reutrn -1;
+		}
+		console.log(matchingStr(arr,sunArr));
+	</script>
+</body>
+</html>

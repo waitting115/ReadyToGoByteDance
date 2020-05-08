@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		function theQueen(num) {
+			// let aRowChessBoard = new Array(num).fill(0);
+			// let chessBoard = new Array(num).fill(aRowChessBoard);//这种方法是不可取的，因为aRowChessBoaord是一个对象，你fill进去的是一个引用，最后导致大数组里面的每个小数组都是同一个数组
+			// let chessBoard = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+			// let aRowChessBoard = [];
+			let chessBoard = [];//8*8的数组一定要这样建
+			for(let i = 0; i < num; i ++) {
+				let aRowChessBoard = [];
+				for(let j = 0; j < num; j ++) {
+					aRowChessBoard[j] = 0;
+				}
+				chessBoard[i] = aRowChessBoard;
+			}
+			let total = 0;//一共多少种方法总计
+
+			findQueen(0);//找皇后
+			return total;
+
+			//找row行的皇后
+			function findQueen(row) {
+				// console.log('num',num);
+				if(row > num - 1) {//如果行数大于最后一行的位置（本例中为7），就说明找到了一种方法
+					total ++;
+					console.log(total)
+					printOne();//输出当前的一种方法
+					return;//退出函数
+				}
+				for(let col = 0; col < num; col ++) {//找row行的8个列，依次从左到右找可以放皇后的地方
+					if(check(row,col)) {//如果找到了可以放皇后的地方
+						chessBoard[row][col] = 1;//将放皇后的地方设为1
+						findQueen(row + 1);//趁热找下一行的皇后位置，递归算法
+						chessBoard[row][col] = 0;//这里很精髓，如果上面一行一直递归，永远执行不到这一行，如果有一个row使上面一行执行完了一整个函数（也就是说没有在if里面break，而且在下面的for循环循环完成也没找到check[row, col]为true的位置），那么就说明row行下面一行没有能放皇后的位置，所以说此时的[row,col]不能放皇后，这样是行不通的，所以要将上一行的上一行赋值为1改回来赋值为0，然后执行结束（不一定此次之行findQueen函数在哪次递归里面呢）
+					}
+				}
+			}
+
+			//判断一个位置是否可以放皇后
+			function check(row, col) {
+				//这里有一个优化点，正常的思路肯定是查找此位置的“米”字型方位是否有1，如果有1则返回false，如果没有则返回true，但是我们可以想到，其实“米”字的下半身此时并没有皇后，所以不可能出现1，而且每一行只能有一个皇后，所以它所在的这一行也不可能出现1，所以只要判断“米”字上半身就可以了
+				//判断“半竖”
+				for(let i = 0; i < row; i ++) {
+					if(chessBoard[i][col] == 1)
+						return false;
+				}
+				//判断“半丿半捺”，双指针法
+				let L = col - 1, R = col + 1;
+				for(let i = row - 1; i >= 0; i --) {
+					if(chessBoard[i][L] == 1 || chessBoard[i][R] == 1)
+						return false;
+					if(L >= 0) L --;
+					if(R < num) R ++;
+				}
+				//上面条件都满足
+				return true;
+			}
+			//输出当前方法
+			function printOne() {
+				console.log(chessBoard);
+			}
+		}
+		
+		console.log(theQueen(8));//八皇后
+	</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let maze = [
+        [0,0,1,0,0,0,1,0],
+        [0,0,1,0,0,0,1,0],
+        [0,0,0,0,1,1,0,0],
+        [0,1,1,1,0,0,0,0],
+        [0,0,0,1,0,0,0,0],
+        [0,1,0,0,0,1,0,0],
+        [0,1,1,1,0,1,1,0],
+        [1,0,0,0,0,0,0,0]
+		];
+		function migong (arr) {
+			//解题的思想：以[0,0]为首节点建树，判断当前节点的上下左右四个方向是否有"路"可走，也就是是否有0，如果有，那么就作为它的子节点放入树中，然后将这个子节点中的0 改为-1（或其他数字），一遍循环过后就能确定“树”的下一行，继续此循环，最先找到“终点”的，肯定从首节点到此路径是最短的，也就是我们要求的啦！
+			//如果要改成8个方向，只需要在下面加上4个判断就ok，代码可读性高喔！
+			class Node {//像单链表一样的node节点，只不过它保存的是上一位的指针和数据域
+				constructor (data) {
+					this.prev = null;
+					this.data = data;
+				}
+			}
+			let maxX = arr[0].length, maxY = arr.length;//迷宫的墙壁处，用于判断是否碰壁，也用于判断是否到终点
+			let x = 0, y = 0;//横纵坐标
+			let finallyNode;//最终的节点，用于保存结果
+			let headNode = new Node([x, y]);//头结点
+			let nowNode = headNode;//当前节点
+			let queue = [headNode];//用来存放这一行的节点，哪一行呢？就是图上最新发黑完整的那一行，用于遍历出这一行的每个节点的子节点
+			cycle:while(true) {
+				let smallQueue = [];//临时队列，用来存queue里面的所有节点的子节点，也就是说这是'树'中queue的下一行,for循环结束后，就要找它们的下一行了，所以最下面要将它赋值给queue
+				for(let i = 0; i < queue.length; i ++) {//遍历队列
+					nowNode = queue[i];
+					x = nowNode.data[0];
+					y = nowNode.data[1];
+					if(x - 1 >= 0 &&arr[x - 1][y] == 0) {//上
+						let node = new Node([x - 1, y]);//将该位置当做数据域
+						node.prev = nowNode;
+						smallQueue.push(node);//将该节点放入临时队列
+						arr[x - 1][y] = -1;
+						if(x - 1 == maxX - 1 && y == maxY - 1) {
+							finallyNode = node;
+							break cycle;
+						}
+					}
+					if(x + 1 < maxX && arr[x + 1][y] == 0) {//下
+						let node = new Node([x + 1, y]);
+						node.prev = nowNode
+						smallQueue.push(node);
+						arr[x + 1][y] = -1;
+						if(x + 1 == maxX - 1 && y == maxY - 1) {
+							finallyNode = node;
+							break cycle;
+						}
+					}
+					if(y - 1 >= 0 && arr[x][y - 1] == 0) {//左
+						let node = new Node([x, y - 1]);
+						node.prev = nowNode
+						smallQueue.push(node);
+						arr[x][y - 1] = -1;
+						if(x == maxX - 1 && y - 1 == maxY - 1) {
+							finallyNode = node;
+							break cycle;
+						}
+					}
+					if(y + 1 < maxY && arr[x][y + 1] == 0) {//右
+						let node =  new Node([x, y + 1]);
+						node.prev = nowNode;
+						smallQueue.push(node);
+						arr[x][y + 1] = -1;
+						if(x == maxX - 1 && y +1 == maxY - 1) {
+							finallyNode = node;
+							break cycle;
+						}
+					}
+				}
+				if(smallQueue.length == 0) return -1;//如果一个叶子结点也没有，那就证明走到了我们创建的树的底端，也就说明此时都没找到出口，那这个迷宫就是没有出口的
+				queue = smallQueue;
+			}
+			//循环退出后，finallyNode就是出口坐标节点，它有一个prev属性指向着上一位，最后连着入口，所以遍历这条链表就可以了，然后反向插入result[]
+			let result = [];
+			while(true) {
+				result.unshift(finallyNode.data);//向前插入元素
+				if(finallyNode.data[0] == 0 && finallyNode.data[1] == 0) break;
+				finallyNode = finallyNode.prev;
+			}
+			return result;
+		}
+		console.log(migong(maze));
+	</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.div1 {
+			width: 200px;
+			height: 200px;
+			background: #F0c;
+			/*border-style: solid;*/
+			/*实线*/
+			/*border-style: hidden;*/
+			/*隐藏边框*/
+			border-style: double;
+			/*双实线*/
+			/*border-style: dotted;*/
+			/*点线*/
+			/*border-style: dashed;*/
+			/*虚线*/
+			/*border-style: groove;*/
+			/*3D凹槽*/
+			/*border-style: ridge;*/
+			/*3D凸槽*/
+			/*border-style: inset;*/
+			/*3D凹边*/
+			/*border-style: outset;*/
+			/*3D凸边*/
+			
+			/*border-top-width: 50px;*/
+			border-width: 50px;
+			border-top-color: #ccc;
+			border-left-color: yellow;
+			border-right-color: blur;
+			border-bottom-color: green;
+			border-radius: 20px;
+
+			/*综合写法*/
+			/*border: solid 1px red;*/
+		}
+		.div2 {
+			width: 200px;
+			height: 200px;
+			background: green;
+			margin-left:auto;
+			margin-right: auto;
+		}
+		.div3 ,.div4{
+			width: 200px;
+			height: 200px;
+			background: red;
+			border-style: solid;
+			border-width: 50px;
+			border-color: yellow;
+		}
+		.div3 {
+			margin-bottom: 50px;
+		}
+		.div4 {
+			margin-top: 50px;
+		}
+		.div6 {
+			width: 200px;
+			height: 200px;
+			background: #f40;
+			border-radius: 5px;
+			/*box-shadow: h-shadow v-shadow blur spread color inset;*/
+			/*box-shadow: 水平阴影位置(必) 垂直阴影位置(必) 模糊距离 阴影尺寸 阴影颜色 将外部阴影改为内部阴影（默认outset）；*/
+			box-shadow: 20px 20px 20px 1px rgb(150,220,120);
+		}
+	</style>
+</head>
+<body>
+	<!-- <div class="div1">盒子模型（margin--border--padding--content--padding--border--margin</div> -->
+
+	<!-- <div class="div2">水平居中</div> -->
+
+	<!-- <div class="div3"></div>
+	<div class="div4">二者之间的距离是50px，而不是100px，这就是外边距垂直塌陷（外边距合并）</div> -->
+
+	<!-- <div class="div5">
+		内容的宽度和高度：
+		外盒尺寸计算：Element height = content height + padding + border + margin;
+		内盒尺寸计算：Element height = content height + padding + border
+		注意：宽度和高度属性只能作用域块级元素，行内元素无效（input和img除外）
+			 计算盒子模型的总高度时，还应考虑上下两元素的外边距合并情况
+			 如果一个盒子没有给定宽高，或者继承父元素的宽高，则padding不会影响本盒子的大小。
+	</div> -->
+	<div class="div6">盒子阴影</div>
+</body>
+</html>

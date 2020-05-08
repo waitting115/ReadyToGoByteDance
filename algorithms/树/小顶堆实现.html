@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		function smallPileTop(arr) {
+			const arrLen = arr.length;
+			if(arrLen < 2) return arr;
+			let i = arr.length - 1;
+			for( ; i >= 0; i --) {
+				if(arr[i * 2 + 1] != undefined) break;
+			}
+			for(;i >= 0; i --) {
+				buildSmallPileTop(i);
+			}
+			return arr;
+
+			function buildSmallPileTop(i) {
+				if(arr[i * 2 + 1] == undefined) return;
+				let fatherNode = arr[i];
+				let leftChild = arr[i * 2 + 1];
+				let rightChild = arr[i * 2 + 2];
+				if(leftChild < fatherNode) {
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 1];
+					arr[i * 2 + 1] = temp;
+					buildSmallPileTop(i * 2 + 1);
+				}
+				if(rightChild < fatherNode) {
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 2];
+					arr[i * 2 + 2] = temp;
+					buildSmallPileTop(i * 2 + 2);
+				}
+			}
+		}
+		const arr = [2,7,5,8,1,10,4];
+		console.log(arr);
+		console.log(smallPileTop(arr))
+	</script>
+</body>
+</html>

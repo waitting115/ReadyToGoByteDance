@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>box-sizing</title>
+	<style>
+		div.box {
+			width: 100%;
+		}
+		div.box .item {
+			width: 17%;
+			height: 150px;
+			background: #f40;
+			margin: 0 4%;
+			float: left;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<div>
+			如果我们想要一个四列的流布局，间距相等，那么可以很容易实现。
+		</div><br>
+		<div>
+			但是如果给四列加上边框，哪怕只有1px，也会打破这一平衡。
+		</div><br>
+		<div>
+			而border-size不能用百分比来设置，因为我们不希望看到border的值随着页面大小变化而变化。
+		</div><br>
+		<div>
+			解决方案：设置css的box-sizing属性值设为border-box，这样就会把border与padding都包含到元素的宽高里面
+		</div><br>
+		<div>
+			这就意味着带有2px边框的200px宽度的div的宽度仍然是200px！
+		</div><br>
+		<div>
+			下面列出box-sizing的三个属性值：
+			<br>
+			content-box（默认值）：内容宽度 = 宽度， padding与border都不包括在内
+			<br>
+			border-box：内容宽度 = 宽度 + padding + border；
+			<br>
+			inherit：从父元素继承。
+		</div><br>
+	</div>
+	<div class="box">
+		<div class="item"></div>
+		<div class="item"></div>
+		<div class="item"></div>
+		<div class="item"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//折半查找
+		let a = [3,4,0];
+		function binarySearch(arr, n) {
+		    let low = 0, high = arr.length - 1, mid = 0;
+		    while(low < high) {
+		        mid = parseInt((low + high) / 2);
+		        if(arr[mid] == n) {
+		        	return mid;
+		        } else if(arr[mid] > n) {
+		            high = mid - 1;
+		        } else{
+		            low = mid + 1;
+		        }
+		    }
+		    return -1;
+		}
+		console.log('折半查找结果：', binarySearch(a, 0));
+	</script>
+</body>
+</html>

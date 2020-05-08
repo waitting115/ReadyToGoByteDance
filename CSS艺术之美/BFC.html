@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box1 {
+			background-color: rgb(224,206,247);
+			border: 5px solid rebeccapurple;
+			/*create BFC*/
+			overflow: auto;
+		}
+		.float1 {
+			float: left;
+			width: 200px;
+			height: 150px;
+			background-color: red;
+			border: 1px solid black;
+			padding: 10px;
+		}
+		.box2 {
+			background-color: rgb(224,206,247);
+			border: 5px solid rebeccapurple;
+			/*create BFC and this not side effects*/
+			display: flow-root;
+		}
+		.float2 {
+			float: left;
+			width: 200px;
+			height: 150px;
+			background-color: red;
+			border: 1px solid black;
+			padding: 10px;
+		}
+		.blue, .red-inner {
+			height: 50px;
+			margin: 10px 0;
+		}
+		.blue {
+			background: blue;
+		}
+		.red-inner {
+			background: yellow;
+		}
+		.red-outer {
+			/*overflow: hidden;*/
+			display: flow-root;
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<!-- div.box$(>div.float${I am a floated box!}+p{I am coontent inside the container.})*2 -->
+	<div class="box1">
+		<div class="float1">I am a floated box!</div>
+		<p>I am coontent inside the container.</p>
+	</div>
+	<div class="box2">
+		<div class="float2">I am a floated box!</div>
+		<p>I am coontent inside the container.</p>
+	</div>
+
+	<div class="blue"></div>
+	<div class="red-outer">
+		<div class="red-inner">red inner</div>
+	</div>
+ </body>
+</html>

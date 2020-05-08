@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//用对象实现hash表
+		class Hash {
+			constructor () {
+				this.hashTable = new Object();
+			}
+			//添加元素，删除元素，查找元素，返回所有元素
+			add(key, value) {
+				this.hashTable[key] = value;
+			}
+			delete(key) {
+				delete this.hashTable[key];
+			}
+			find (key) {
+				return this.hashTable[key];
+			}
+			all() {
+				let result = [];
+				for(let i in this.hashTable) {
+					result.push(i);
+				}
+				return result;
+			}
+		}
+		let hash1 = new Hash();
+		console.log(hash1);
+	</script>
+</body>
+</html>

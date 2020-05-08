@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+		// let arr = [4, 2, 8, 8, 10, 18, 20, 22, 36, 88];
+		//冒泡排序
+		function bubbleSort(arr) {//数组，排序规则（升还是降）
+			let len = arr.length;
+			if(len == 0) {
+				return arr;
+			};
+			// let swap,a = 0;
+			for(let i = 0; i < len; i ++) {//循环十次
+				swap = false;
+				for(let j = 1; j < len - i; j ++) {//俩俩比较
+					// a ++;
+					if(arr[j] < arr[j - 1]) {
+						let temp = arr[j];
+						arr[j] = arr[j - 1]; 
+						arr[j - 1] = temp;
+						// swap = true;
+					}
+				}
+				// if(swap == false) {
+				// 	break;
+				// }
+			}
+			// console.log(a);
+			return arr;
+		}
+		console.log('冒泡排序升序排序结果：', bubbleSort(arr, 'rise'));
+	</script>
+</body>
+</html>

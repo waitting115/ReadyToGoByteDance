@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="410dp"
+        android:layout_height="210dp"
+        app:srcCompat="@drawable/srm" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:textColor="#e9ddb3"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="恕 瑞 玛" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="背景故事"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineHeight="25dp"
+        android:text="\t\t\t\t\t恕瑞玛曾经是一个幅员辽阔的强大帝国，疆域遍及大陆南部广袤土地的每个角落。在扩张与繁荣的时代过后，帝国的末代皇帝被他最亲密的朋友背叛，帝国伟业随即化为乌有。闪亮的都城在天崩地裂的大灾变中土崩瓦解，整个帝国都沦为废墟，帝国的子民四散漂泊，曾经气势磅礴的城市被黄沙吞没。现在的恕瑞玛已然成为荒芜的废土和无情的沙漠，只有最强者才能存活下来，这里的人们只能依靠尚存的几处绿洲和沿海的几寸耕地艰难维生。
+
+\n\n\t\t\t\t\t在恕瑞玛陨落以后的数千年间，它辉煌荣耀的帝国都城和金光闪烁的太阳圆盘愈发模糊，历史故事变成了神话传说，甚至沦为毫无根据的冷僻信仰，在几支幸存的帝国子民后裔中流传。大多数恕瑞玛的居民都以小型部落为单位，簇拥在水源地附近，或者在古代城市的废墟上重建家园，缅怀曾经的荣耀。有的居民会盗猎帝国废墟之下埋藏的财富，也有的去充当雇佣兵，为有钱的老爷们卖命，最后葬身于黄沙之中。另外一些人则尝试忘记过去，放眼未来，在大洋彼岸寻找贸易的伙伴。
+
+\n\n\t\t\t\t\t但是恕瑞玛古国的传说并不会永远安眠，它现在再次蠢蠢欲动。从沙漠的中心吹来轻语的微风，诉说着宏伟城市拔地而起的景象，诉说着金色武士带领沙兵大军大步前进的气势，诉说着众神之间的战争，以及世界之基即将遭受的撼动。
+
+\n\n\t\t\t\t\t恕瑞玛之城已经崛起，一切都将随之改变。" />
+
+</LinearLayout>

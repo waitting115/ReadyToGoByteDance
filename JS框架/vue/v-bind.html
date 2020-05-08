@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="vue1">
+		<span v-bind:title='message'>
+			鼠标悬停几秒查看此处动态绑定信息
+		</span>
+	</div>
+
+	<script>
+		let vue1 = new Vue({
+			el: '#vue1',
+			data: {
+				message: '页面加载于' + new Date().toLocaleString()
+			}
+		})
+	</script>
+</body>
+</html>

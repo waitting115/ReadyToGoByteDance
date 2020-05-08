@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>[attr]</title>
+	<style>
+		a {
+			width: 200px;
+			height: 100px;
+		}
+		/*存在title属性的a元素*/
+		a[title] {
+			background: red;
+		}
+		/*href属性为“https://example.org”的a元素*/
+		a[href="https://example.org"] {
+			background: #ccc;
+		}
+		/*href属性值有example的a元素*/
+		a[href*="example"] {
+			font-size: 2em;
+		}
+		/*href属性值以'.org'结尾的a元素*/
+		a[href$='.org'] {
+			font-size: italic;
+		}
+		/*class属性中包含logo的a元素 它和*不同，~需要是一个独立的值*/
+		a[class~='logo'] {
+			border: 2px solid #f40;
+		}
+		/*href属性值以#开头的a元素*/
+		a[href^='#'] {
+			background: yellow;
+		}
+		/*href属性值中存在insensitive字符的a元素，不区分大小写*/
+		a[href*="insensitive" i] {
+			color: cyan;
+		}
+		/*href属性值中存在cAsE字符的a元素，区分大小写，但是这里并没有抓取到，这是个试验性的api，暂时不能再开发中使用*/
+		a[href*="cAsE" S] {
+			color: pink;
+		}
+		/*所有包含lang属性的div元素*/
+		div[lang] {
+			font-weight: bold;
+		}
+		/*所有lang属性中包括usa值的div元素*/
+		div[lang~='usa'] {
+			color: blue;
+		}
+		/*所有lang值为zh或以zh作为前缀的div元素*/
+		div[lang|='zh'] {
+			color: #F40;
+		}
+	</style>
+</head>
+<body>
+	<a href="" title="">a[title]</a><br><br>
+	<a href="https://example.org">a[href="https://example.org"]</a><br><br>
+	<a href="" class="logo">a[class~='logo']</a><br><br>
+	<a href="#">a[href^='#']</a><br><br>
+	<a href="InsensitivEaabc">a[href*="insensitive" i]</a><br><br>
+	<a href="cAsEaabc">a[href*='cAsE' s]</a><br><br>
+	<div lang="">lang</div><br><br>
+	<div lang="usa lang2">div[lang~='usa']</div><br>
+	<div lang="zh-cn">div[lang|='zh']</div>
+	<div lang="zh">div[lang|='zh']</div>
+</body>
+</html>

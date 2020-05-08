@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.parent {
+			width: 300px;
+			border: 2px solid #ccc;
+		}
+		.sun {
+			width: 100px;
+			height: 100px;
+			border: 2px solid #f40;
+
+			float: left;
+		}
+		.daughter {
+			width: 50px;
+			height: 50px;
+			border: 2px solid #dea;
+
+			float: left;
+		}
+		.parent div {
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<div class="parent">
+		<div class="sun"></div>
+		<div class="daughter"></div>
+		<div></div><!-- 不能用span -->
+	</div>
+</body>
+</html>

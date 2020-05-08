@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//call()  改变this指向，传参，返回值
+		//在Function的原型上创建我们自己的call()
+		Function.prototype.myCall = function (obj, ...arg) {
+			if(obj == null || obj == undefined) {//如果obj为null或undefined，则默认为window
+				obj = window;
+			} else {//如果传入string、boolean、number等值应该转换为对象
+				obj = Object(obj);
+			}
+			let result;//用于返回函数执行结果
+			obj._fn_ = this;//在传进来的对象上面新建属性_fn_，值为this，也就是调用myCall()的函数
+			result = obj._fn_(...arg);//由于_fn_是个函数，是想在obj的作用域上运行的函数，所以，满足它，此时执行的时候那个函数的this就是obj，并将函数执行结果保存
+			delete obj._fn_;//最后删掉这个临时属性_fn_，消除影响
+			return result;//返回函数执行结果
+		}
+
+		//apply() 改变this指向，传参，返回值
+		Function.prototype.myApply = function (obj, arg) {
+			let result;
+			obj._fn_ = this;
+			result = obj._fn_(...arg);
+			delete obj._fn_;
+			return result;
+		}
+
+		//bind() 改变this指向，传参，返回函数
+		Function.prototype.myBind = function (obj, ...arg) {
+			//投机取巧
+			return (...arg2) => {
+				this.myApply(obj, arg.concat(arg2));
+			}
+		}
+		Function.prototype.myBind2 = function (obj, ...arg) {
+			return (...arg2) => {
+				let AllArg = arg.concat(arg2);
+				let result;
+				obj._fn_ = this;
+				result = obj._fn_(...AllArg);
+				delete obj._fn_;
+				return result;
+			}
+		}
+
+		let color = 'window';
+		let test = {
+			color : 'red'
+		}
+
+		let test2 = {
+			color : 'yellow',
+			fn: function () {
+				console.log(this.color, ...arguments);//显示一下参数
+			}
+		}
+
+		// test2.fn();							//yellow
+		// test2.fn.call(test,1,2,3);			//red
+		// test2.fn.myCall(test,1,2,3);		//red  成功！
+
+		test2.fn();							//yellow
+		test2.fn.apply(test,[1,2,3]);			//red
+		test2.fn.myApply(test,[1,2,3]);		//red  成功！
+	</script>
+</body>
+</html>

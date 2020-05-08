@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+		//堆排序
+		function heapSort(arr, size) {
+			if(size == undefined) {//只有首次调用才会触发此if
+				size = arr.length;
+			}
+			for(let i = size - 1; i >= 0; i --) {
+				heapify(arr, i, size);
+			}
+			//完成一次完完全全建堆之后，将数组首末互换，然后size - 1
+			let temp = arr[0]; 
+			arr[0] = arr[size - 1];
+			arr[size - 1] = temp;
+
+			size --;
+
+			if(size > 0) {
+				heapSort(arr, size);
+			}
+			//当size=0的时候就说明原数组就剩下第一个元素了，自然是最小的，所以完成了堆排序
+			return arr;
+		}
+		//建大顶堆的函数(只是把以currentRootNode为父节点的堆建立为大顶堆)
+		function heapify(arr, currentRootNode, size) {//arr为完全二叉树；currentRootNode为父节点位置；size为节点总数
+			// if(currentRootNode < size){};//我看的原代码是这样做的，我改进了一下，因为叶子结点根本没必要做以下的操作，改进之后下面的代码执行次数从71-->33
+			//这里我优先判断该父节点是否有左子树，如果有才继续执行
+			if(2 * currentRootNode + 1 <= size - 1) {//size-1,currentRootNode为下标，size为长度
+				//左子树和右子树的位置
+				let left = 2 * currentRootNode + 1;
+				let right = 2 * currentRootNode + 2;
+
+				//先把父节点看做是最大的存起来
+				let max = currentRootNode;
+
+				//如果左、右子树比父节点大，记录它的位置max
+				//记住这里一定要判断left、right与size的关系，因为有时候会将后面已经排好序的数组当做父节点的子节点拽进来继续操作，这是很要命的，别忘了自己就在这卡了好久！！！！
+				if( left < size && arr[left] > arr[max]) {
+					max = left;
+				}
+				if( right < size &&arr[right] > arr[max]) {
+					max = right;
+				}
+
+				//判断max是否有变化
+				if(max != currentRootNode) {
+					let temp = arr[max];
+					arr[max] = arr[currentRootNode];
+					arr[currentRootNode] = temp;
+
+					//既然发生变化了，那么就不能保证下面的节点是否还是大顶堆，所以要以max为父节点继续比较，直到完成一次建堆
+					heapify(arr, max, size);
+				}
+			} else {//则说明该节点为叶子结点
+				return;
+			}
+		}
+
+	console.log('堆排序算法升序序列结果：', heapSort(arr));
+	</script>
+</body>
+</html>

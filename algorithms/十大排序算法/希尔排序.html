@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+		//希尔排序
+		function hillSort (arr) {
+			//思路：使用希尔增量，初始增量则为length/2,然后每次除以2，用希尔增量将原始数组分为若干个数组，然后将每个数组使用插入排序，依次类推
+			let len = arr.length;
+			if(len == 0) {
+				return arr;
+			};
+			let hillNum = parseInt(len / 2);//希尔增量
+			//在js里面需要向上取整
+			while(hillNum > 0) {
+				for(let i = hillNum; i < len; i ++) {//i正好是第二个，直接将前一个比较就好了
+					let temp = arr[i];//要比较的数字
+					let preIndex = i - hillNum;//被比较的数的下标
+					while(preIndex >= 0 && temp < arr[preIndex]) {
+						arr[preIndex + hillNum] = arr[preIndex];
+						preIndex -= hillNum;//继续找前一个
+					}
+					arr[preIndex + hillNum] = temp;
+				}
+				hillNum = parseInt(hillNum/2);
+			}
+			return arr;
+		}
+
+	console.log('希尔排序升序排序结果：', hillSort(arr));
+	</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//用模式串构建哈希表，用于判断坏字符是否在模式串中
+		function generateHash(patternStr) {
+			let pslen = patternStr.length;
+			// let hashArr = new Arr(pslen).fill(-1)
+			let hashArr = [];
+			for(let i = 0; i < pslen; i ++) {
+				let char = patternStr[i].charCodeAt();
+				hashArr[char] = 1;
+			}
+			return hashArr;
+		}
+
+
+		function badWordBM(textStr, patternStr) {
+			let tslen = textStr.length;
+			let pslen = patternStr.length;
+			let psHash = generateHash(patternStr);
+
+			for(let i = 0, p = pslen - 1; i < tslen; ) {//i为textStr的下标，p为patternStr的下标
+				if(textStr[i + pslen - 1] != patternStr[pslen - 1]) {//出现坏字符
+					let iCode = textStr[i + p].charCodeAt();
+					console.log(textStr[i +p]);
+					if(psHash[iCode] == 1) {//说明模式串中有坏字符
+						for(let j = pslen - 2; j >= 0; j --) {//找位置
+							if(patternStr[j] == textStr[i + p]) {//找到了
+								
+								p = j;
+								i += p;
+								break;//找到最右面的即退出循环
+							}
+						}
+					} else {//没有坏字符
+						i += pslen;
+					}
+				} else {//说明最后一个元素是匹配的，那么继续匹配前一个
+					for(let k = pslen - 1; k >= 0; k )
+					// if(p >= 0) {
+					// 	i --;
+					// 	p --;
+					// } else {
+					// 	return i;//找到了位置
+					// }
+				}
+			}
+			return -1;
+		}
+		console.log(badWordBM('abbadcababacab', 'babac'));//正确答案：7
+	</script>
+</body>
+</html>

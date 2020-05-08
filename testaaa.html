@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><title></title><link rel="stylesheet" href="/stylesheets/style.css"></head><body><h1>Converting circular structure to JSON
+    --&gt; starting at object with constructor 'TLSSocket'
+    |     property 'parser' -&gt; object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle</h1><h2></h2><pre>TypeError: Converting circular structure to JSON
+    --&gt; starting at object with constructor 'TLSSocket'
+    |     property 'parser' -&gt; object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle
+    at JSON.stringify (&lt;anonymous&gt;)
+    at stringify (/www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/response.js:1119:12)
+    at ServerResponse.json (/www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/response.js:260:14)
+    at /www/wwwroot/www.tangchaolizi.club/xchengxu/routes/login.js:14:19
+    at Layer.handle [as handle_request] (/www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/router/layer.js:95:5)
+    at next (/www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/router/layer.js:95:5)
+    at /www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/www/wwwroot/www.tangchaolizi.club/xchengxu/node_modules/express/lib/router/index.js:335:12)</pre></body></html>

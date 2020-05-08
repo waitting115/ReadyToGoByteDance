@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+
+		//插入排序(更优一点)
+		function insertSor (arr) {
+
+			let len = arr.length;
+			for(let i = 0; i < len - 1; i ++) {
+				let current = arr[i +1];//比较数
+				let index = i;//被比较数下标
+				while(index >= 0 && current < arr[index]) {
+					arr[index + 1] = arr[index];
+					index --;
+				}
+				arr[index + 1] = current;
+			}
+			return arr;
+		}
+		console.log('插入排序算法升序排序结果：', insertSort(arr));
+
+		//插入排序另一种思路
+		function insertSort2 (arr) {
+			let len = arr.length;
+			if(len == 0) {
+				return arr;
+			};
+			//思路：第一次循环，把第一个元素当做一个有序数组，从第二个元素开始依次往里面插入元素，和数组最后一个元素比较，如果比它小，则调换位置，反之则不变
+			for(let i = 1; i < len; i ++) {//i为要比较的数字
+				for(let j = i - 1; j >= 0; j --) {//j为i要依次比较的数字
+					if(arr[i] < arr[j]) {//如果后者比前者小，就互换位置
+						let temp = arr[i];
+						arr[i] = arr[j];
+						arr[j] = temp;
+						i --;//既然互换位置了，那么要比较的数字就向前移动了一位，所以i此时也要移动一位
+					} else {//如果if条件不成立，则说明到位置了，就没必要继续再比了
+						break;
+					}
+				}
+			}
+			return arr;
+		}
+		console.log('插入排序算法升序排序结果：', insertSort2(arr));
+
+		
+	</script>
+</body>
+</html>

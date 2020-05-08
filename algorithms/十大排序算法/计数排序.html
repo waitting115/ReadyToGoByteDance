@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr = [ 8, 4, 36, 20, 88, 12, 2, 8, 22, 18];
+		//计数排序
+		function countSort(arr) {
+			//思路：首先找到该数组A的最大最小值，并存下二者的差值+1；然后创建新数组B，数组B的长度就是差值 + 1，数组B每一项都设为0；然后循环A数组，存下每个数字减去min的值，然后将B数组【差值】位置上的数字++；整个循环结束后，循环B数组，存下每个下标加上min的值，判断此位置上的数组值是否为0，如果不为0，则将该数依次放到A数组，然后B数组该位置上的数字--，继续判断，如果为0，则循环B数组的下一位，直到B数组末尾。
+	        if(arr.length == 0) return arr;
+	        
+			let max = arr[0],
+				min = arr[0],
+				dif = 0,
+				len = arr.length,
+				temp = 0;
+			for(let i = 1; i < len; i ++) {
+				if(arr[i] > max) {
+					max = arr[i];
+				}
+				if(arr[i] < min) {
+					min = arr[i];
+				}
+			}
+			dif = max - min + 1;//0~87需要88个位置来放
+
+			//数组B
+			// let array = new Array(dif);
+			let array = [];
+			for(let i = 0; i < dif; i ++) {//如果上面不+1，这里要<=
+				array[i] = 0;
+			}
+			// console.log(array)
+			//A-->B
+			for(let i = 0; i < len; i ++) {
+				temp = arr[i] - min;
+				array[temp] ++;
+			}
+			//B-->A
+			let arrayLen = array.length;
+			let arrNum = 0;//表示A数组下标，从0开始填数字
+			for(let i = 0; i < arrayLen; i ++) {
+				while(array[i] > 0) {
+					arr[arrNum] = i + min;
+					arrNum ++;
+					array[i] --;
+				}
+			}
+			return arr;
+		}
+		console.log('计数排序算法升序序列结果：', countSort(arr));
+	</script>
+</body>
+</html>

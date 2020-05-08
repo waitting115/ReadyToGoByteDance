@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>圣杯布局</title>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+			border: 1px solid #ccc;
+		}
+		.content {
+			min-height: 100vh;/*vh是相对于视口的高度，视口高度被均分为100份*/
+			background: red;
+			display: flex;
+			flex-direction: column;
+		}
+		.center {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+		}
+		header, footer {
+			flex: 1;
+		}
+		.body {
+			flex: 5;
+			display: flex;
+		}
+		.left ,.right {
+			flex: 0 0 12em;
+		}
+		.middle {
+			flex: 1;
+		}
+		/*如果是小屏幕，躯干的三栏自动变为垂直叠加。*/
+		@media (max-width: 768px) {
+			.body {
+				flex-direction: column;
+				flex: 1;
+			}
+			.left, .right, .middle {
+				flex: auto;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="content">
+		<header class="center">header</header>
+		<div class="body">
+			<div class="left center">left</div>
+			<div class="middle center">middle</div>
+			<div class="right center">right</div>
+		</div>
+		<footer class="center">footer</footer>
+	</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>float-left元素</title>
+	<style type="text/css">
+		.box {
+			width: 500px;
+			height: 300px;
+			border: 2px solid #ccc;
+		}
+		.parent {
+			width: fit-content;
+			margin: 0 auto;
+		}
+		.child {
+			width: 100px;
+			height: 100px;
+			border: 2px solid #f40;
+			float: left;
+			/*margin: 0 auto;不起作用*/
+		}
+	</style>
+</head>
+<body>
+	<p>子元素包含float:left属性</p>
+	<div class="box">
+		<div class="parent"><!-- 这层div的作用就是实现.child居中 -->
+			<div class="child"></div>
+		</div>
+	</div>
+</body>
+</html>

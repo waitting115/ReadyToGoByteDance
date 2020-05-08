@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+    <!-- Bootstrap -->
+    <link href="./bs/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> 
+    <style>
+      div {
+        /* border: 1px solid #ccc; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <!-- 基本实例：
+        <form action="#">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" id="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="pas">Password</label>
+                <input class="form-control" type="password" id="pas" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="file">File</label>
+                <input type="file" id="file">
+                <p class="help-block">Example block-level help text here</p>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox">
+                    "Check Me"
+                </label>
+            </div>
+            <button class="btn btn-default" type="submit">Submit</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        内联表单：
+        <form action="" class="form-inline">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" id="email" placeholder="Email">
+            </div>
+            <button type="submit" class="btn btn-default">Send invitation</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        <form action="" class="form-inline">
+            <div class="form-group">
+                <label for="name" class="sr-only">Name</label>
+                <div class="input-group">
+                    <div class="input-group-addon">$</div>
+                    <input type="text" class="form-control" id="name" placeholder="name">
+                    <div class="input-group-addon">.00</div>
+                </div>
+            </div>
+            <button class="btn btn-default">Submit</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        水平排列的表单：
+        <form action="" class="form-horizontal">
+            <div class="form-group">
+                <label for="input" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="email" id="input" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pas" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" id="pas" class="form-control" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-push-2 col-md-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox">Remember me
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <br>
+        <br> -->
+        静态控件：
+        <form action="" class="form-horizontal">
+            <div class="form-group">
+                <label for="emal" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">email@example.com   (我与前面的Email在同一行！)</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pas" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" placeholder="Password" id="pas" class="form-control">
+                </div>
+            </div>
+        </form>
+        <br>
+        另一个实例：
+        <form action="" class="form-inline">
+            <div class="form-group">
+                <label for="input" class="sr-only">input</label>
+                <p class="form-control-static">email@example.com（俺也一样！）</p>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="sr-only">password</label>
+                <input type="password" class="form-control" id="input2" placeholder="password">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        禁用状态:
+        <form action="">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="abcabcabc" disabled>
+            </div>
+        </form>
+        只读状态：
+        <form action="">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="abcdabcd" readonly>
+            </div>
+        </form>
+        校验状态：
+        <form action="" class="form-horizontal">
+            <div class="form-group has-success">
+                <label for="success" class=" col-md-2 control-label">Success</label>
+                <div class="col-md-10">
+                    <input type="text" id="success" class="form-control" placeholder="input">
+                </div>
+            </div>
+            <div class="form-group has-warning">
+                <label for="warning" class="col-md-2 control-label">warning</label>
+                <div class="col-md-10">
+                    <input type="text" placeholder="warning" class="form-control">
+                </div>
+            </div>
+            <div class="form-group has-error">
+                <label for="" class="col-md-2 control-label">error</label>
+                <div class="col-md-10">
+                    <input type="text" id="" placeholder="error" class="form-control">
+                </div>
+            </div>
+        </form>
+        <br><br>
+        添加额外图标：
+        <form action="">
+            <div class="form-group has-success has-feedback">
+                <label for="duigou" class="control-label">Input with success</label>
+                <input type="text" id="duigou" class="form-control" aria-describedby="inputSuccess2Status">
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span id="inputSuccess2Status" class="sr-only">Success</span>
+            </div>
+            <div class="form-group has-warning has-feedback">
+                <label for="duigou" class="control-label">Input with warning</label>
+                <input type="text" id="duigou" class="form-control" aria-describedby="inputwarning2Status">
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                <span id="inputwarning2Status" class="sr-only">warning</span>
+            </div>
+            <div class="form-group has-error has-feedback">
+                <label for="duigou" class="control-label">Input with error</label>
+                <input type="text" id="duigou" class="form-control" aria-describedby="inputerror2Status">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span id="inputerror2Status" class="sr-only">error</span>
+            </div>
+            <div class="form-group has-success has-feedback">
+                <label for="" class="control-label">Input with success</label>
+                <div class="input-group">
+                    <span class="input-group-addon">@</span>
+                    <input type="text" class="form-control">
+                </div>
+                <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+            </div>
+        </form>
+        <br>
+        水平排列的表单：
+        <form action="" class="form-horizontal">
+            <div class="form-group has-success has-feedback">
+                <label for="" class="control-label col-md-2">Label</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control">
+                    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+            </div>
+            <div class="form-group has-success has-feedback">
+                <label for="" class="control-label col-md-2">Label</label>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span>
+                        <input type="text" class="form-control">
+                    </div>
+                    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                    这里加了一个没用的东西
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="./bs/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="./bs/bootstrap.min.js"></script>
+  </body>
+</html>

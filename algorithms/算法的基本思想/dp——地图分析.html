@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>地图分析</title>
+</head>
+<body>
+	<div>
+你现在手里有一份大小为 N x N 的『地图』（网格） grid，上面的每个『区域』（单元格）都用 0 和 1 标记好了。其中 0 代表海洋，1 代表陆地，你知道距离陆地区域最远的海洋区域是是哪一个吗？请返回该海洋区域到离它最近的陆地区域的距离。
+
+我们这里说的距离是『曼哈顿距离』（ Manhattan Distance）：(x0, y0) 和 (x1, y1) 这两个区域之间的距离是 |x0 - x1| + |y0 - y1| 。
+
+如果我们的地图上只有陆地或者海洋，请返回 -1。
+
+示例 1：
+
+输入：[[1,0,1],[0,0,0],[1,0,1]]
+输出：2
+解释： 
+海洋区域 (1, 1) 和所有陆地区域之间的距离都达到最大，最大距离为 2。
+示例 2：
+
+输入：[[1,0,0],[0,0,0],[0,0,0]]
+输出：4
+解释： 
+海洋区域 (2, 2) 和所有陆地区域之间的距离都达到最大，最大距离为 4。
+
+	</div>
+	<script>
+		var maxDistance = function(grid) {
+    // 两遍dp，从头到尾，从尾到头
+    const len = grid.length;
+    let min = -1;
+    //初始化dp
+    let dp = new Array(len);//这里不能用fill填满，因为用fill填的都是同一个arr对象
+    for(let i = 0; i < len; i ++) {
+        dp[i] = new Array(len);
+    }
+    for(let x = 0; x < len; x ++) {
+        for(let y = 0; y < len; y ++) {
+            dp[x][y] = (grid[x][y]) ? 0 : Infinity;
+        }
+    }
+    // 从头到尾dp
+    for(let x = 0; x < len; x ++) {
+        for(let y = 0; y < len; y ++) {
+            if(x > 0) dp[x][y] = Math.min(dp[x][y], dp[x - 1][y] + 1);
+            if(y > 0) dp[x][y] = Math.min(dp[x][y], dp[x][y - 1] + 1);
+        }
+    }
+    // 从尾到头dp
+    for(let x = len - 1; x >= 0; x --) {
+        for(let y = len - 1; y >= 0; y --) {
+            if(x < len - 1) dp[x][y] = Math.min(dp[x][y], dp[x + 1][y] + 1);
+            if(y < len - 1) dp[x][y] = Math.min(dp[x][y], dp[x][y + 1] + 1);
+        }
+    }
+    // 找到最大距离
+    for(let i of dp) {
+        for(let j of i) {
+            if(j === 0) continue;
+            min = Math.max(min, j);
+        }
+    }
+    // 排除都是海洋的情况，如果都是岛屿每个值都是0，此时应该返回-1，而我们min初始值就是-1，直接返回即可
+    if(min === Infinity) {
+        return -1;
+    } else {
+        return min;
+    }
+};
+console.log(maxDistance([[1,0,0],[0,0,0],[0,0,0]]));//4
+	</script>
+</body>
+</html>

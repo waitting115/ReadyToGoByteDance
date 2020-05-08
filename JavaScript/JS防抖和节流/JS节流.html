@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 2000px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        window.addEventListener('scroll', thorttle(handle, 1000));
+
+        function handle () {
+            console.log(Math.random());
+        }
+        //时间戳实现节流
+        // function thorttle(fn, delay) {
+        //     let prev = Date.now();
+        //     return function () {
+        //         let that = this;
+        //         let args = arguments;
+        //         let now = Date.now();
+        //         if(now - prev >= delay) {
+        //             fn.apply(that, args);
+        //             prev = Date.now();
+        //         }
+        //     }
+        // }
+        // 定时器实现节流
+        function thorttle(fn, delay) {
+            let timeout = null;
+            return function () {
+                let that = this;
+                let args = arguments;
+                if(!timeout) {
+                    timeout = setTimeout(() => {
+                        fn.apply(that,args);
+                        timeout = null;
+                    }, delay)
+                }
+            }
+        }
+    </script>
+</body>
+</html>

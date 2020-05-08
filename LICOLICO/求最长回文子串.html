@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var longestPalindrome = function(s) {
+			//思路：将s的所有字符前后都加上-存给辅助字符串，然后从第二位遍历到倒数第二位辅助字符串，判断其前后是否相等，如果相等，将左右及中间相加赋值给临时结果res，然后判断res与真实结果reuslt的长度，如果前者大，把它赋值给result，然后左右各延伸一步继续while比较，循环下来result中保存的就是最长回文子串，但是要去除-才是最终结果，所以最后一步出去-，然后返回。
+		    let result = '';
+		    //加空格，辅助str
+		    let str = '-';//本身就要有一个空格
+		    for(let i = 0; i < s.length; i ++) {
+		    	str += (s[i] + '-');
+		    }
+		    // console.log(str)
+		    let len = str.length;
+		    for(let i = 1; i < len - 1; i ++) {//从第二位比较到倒数第二位
+		    	let L = i - 1;
+		    	let R = i + 1;
+		    	let res = str[i];
+		    	while(str[L] == str[R] && str[L] != undefined && str[R] != undefined) {
+		    		res = str[L] + res + str[R];
+		    		if(res.length > result.length)
+		    			result = res;
+		    		L --;
+		    		R ++;
+		    	}
+		    	// console.log(res);
+		    }
+		    // console.log('result', result);
+		    let p = 1;
+		    let TrueRes = '';
+		    while(result[p] != undefined) {
+		    	TrueRes += result[p];
+		    	p += 2;
+		    }
+		    // console.log(TrueRes);
+		    return TrueRes;
+		};
+		console.log(longestPalindrome('abba'))
+	</script>
+</body>
+</html>

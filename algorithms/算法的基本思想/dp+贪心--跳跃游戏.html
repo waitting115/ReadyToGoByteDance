@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// 力扣第45题
+		// 跳跃游戏
+		// 给定一个非负整数数组，你最初位于数组的第一个位置。
+		// 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+		// 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+		// 示例:
+		// 输入: [2,3,1,1,4]
+		// 输出: 2
+		// 解释: 跳到最后一个位置的最小跳跃数是 2。
+		//      从下标为 0 跳到下标为 1 的位置，跳 1 步，然后跳 3 步到达数组的最后一个位置。
+
+		// 思路：贪心算法，每一次都尽可能跳的最远，所以把最远处记录下来，一旦超过了终点，则直接返回结果
+		// 一次跳跃能到的地方为i到end，end跟着far变化
+		var jump = function(nums) {
+		    let len = nums.length;
+		    let ans = 0;
+		    let end = 0;//当前次数的起始终止位置
+		    let far = 0;//最远距离
+		    for(let i = 0; i < len - 1; i ++) {
+		        far = Math.max(far, nums[i] + i);
+		        if(far >= len - 1) return ans + 1;//如果最远距离已经>=终点，直接返回次数+1就好了
+		        if(i === end) {
+		            end = far; 
+		            ans ++;
+		        }
+		    }
+		    return ans;
+
+		    // dp会在鬼一样大的数据下超时，所以还要另寻他路
+		    // dp
+		    // dp[i] = min(dp[i], dp[j] + 1),0<=j<i,j为能通往i的所有位置
+		    // const len = nums.length;
+		    // if(!len) return 0;
+		    // let dp = new Array(len).fill(Infinity);
+		    // dp[0] = 0;
+		    // for(let i = 0; i < len; i ++) {
+		    //     for(let j = nums[i]; j > 0; j --) {
+		    //         if(i + j >= len) j = len - i - 1;
+		    //         // dp[i + j]  = Math.min(dp[i + j], dp[i] + 1);
+		    //         dp[i + j] = (dp[i + j] > dp[i] + 1) ? dp[i] + 1 : dp[i +j];
+		    //     }
+		    // }
+		    // return dp[len - 1];
+		};
+	</script>
+</body>
+</html>

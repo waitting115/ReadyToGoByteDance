@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		function bigPileTop(arr) {
+			//思路：首先找到最后一个有左子节点的节点，将以该节点为堆顶的堆变为大顶堆，然后向上找，直到找到最后一位
+			const len = arr.length;
+			if(len < 2) return arr;
+			let i;
+			for(i = len - 1; i >= 0; i --) {
+				if(arr[2 * i + 1] != undefined) break;
+			}
+			for(; i >= 0; i --) {
+				buildBigPileTop(i)
+			}
+			return arr;
+			
+			function buildBigPileTop(i) {
+				if(arr[2 * i + 1] == undefined) return;
+				let fatherNode = arr[i];
+				let leftChild = arr[i * 2 + 1];
+				let rightChild = arr[i * 2 + 2];//有肯能是undefined
+				if(leftChild > fatherNode) {
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 1];
+					arr[i * 2 + 1] = temp;
+					buildBigPileTop(i * 2 + 1);//由于变化后并不能保证下面的节点依然是大顶堆，所以要递归一下
+				}
+				if(rightChild != undefined && rightChild > fatherNode) {
+					let temp = arr[i];
+					arr[i] = arr[i * 2 + 2];
+					arr[i * 2 + 2] = temp;
+					buildBigPileTop(i * 2 + 2);
+				}
+			}
+		}
+		const arr = [2,7,5,8,1,10,4];
+		console.log(arr);
+		console.log(bigPileTop(arr));
+	</script>
+</body>
+</html>

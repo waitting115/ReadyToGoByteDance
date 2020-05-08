@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var intToRoman = function(num) {
+		    let arr1 = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+		    let arr2 = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+		    let RomanNum = '';
+		    for(let i = 0; i < 13; i ++) {
+		        while(num >= arr1[i]) {
+		            RomanNum += arr2[i];
+		            num -= arr1[i];
+		        }
+		    }
+		    return RomanNum;
+		};
+		console.log(intToRoman(2020));
+	</script>
+</body>
+</html>

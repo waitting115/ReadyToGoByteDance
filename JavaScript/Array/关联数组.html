@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<script>
+		// 关联数组
+
+		// 使用方式：
+		var arr = [];
+		arr['key1'] = 1;
+		arr['key2'] = 2;
+		console.log('arr',arr);
+
+		// 通常数组在填充时会隐式或显示的指定数组下标，但js中的数组可以以名字的形式为元素赋值，这就形成了关联数组
+
+		var arr2=new Array();
+        arr2["china"]="beijing,niaoling,hulan";
+        arr2["usa"]="newyork,washington,atlanta";
+        arr2["japan"]="tokyo";
+
+        console.log(arr2["china"]);
+        console.log(arr2["japan"]);
+
+　　　　 console.log(arr2[0]);//undefined  因为关联数组中只能以名字来访问元素，不能以下标了
+
+
+		// 这种通过名字来访问数组元素的形式有可读性高，灵活方便的优势。一定程度上它可以作为JS中的哈希表来使用。
+
+		// 对关联数组的遍历时需要使用for in循环，注意以下两种不同的遍历方式
+
+		for(let i in arr2) {
+			console.log(i);//返回  键
+		}
+
+		for(let i in arr2) {
+			console.log(arr2[i]);//返回  值
+		}
+	</script>
+</body>
+</html>

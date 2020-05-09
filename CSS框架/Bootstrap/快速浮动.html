@@ -16,7 +16,26 @@
   </head>
   <body>
     <div class="container">
-      
+        <p>通过添加一个类，可以将任意元素向左或向右浮动。!important 被用来明确 CSS 样式的优先级。这些类还可以作为 mixin（参见 less 文档） 使用。</p>
+<br><br>
+        <div class="pull-left">pull-left</div>
+        <div class="pull-right">pull-right</div>
+        <br><br>
+        <p>// Classes
+            .pull-left {
+              float: left !important;
+            }
+            .pull-right {
+              float: right !important;
+            }
+            
+            // Usage as mixins
+            .element {
+              .pull-left();
+            }
+            .another-element {
+              .pull-right();
+            }</p>
     </div>
 
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        #app {
+            width: 100px;
+            height: 100px;
+        }
+        .red {
+            background: red;
+        }
+        .shadow {
+            box-shadow: 0 0 15px black;
+        }
+        .animate {
+            transition: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- 直接.键值的ASCII码即可 -->
+    <button @click='click'>click</button>
+    <div id="app" :class="cls"></div>
+
+    <script>
+        let app = new Vue({
+            el: 'body',
+            data: {
+                // cls: ['red','shadow','animate']
+                cls: {
+                    'red': true,
+                    'shadow':true,
+                    'animate':true
+                }
+            },
+            methods: {
+                click: function () {
+                    // this.cls.pop();
+                    this.cls.shadow = !this.cls.shadow;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

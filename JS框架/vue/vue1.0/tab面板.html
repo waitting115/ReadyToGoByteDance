@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <script src="vue.min.js"></script>
+    <style>
+        .red{
+            background: red;
+        }
+        .item {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+        }
+        .block {
+            display: block;
+        }
+        .none {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button v-for="i in name" @click="change($index)" :class="$index === index ? 'btn btn-default red' : 'btn btn-default'">{{i}}</button>
+        <div class="item" v-for="i in nicheng" :class="$index === index ? 'block' : 'none'">{{i}}</div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                index: 0,
+                name:['wei','meng'],
+                nicheng:['帅气小怪兽','磨人小妖精']
+            },
+            methods: {
+                change: function (index) {
+                    this.index = index;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

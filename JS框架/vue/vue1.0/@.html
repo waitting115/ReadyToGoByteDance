@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" @click='changed(10,$event)'></div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                changed: function (arg, e) {
+                    console.log(arg, e);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

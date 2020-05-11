@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="vue.min.js"></script>
+    <title>Document</title>
+    <style>
+        #app {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-on:click="alert"></div>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                msg: "Hello Vue!"
+            },
+            methods: {
+                alert: function () {
+                    alert(this.msg)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

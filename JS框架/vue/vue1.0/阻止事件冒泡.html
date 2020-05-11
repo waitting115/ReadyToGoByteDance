@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        #app {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .child {
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" @click='fatherClick'>
+        <!-- <div class="child" @click.stop='childClick'></div> -->
+        <div class="child" @click='childClick'></div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                fatherClick: function () {
+                    alert('father')
+                },
+                childClick: function (e) {
+                    // 2种原生的方法：
+                    // e.cancelBubble=true;  //非标准
+                    // e.stopPropagation();  //w3c标准
+                    alert('child')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

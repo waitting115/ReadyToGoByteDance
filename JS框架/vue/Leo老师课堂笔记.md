@@ -59,9 +59,35 @@ change: function (arg, e) {
 
 v-bind:属性名="数据"  v-bind: => :
 
+## nodejs
 
+### npm install（安装包）
 
+安装前端包管理器bower
 
+npm install bower -g
+
+bower 只是npm包管理器其中的一个
+
+### npm info （查看包信息）
+
+npm info vue
+
+bower也有info方法
+
+## bower i （安装包）
+
+bower i  vue   （i是install的缩写）这样安装默认安装vue最高版本
+
+如果想要指定版本的包：
+
+bower i vue#1.0.8
+
+## vue交互
+
+vue1.x用插件vue-resource(也是采用的Promise)
+
+vue2+弃用了vue-resource，采用axios。bower i axios
 
 
 

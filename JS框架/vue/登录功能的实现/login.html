@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./kj/vue.min.js"></script>
+    <script src="./kj/axios.min.js"></script>
+    <link rel="stylesheet" href="./kj/bootstrap.min.css">
+    <style>
+
+    </style>
+</head>
+<body><br>
+    <div id="app" class="container">
+        <div class="form">
+            <div class="form-group">
+                <label for="user">用户名</label>
+                <input type="text" id="user" class="form-control" v-model="user">
+            </div>
+            <div class="form-group">
+                <label for="pas">密码</label>
+                <input type="text" id="pas" class="form-control" v-model="password">
+            </div>
+            <button class="btn btn-success form-control btn-lg" @click="login">登录</button>
+        </div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                user: '',
+                password: '',
+            },
+            methods: {
+                login: function () {
+                    let that = this;
+                    axios.get('http://localhost:2400/getMsg', {
+                        params: {
+                            user: this.user,
+                            password: this.password
+                        }
+                    }).then((response) => {
+                        // console.log(response)
+                        alert(response.data.msg)
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

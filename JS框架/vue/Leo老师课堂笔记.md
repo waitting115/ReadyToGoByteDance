@@ -1,4 +1,4 @@
-## 5.11
+# 5.11
 
 ### vue与jQuery
 
@@ -59,6 +59,8 @@ change: function (arg, e) {
 
 v-bind:属性名="数据"  v-bind: => :
 
+# 5.12
+
 ## nodejs
 
 ### npm install（安装包）
@@ -88,8 +90,6 @@ bower i vue#1.0.8
 vue1.x用插件vue-resource(也是采用的Promise)
 
 vue2+弃用了vue-resource，采用axios。bower i axios
-
-
 
 
 

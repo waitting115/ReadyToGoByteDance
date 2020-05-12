@@ -10,7 +10,12 @@ let json = {
 app.use(bodyParser.urlencoded());//post need
 
 app.use('/postMsg', (req, res) => {
-    res.send(req.body);
+    // res.send(req.body);
+    if(json[req.body.user] === req.body.password) {
+        res.send({ok:1, 'msg': 'You are success login it!'})
+    } else {
+        res.send({ok: 1, 'msg': 'User or password is error!'})
+    }
 })
 
 app.use('/getMsg',(req, res) => {

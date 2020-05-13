@@ -91,11 +91,35 @@ vue1.x用插件vue-resource(也是采用的Promise)
 
 vue2+弃用了vue-resource，采用axios。bower i axios
 
+# 5.13
 
 
 
+vue的计算属性
 
 
+
+过滤器：
+
+{{msg | capitalize}}
+
+vue内置过滤器：
+
+- capitalize-首字母变大写
+- uppercase-所有英文字母变大写
+- lowercase-所有英文字母变小写
+-  currency-变成货币形式
+  - currency '￥' '3'	传参
+- pluralize-英文变复数
+- debounce-延迟执行
+- limitBy-截取数组
+  - 第一个参数选几个
+  - 第二个参数从哪开始截取
+- filterBy-过滤（给出关键字）
+  - 第一个参数过滤有它的：filterBy  "h" 	就过滤出包含h的所有值
+- orderBy-排序
+  - orderBy  1	升序
+  - orderBy   -1   降序
 
 
 

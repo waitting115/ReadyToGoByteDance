@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{msg | capitalize}}首字母大写<br>
+        <input type="text" v-model="money"><br>
+        {{money | currency}}<br>
+        {{money | currency '￥' '3'}}<br>
+        {{money | currency '&' '5'}}
+        <br>
+        <br>
+        <br>
+        <button id="btn" @click='disappear | debounce "1000"'>延迟一秒消失</button>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg: 'abcd',
+                money: ''
+            },
+            methods: {
+                disappear: function () {
+                    btn.style.display = 'none';
+                }
+            }
+        })
+    </script>
+</body>
+</html>

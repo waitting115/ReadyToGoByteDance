@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{c}}<br>
+        {{d}}<br>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                a: 10
+            },
+            methods: {
+                
+            },
+            computed: {
+                c: function () {
+                    return 10;
+                },
+                d: {
+                    get: function () {
+                        return 20;
+                    },
+                    set: function (num) {
+                        this.a = num;//不能计算计算属性
+                    }
+                }
+            }
+        })
+        app.d = 30;//30即传入d里面set的num
+        console.log(app.a)
+    </script>
+</body>
+</html>

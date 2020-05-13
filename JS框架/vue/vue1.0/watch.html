@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="change">Change</button>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                a: 10
+            },
+            methods: {
+                change: function () {
+                    this.a = 20;
+                }
+            }
+        })
+
+        app.$watch('a', function () {
+            console.log('a发生了改变！');//只弹出一次说明其有缓存功能
+        })
+    </script>
+</body>
+</html>

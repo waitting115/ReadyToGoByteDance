@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{msg | wei}}
+        <br>
+        <br>
+        <input type="number" v-model="num | meng"><br><br>
+        {{num}}
+    </div>
+
+    <script>
+        //过滤器要放在实例前面！
+         Vue.filter("wei", function (arg) {
+            return arg.toUpperCase();
+        })
+        //双向过滤器
+        Vue.filter('meng', {
+            read: function (val) {
+                // return val;
+                console.log(val);
+            },
+            write: function (val) {
+                console.log(val)
+            }
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg: 'abcd',
+                arr: [1,5,2,7],
+                num: 0
+            },
+            methods: {
+                
+            }
+        })
+
+       
+    </script>
+</body>
+</html>

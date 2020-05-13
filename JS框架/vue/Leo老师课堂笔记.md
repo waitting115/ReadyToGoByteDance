@@ -121,6 +121,32 @@ vue内置过滤器：
   - orderBy  1	升序
   - orderBy   -1   降序
 
+自定义过滤器：
+
+~~~js
+Vue.filter('wei', function (val) {
+	//...
+	return val
+})
+~~~
+
+自定义双向过滤器：
+
+~~~
+Vue.filter('meng', {
+	read: function (val) {
+		//do something...
+		return val;
+	},
+	write: function (val) {
+		//do something...
+		return val;
+	}
+})
+~~~
+
+
+
 
 
 

@@ -26,11 +26,12 @@
         //双向过滤器
         Vue.filter('meng', {
             read: function (val) {
-                // return val;
+                return val;
                 console.log(val);
             },
             write: function (val) {
                 console.log(val)
+                return val;
             }
         })
         let app = new Vue({

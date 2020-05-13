@@ -6,19 +6,22 @@
     <title>Document</title>
     <script src="vue.min.js"></script>
     <style>
-
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div id="app">
-
+    <div id="app" v-cloak>
+        这个属性不会渲染出来，也就是说，它只在该元素渲染之前存在，那么我们就可以为他设置display:none;来防止vue还没加载完就渲染出来该模块然后vue加载完之后该模块瞬间变化导致的用户体验不佳。<br><br>
+        {{msg}}
     </div>
 
     <script>
         let app = new Vue({
             el: '#app',
             data: {
-                msg:'wei'
+                msg: 'wei'
             },
             methods: {
                 

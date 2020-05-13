@@ -11,17 +11,22 @@
 </head>
 <body>
     <div id="app">
-
+        <button @click="add">点击添加</button>
+        <ul v-for="i in msg" track-by="$index">
+            <li>{{i}}</li>
+        </ul>
     </div>
 
     <script>
         let app = new Vue({
             el: '#app',
             data: {
-                msg:'wei'
+                msg:[1,2,3,4,5]
             },
             methods: {
-                
+                add: function () {
+                    this.msg.push(0);//在不加track-by的情况下只能添加一次0
+                }
             }
         })
     </script>

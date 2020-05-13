@@ -11,19 +11,23 @@
 </head>
 <body>
     <div id="app">
-
+        {{msg}}
     </div>
 
     <script>
         let app = new Vue({
-            el: '#app',
+            // el: '#app',
             data: {
-                msg:'wei'
+                msg: 'wei'
             },
             methods: {
                 
             }
-        })
+        }).$mount('#app');
+
+        console.log('data', app.$data)
+        app.$el.style.cssText = 'width: 100px; height: 100px; background: red;';
+        console.log('options', app.$options);
     </script>
 </body>
 </html>

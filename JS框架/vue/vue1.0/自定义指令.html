@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-drag>
+
+    </div>
+
+    <script>
+        Vue.directive('drag', function () {
+            // console.log(this);
+            this.el.onmousedown = function (e) {
+                console.log('a')
+                let ev = e || event;
+                let left = ev.clientX - this.offsetLeft;
+                let top = ev.clientX - this.offsetTop;  
+                document.onmousemove = function (e) {
+                    console.log('b')
+                    let ev = e || event;
+                    this.style.left = ev.clientX - left + 'px';
+                    this.style.top = ev.clientY - top + 'px';
+                }.bind(this);
+                document.onmouseup = function (e) {
+                    console.log('c')
+                    console.log(this)
+                    this.onmouseup = this.onmousemove = null;//这里的this指向document
+                };
+            };
+        });
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg:'wei'
+            },
+            methods: {
+                
+            }
+        })
+    </script>
+</body>
+</html>

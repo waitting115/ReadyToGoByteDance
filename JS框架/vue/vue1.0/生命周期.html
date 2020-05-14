@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg:'wei'
+            },
+            methods: {
+                
+            },
+            created() {
+                console.log('实例已创建');
+            },
+            beforeCompile() {
+                console.log('实例编译之前');
+            },
+            compiled() {
+                console.log('实例编译之后');
+            },
+            ready() {
+                //可以理解成window.onload
+                console.log('数据已经渲染完成')
+            },
+            beforeDestroy() {
+                console.log('vue实例销毁之前')
+            },
+            destroyed() {
+                console.log('vue实例销毁之后')
+            }
+        })
+        document.onclick = function () {
+            app.$destroy();
+        }
+    </script>
+</body>
+</html>

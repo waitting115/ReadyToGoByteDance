@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="vue.min.js"></script>
     <style>
-
+        .color {
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
     <div id="app">
+        <input type="text" v-model="color">
+        <div class="color" v-color="color"></div>
 
     </div>
 
     <script>
+        Vue.directive('color', function (color) {
+            this.el.style.background = color;
+        })
         let app = new Vue({
             el: '#app',
             data: {
-                msg:'wei'
+                color: 'red'
             },
             methods: {
                 

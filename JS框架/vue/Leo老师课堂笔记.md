@@ -175,6 +175,303 @@ $destroy：销毁该vue实例（该实例还存在，但是里面的东西都是
 
 
 
+## 自定义指令
+
+单项数据绑定：
+
+~~~html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        .color {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="color">
+        <div class="color" v-color="color"></div>
+
+    </div>
+
+    <script>
+        Vue.directive('color', function (color) {
+            this.el.style.background = color;
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                color: 'red'
+            },
+            methods: {
+                
+            }
+        })
+    </script>
+</body>
+</html>
+~~~
+
+双向数据绑定：
+
+~~~html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        .color {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="color">
+        <div class="color" v-color="color"></div>
+
+    </div>
+
+    <script>
+        Vue.directive('color', {
+            bind() {
+                // 不接受参数，代表该自定义指令作用的元素初始的样子
+                this.el.style.background = 'blue';
+            },
+            update(color) {
+                //接收参数，监听该自定义指令作用的元素的改变
+                this.el.style.background = color;
+            }
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                color: 'blue'
+            },
+            methods: {
+                
+            }
+        })
+    </script>
+</body>
+</html>
+~~~
+
+## 生命周期
+
+~~~html
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg:'wei'
+            },
+            methods: {
+                
+            },
+            created() {
+                console.log('实例已创建');
+            },
+            beforeCompile() {
+                console.log('实例编译之前');
+            },
+            compiled() {
+                console.log('实例编译之后');
+            },
+            ready() {
+                //可以理解成window.onload
+                console.log('数据已经渲染完成')
+            },
+            beforeDestroy() {
+                console.log('vue实例销毁之前')
+            },
+            destroyed() {
+                console.log('vue实例销毁之后')
+            }
+        })
+        document.onclick = function () {
+            app.$destroy();
+        }
+    </script>
+</body>
+</html>
+~~~
+
+## vue动画
+
+~~~html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="vue.min.js"></script>
+    <style>
+        .trans {
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+        }
+        .wei-transition {
+            opacity: 1;
+            transition: 1s;
+            transform: translate(0,0);
+        }
+        .wei-leave {
+            opacity: 0;
+            transform: translateX(90px);
+        }
+        .wei-enter {
+            opacity: 0;
+            transform: translateY(90px);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button class="btn btn-default" @click='move'>动起来</button><br><br>
+        <div class="trans" v-show="show" transition='wei'></div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg:'wei',
+                show: true
+            },
+            methods: {
+                move: function () {
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
+~~~
+
+~~~html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="vue.min.js"></script>
+    <style>
+        .trans {
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+        }
+        .wei-transition {
+            opacity: 1;
+            transition: 1s;
+            transform: translate(0,0);
+        }
+        .aaa {
+            opacity: 0;
+            transform: translateX(90px);
+        }
+        .bbb {
+            opacity: 0;
+            transform: translateY(90px);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button class="btn btn-default" @click='move'>动起来</button><br><br>
+        <div class="trans" v-show="show" transition='wei'></div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg:'wei',
+                show: true
+            },
+            methods: {
+                move: function () {
+                    this.show = !this.show;
+                }
+            },
+            transitions: {//s
+                'wei': {
+                    enterClass: 'bbb',
+                    leaveClass: 'aaa'
+                }
+            }
+        })
+    </script>
+</body>
+</html>
+~~~
+
+## 用animate.css框架实现动画
+
+用bower下载：bower install animate.css
+
+~~~html
+
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        .color {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="color">
+        <div class="color" v-color="color"></div>
+
+    </div>
+
+    <script>
+        Vue.directive('color', {
+            bind() {
+                // 不接受参数，代表该自定义指令作用的元素初始的样子
+                this.el.style.background = 'blue';
+            },
+            update(color) {
+                //接收参数，监听该自定义指令作用的元素的改变
+                this.el.style.background = color;
+            }
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                color: 'blue'
+            },
+            methods: {
+                
+            }
+        })
+    </script>
+</body>
+</html>

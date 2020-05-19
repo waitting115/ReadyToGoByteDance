@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="../vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <wei :wasai='msg'></wei>
+
+        <template id="aa">
+            <h1>我是组件{{msg}}，来自父级的数据：{{wasai}}</h1>
+            <jing :keke="msg" :num="number"></jing>
+        </template>
+
+        <template id="bb">
+            <h1>我是组件{{msg}}，来自父级的数据：{{keke}} 和 {{num}}</h1>
+        </template>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg:'父级的数据msg'
+            },
+            components: {
+                'wei': {
+                    data() {
+                        return {
+                            msg: 'aa',
+                            number: 12
+                        }
+                    },
+                    props: ['wasai'],//wasai是一个指向对应父级数据的指针，父级msg变了，wasai也会随着变
+                    template: '#aa',//因为一旦模板内容太多会很乱
+                    components: {
+                        jing: {
+                            data() {
+                                return {
+                                    msg : 'bb',
+                                    num: 555//事实证明，父级传下来的数据优先级高于此模板内data数据的优先级，会发生覆盖
+                                }
+                            },
+                            props: {
+                                'keke': String,
+                                'num' : Number//过滤器
+                            },
+                            template: '#bb',
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

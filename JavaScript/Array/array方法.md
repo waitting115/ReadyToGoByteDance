@@ -182,7 +182,7 @@ console.log(iterator1.next().value);
 如果数组中至少有一个元素满足回调函数，就返回true，反之返回false。
 
 ## filter()-对的返回
-
+    
 将所有在过滤函数中返回true的数组元素放到一个新数组中返回。
 
 ## find()-找到返回

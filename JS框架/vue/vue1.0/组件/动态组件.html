@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="../vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <wei></wei>
+    <div id="app">
+        <button @click="msg='wei'">变为wei组件</button>
+        <button @click="msg='jingwei'">变为jingwei组件</button>
+        <component :is="msg"></component>
+        <div :is="msg"></div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg:'wei'
+            },
+            components: {
+                'wei': {
+                    template: '<h2>我是wei组件</h2>'
+                },
+                'jingwei': {
+                    template: '<h2>我是jingwei组件</h2>'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

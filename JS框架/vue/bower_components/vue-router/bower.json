@@ -6,11 +6,7 @@
   ],
   "description": "router for Vue.js",
   "main": "dist/vue-router.js",
-  "moduleType": [
-    "globals",
-    "node",
-    "amd"
-  ],
+  "moduleType": ["globals", "node", "amd"],
   "keywords": [
     "vue",
     "router"
@@ -25,16 +21,5 @@
     "test",
     "*.yml",
     "*.json"
-  ],
-  "version": "0.7.13",
-  "_release": "0.7.13",
-  "_resolution": {
-    "type": "version",
-    "tag": "v0.7.13",
-    "commit": "5b442626837206026582cf2772120b8158dfe5a9"
-  },
-  "_source": "https://github.com/vuejs/vue-router.git",
-  "_target": "0.7.13",
-  "_originalSource": "vue-router",
-  "_direct": true
+  ]
 }

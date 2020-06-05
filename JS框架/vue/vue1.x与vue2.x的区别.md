@@ -9,3 +9,33 @@
 
 - 1.x如果想显示要是用json过滤器：{{obj | json}}
 - 2.x中json数据无需过滤器可以直接显示：{{obj}}
+
+## 3.生命周期的变化
+
+- vue1.x的生命周期：
+  - created（）——实例创建完成
+  - beforeCompile（）——实例编译前
+  - compiled（）——实例编译后
+  - ready（）——数据渲染完成（类似window.onload）
+  - beforeDestroy（）——实例销毁前
+  - destroyed（）——实例销毁后
+- vue2.x的生命周期：
+  - beforeCreated（）——初始化（注入&校验）之前
+  - created（）——初始化（注入&校验）之后
+  - beforeMount（）——模板以及el外部的HTML 编译完成，创建vm.$el并用其替换“el”之前
+  - mounted（）——创建vm.$el并用其替换“el”之后
+  - beforeUpdate（）——当data被修改时触发虚拟DOM重新渲染并应用更新之前
+  - updated（）——当data被修改时触发虚拟DOM重新渲染并应用更新之后
+  - beforeDestory（）——销毁实例前
+  - destroyed（）——销毁实例后
+
+销毁vue实例：app.$destroy();
+
+## 4.没有 了$key和$value
+
+vue2.x:
+
+~~~html
+<div v-for="(value, key) in json">{{key}}={{value}}</div>
+~~~
+

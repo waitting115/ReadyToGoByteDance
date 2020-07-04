@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../bower_components/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <components-one>
+        </components-one>
+        <components-two></components-two>
+    </div>
+
+    <template id="components-one">
+        <div>
+            <h1>我是components-one组件</h1>
+            <button @click="clk">click</button>
+            <components-one-one :msg1 = 'msg1'></components-one-one><!--父传子-->
+        </div>
+    </template>
+
+    <template id="components-two">
+        <div>
+            <h1>我是components-two组件</h1>
+            <h1>我获取到同级的components-one组件的数据为:{{msg11}}</h1>
+        </div>
+    </template>
+
+    <template id="components-one-one">
+        <div>
+            <h2>我是components-one-one组件</h2>
+            <h2>我获取到的父级components-one组件的数据为:{{msg1}}</h2>
+        </div>
+    </template>
+    <script>
+        let vm = new Vue();//同级组件传递数据的媒人，要发数据的组件用vm.$emit(key,val);的形式发送到vm，要接收数据的组件用vm.$on(key,(arg)=>{this.key = arg})
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                a: '1'
+            },
+            components: {
+                'components-one': {
+                    template: '#components-one',
+                    data() {
+                        return {
+                            msg1: 'one'
+                        }
+                    },
+                    methods: {
+                        clk() {
+                            vm.$emit('msg11', this.msg1);
+                        }
+                    },
+                    components: {
+                        'components-one-one': {
+                            template: '#components-one-one',
+                            props: ['msg1']//子接收
+                            // 这里需要注意一点，如果想让子级组件内改变msg1之后父级组件也随之变化，那么父级在向子级传递时要传递一个对象，将需要的数据作为该对象的一个属性来传递，这样一来子级接收到的的msg1就是一个指向父级msg1的指针，就可以实时变化；如果不想影响到父级数据，那么就传递字符串，数字等基本数据类型，那么js的操作就是复制一个副本来为子级所用，自然也就不会影响到父级，这里传递就是一个字符串，所以子级数据变化不会影响到父级
+                        }
+                    }
+                },
+                'components-two': {
+                    template: '#components-two',
+                    data() {
+                        return {
+                            msg11: ''
+                        }
+                    },
+                    mounted() {
+                        vm.$on('msg11', (arg1) => {
+                            this.msg11 = arg1;
+                            // console.log(arg1)
+                        })
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

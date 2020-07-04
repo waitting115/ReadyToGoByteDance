@@ -1,14 +1,24 @@
 # 常用命令
 
-打开数据库： mysql -u root -p  然后输入密码，如果没有密码则直接回车
+### 打开数据库：
 
-展示所有数据库：SHOW DATABASES
+ mysql -u root -p  然后输入密码，如果没有密码则直接回车
 
-创建数据库：CREATE DATABASE RUNOOB
+### 展示所有数据库：
 
-进入某数据库： USE RUNOOB
+SHOW DATABASES
 
-创建数据表：CREATE TEBLE allUser(
+### 创建数据库：
+
+CREATE DATABASE RUNOOB
+
+### 进入某数据库：
+
+ USE RUNOOB
+
+### 创建数据表：
+
+CREATE TEBLE allUser(
 
 ​	openID VARCHAR(100) NOT NULL,
 
@@ -20,13 +30,19 @@
 
 (用InnoDB引擎，默认编码为utf-8)
 
-查看数据表：show tables
+### 查看数据表：
 
-查看表结构：desc runoob
+show tables
 
-删除数据表：DROP TABLE runoob
+### 查看表结构：
 
-插入数据：
+desc runoob
+
+### 删除数据表：
+
+DROP TABLE runoob
+
+### 插入数据：
 
 ```mysql
 INSERT INTO alluser
@@ -34,15 +50,15 @@ INSERT INTO alluser
 -> VALUES
 -> ("five","five","../../iamges/userHead/cat.jpg","'考研资料',’球类运动','租好物'","'snwn','xxg','hx','ch','lsiy'","'snwn','hx','fzzf'","'lsjy-7','snwn-8','hx-14','hx-16'");
 ```
-查询数据：
+### 查询数据：
 
 ​	SELECT * FROM alluser WHERE openID='five';
 
-更新数据表：
+### 更新数据表：
 
 ​	 UPDATE alluser SET userName='Five' WHERE openID='five';
 
-删除表数据：
+### 删除表数据：
 
 ​	DELETE FROM alluser WHERE openID='five';
 
@@ -52,11 +68,11 @@ LIKE语句：
 
 。。。
 
-添加主外键关系：
+### 添加主外键关系：
 
 ​	alter table **goods** add constraint FK_ID foreign key(**openID**) references **alluser(openID)**;
 
-删除主外键关系：
+### 删除主外键关系：
 
 ​	先找到要删除外键的表，然后  show create table **goods**;
 
@@ -66,15 +82,15 @@ LIKE语句：
 
 ​	就ok了。
 
-删除主键约束：
+### 删除主键约束：
 
 ​	alter table **goods** drop primary key;
 
-添加主键约束：
+### 添加主键约束：
 
 ​	 alter table **goods** add primary key (**userName**);
 
-删除某一字段：
+### 删除某一字段：
 
 ​	alter table **goods** drop **openID**;
 
@@ -84,11 +100,47 @@ LIKE语句：
 
 ​	就可以了。
 
+### 创建表：
+
+create table user(
+
+username char(20) primary key,
+
+password char(20) not null
+
+);
+
+### 插入数据：
+
+insert into user  values (1,1);
+
+### 查询数据：
+
+select * from user where username=1 and password=1;
+
+### 查看数据表：
+
+select *from user;
+
+### 展示一下数据表的信息(编码方式)：
+
+show create table user;
+
+### 精确查询：
+
+select *from st_grade where st_name=1;
+
+### 模糊查询：
+
+select *from st_grade where st_name like '1%';
+
+### 更新数据：
+
+update st_grade set math=2,english=3 where st_name=1;
 
 
 
 
-# SQL注入：
 
 ​	所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。 
 

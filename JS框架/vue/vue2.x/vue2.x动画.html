@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../bower_components/vue/dist/vue.min.js"></script>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: 100px;
+            background-color: red;
+        }
+        /* .fade-enter-active ,.fade-leave-active {
+            transition: all .5s;
+        }
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        } */
+        
+        /* .fade-enter-active {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            opacity: 1;
+            transition: 1s ease all;
+        }
+        .fade-enter {
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+            opacity: 0;
+        }
+        .fade-leave-active {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            opacity: 1;
+        }       
+        .fade-leave-to {
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+            opacity: 0;
+            transition: 1s ease all;
+        } */
+
+        .fade-enter-active, .fade-leave-active {
+            opacity: 1;
+            width: 200px;
+            height: 200px;
+            transition: all ease 1s;
+        }
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click='change'>改变</button>
+        <transition name='fade'>
+            <div class="box" v-show="show">
+
+            </div>
+        </transition>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                show: false
+            },
+            methods: {
+                change() {
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

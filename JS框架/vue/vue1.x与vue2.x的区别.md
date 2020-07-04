@@ -31,10 +31,37 @@
 
 销毁vue实例：app.$destroy();
 
-## 4.没有 了$key和$value
-
+## 4.循环没有 了$key和$value
+取而代之的是：
 vue2.x:
+<div v-for="(value, key) in json">
+  {{value}} = {{key}}
+</div>
 
+
+## 5.2.x取消了所有的过滤器
+如uppercase等过滤器，因为过于简单，若用自己写；
+<div id="div1">
+  {{msg | uppercase}}
+</div>
+
+<script>
+  Vue.filter('uppercase', (val) => {
+    return val.toUpperCase();
+  });
+</script>
+
+若需传参：
+<div id="div1">
+  {{msg | uppercase('1','2')}}
+</div>
+
+<script>
+  Vue.filter('uppercase', (val, arg1, arg2) => {
+    console.log(arg1, arg2)
+    return val.toUpperCase();
+  });
+</script>
 ~~~html
 <div v-for="(value, key) in json">{{key}}={{value}}</div>
 ~~~

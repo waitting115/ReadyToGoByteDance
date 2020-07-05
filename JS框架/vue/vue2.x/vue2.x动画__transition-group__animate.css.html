@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../bower_components/vue/dist/vue.min.js"></script>
+    <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: absolute;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: 100px;
+        }
+        .box2 {
+            margin-top: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click='change'>change</button>
+        <transition-group name='anim1'
+        enter-active-class='animate__animated animate__bounceInDown'
+        leave-active-class='animate__animated animate__bounceOutDown'>
+            <div class="box" v-show='show' :key='1'></div>
+            <div class="box box2" v-show='show' :key='2'></div>
+        </transition-group>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el:"#app",
+            data: {
+                show: false
+            },
+            methods: {
+                change() {
+                    this.show = !this.show;
+                },
+            }
+        })
+    </script>
+</body>
+</html>

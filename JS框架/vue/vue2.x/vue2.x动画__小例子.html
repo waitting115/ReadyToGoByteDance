@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../bower_components/vue/dist/vue.min.js"></script>
+    <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
+    <style>
+        #app {
+            margin-left: 100px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="msg" @input="change">
+        <transition-group name='anim1'
+        enter-active-class='animate__animated animate__jackInTheBox'
+        leave-active-class='animate__animated animate__hinge'>
+            <p v-for="(val,index) in arr2" :key='index'>{{val}}</p>
+            <!-- 记得:key -->
+        </transition-group>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el:"#app",
+            data: {
+                arr: ['apple', 'pear', 'orange', 'banana'],
+                msg: '',
+                arr2: []
+            },
+            methods: {
+                change() {
+                    this.arr2 = [];
+                    // console.log(this.arr2)
+                    if(this.msg != '') {
+                        this.arr.forEach((val, index) => {
+                            if(val.indexOf(this.msg) != -1) {
+                                this.arr2.push(this.arr[index]);
+                            }
+                        })
+                    }
+                },
+            }
+        })
+    </script>
+</body>
+</html>

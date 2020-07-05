@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../bower_components/vue/dist/vue.min.js"></script>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: absolute;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click='change'>change</button>
+        <transition name='anim1'
+        @before-enter='beforeEnter'
+        @enter='enter'
+        @after-enter='afterEnter'
+        @before-leave='beforeLeave'
+        @leave='leave'
+        @after-leave='afterLeave'>
+            <div class="box" v-show='show'></div>
+        </transition>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el:"#app",
+            data: {
+                show: false
+            },
+            methods: {
+                change() {
+                    this.show = !this.show;
+                },
+                beforeEnter(arg){
+                    // console.log(arg)
+                    console.log('beforeEnter：进入之前')
+                    // arg.style.background = 'red'
+                    arg.style.transition = 'all ease 1s'
+                },
+                enter(arg) {
+                    console.log('enter：进入时')
+                    arg.style.background = 'orange'
+                    arg.style.opacity = '0'
+                },
+                afterEnter(arg) {
+                    console.log('afterEnter：进入之后')
+                    arg.style.background = 'yellow'
+                    arg.style.opacity = '1'
+                    // this.show = !this.show
+                },
+                beforeLeave(arg) {
+                    console.log('beforeLeave：离开前')
+                    arg.style.background = 'green'
+                    arg.style.opacity = '1'
+                },
+                leave(arg) {
+                    console.log('leave：离开时')
+                    arg.style.background = 'blue'
+                    arg.style.opacity = '0'
+                },
+                afterLeave(arg) {
+                    console.log('afterLeave：离开后')
+                    this.show = !this.show
+                    // arg.style.background = 'purple'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

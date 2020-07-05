@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../bower_components/vue/dist/vue.min.js"></script>
+    <script src="../bower_components/vue-router/dist/vue-router.min.js"></script>
+    <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
+    <style>
+        a {
+            transition: .5s;
+        }
+        .router-link-exact-active {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click='change'>切换到home_two</button><br><br>
+        <router-link to="/home">home</router-link>
+        <router-link to='/news'>news</router-link>
+        <router-link to='/games'>games</router-link>
+
+        <transition
+        enter-active-class='animate__animated animate__bounceInLeft'
+        leave-active-class='animate__animated animate__bounceOutRight'>
+            <router-view></router-view>
+        </transition>
+        
+    </div>
+
+    <template id="home">
+        <div>
+            <h3>home home home</h3>
+            <router-link to='/home/home_one'>home_one</router-link>
+            <router-link to='/home/home_two'>home_two</router-link>
+
+            <transition
+            enter-active-class='animate__animated animate__zoomIn'
+            leave-active-class='animate__animated animate__zoomOut'>
+            <router-view></router-view>
+        </transition>
+        </div>
+    </template>
+
+    <template id="news">
+        <div>
+            <h3>news news news</h3>
+        </div>
+    </template>
+
+    <template id="games">
+        <div>
+            <h3>games games games</h3>
+        </div>
+    </template>
+
+    <template id="home_one">
+        <div>
+            <h3>home_one home_one home_one</h3>
+        </div>
+    </template>
+    
+    <template id="home_two">
+        <div>
+            <h3>home_two home_two home_two</h3>
+        </div>
+    </template>
+    <script>
+
+        // 配置路由
+        let routes = [
+            {
+                path: '/',
+                redirect: '/games'//初始页面
+            },
+            {
+                path: '/home', 
+                component: {
+                    template: '#home'
+                },
+                children: [
+                    {
+                        path: 'home_one',
+                        component: {
+                            template: '#home_one'
+                        }
+                    },
+                    {
+                        path: 'home_two',
+                        component: {
+                            template: '#home_two'
+                        }
+                    }
+                ]
+            },
+            {
+                path: '/news',
+                component: {
+                    template: '#news'
+                }
+            },
+            {
+                path: '/games',
+                component: {
+                    template: '#games'
+                }
+            }
+        ];
+
+        // 生成路由
+        let router = new VueRouter({
+            routes
+        });
+
+        let app = new Vue ({
+            router,//放置路由
+            el: '#app',
+            methods: {
+                change() {
+                    // console.log(this.$route.path)
+                    if(this.$route.path != '/home/home_two') {
+                        router.push({path: '/home/home_two'})//浏览器可以后退，和普通路由一样
+                        // router.replace({path: '/home/home_two'})//浏览器没有后退
+                        // 但是二者都有一个缺点，就是如果已经在home_two页面了，再点击按钮会报错，显示路由重复，对项目无影响，但是可以解决,就是获取当前页面route路由，判断是否为目标路由，不是才跳转。
+                    }
+                }   
+            }
+        })
+    </script>
+</body>
+</html>

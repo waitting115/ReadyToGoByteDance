@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../bower_components/vue/dist/vue.min.js"></script>
+    <script src="../bower_components/vue-router/dist/vue-router.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <router-link to='/book/123456'>从烂木头开始吞噬进化</router-link>
+        <router-link to='/book/654321'>活人炼狱</router-link>
+
+        <router-view></router-view>
+    </div>
+
+    <template id='book'>
+        <div>
+            <!-- <h2>{{$route | json}}</h2> -->
+            <h2>{{$route.fullPath}}</h2>
+            <h2>{{$route.params}}</h2>
+            <h2>{{$route.path}}</h2>
+        </div>
+    </template>
+    <script>
+        // let jsonFilter = Vue.filter('json', (data) => {
+        //     console.log(data)
+        // })
+        let routes = [
+            {
+                path: '/book/:id',//动态路由
+                component: {
+                    template: '#book'
+                }
+            }
+        ];
+
+        let router = new VueRouter({
+            routes
+        })
+        let app = new Vue({
+            router,
+            el:'#app'
+        })
+    </script>
+</body>
+</html>

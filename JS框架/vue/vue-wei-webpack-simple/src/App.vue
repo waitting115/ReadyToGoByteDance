@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Router1></Router1>
     <Loading></Loading>
     <Loading2></Loading2>
     <!-- <img src="./assets/logo.png">

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+
+        class Wei extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    time : new Date()
+                }
+                setInterval(() => {
+                    this.setState({
+                        time : new Date()
+                    })
+                }, 1000)
+            }
+            render() {
+                return  (
+                    <div>
+                        {this.state.time.toLocaleDateString()}
+                        <br />
+                        {this.state.time.toLocaleTimeString()}
+                    </div>
+                )
+            }
+        }
+    
+        ReactDOM.render(
+            <Wei/>,
+            app
+        );
+    </script>
+</body>
+</html>

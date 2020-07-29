@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+    <style>
+        span {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class NumberBox extends React.Component{
+            constructor () {
+                super();
+                this.state = {
+                    num : 5
+                }
+            };
+            render() {
+                return (
+                    <div>
+                        <button onClick={this.minus.bind(this)}>-</button>
+                        <span>{this.state.num}</span>
+                        <button onClick={this.add.bind(this)}>+</button>
+                    </div>
+                )
+            };
+            minus() {
+                // console.log(this.state.num --)
+                this.setState({
+                    num : (this.state.num <= this.props.min) ? this.props.min : -- this.state.num
+                })
+            };
+            add() {
+                this.setState({
+                    num : (this.state.num >= this.props.max) ? this.props.max : ++ this.state.num
+                })
+            };
+        }
+
+        let max = 15, min = 0;
+        ReactDOM.render(
+            <NumberBox max={max} min={min} />,
+            app
+        );
+    </script>
+</body>
+</html>

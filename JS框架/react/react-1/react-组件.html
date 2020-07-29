@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+    <style>
+        .div1 {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type='text/babel'>
+        class Wei extends React.Component{
+            constructor () {
+                super();
+                this.state = {
+                    show : 'block'
+                }
+            }
+            render() {
+                return (
+                    <div>
+                        <span>{this.props.a}</span>
+                        <br /><br />
+                        <button onClick={this.change.bind(this)}>Change</button>
+                        <div className="div1" style={{display: this.state.show}}></div>
+                    </div>
+                )
+            }
+            change() {
+                this.setState({
+                    show: (this.state.show === 'block') ? 'none' : 'block'
+                })
+            }
+        }
+        
+        let node = '向组件内传数据直接写自定义属性，然后在组件内用this.props.a来接收，但要注意的是this.props这个属性是只读的，不能改变，想要能改变你的数据用this.state即可，如果想实时更新数据，用this.setState({})即可';
+        ReactDOM.render(
+            <Wei a = {node}/>,
+            app
+        )
+    </script>
+</body>
+</html>

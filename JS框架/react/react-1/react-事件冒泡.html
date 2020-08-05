@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+    class Wei extends React.Component{
+        constructor() {
+            super();
+            
+        }
+        Bubbling(e) {//这是合成事件
+            console.log(1);
+            // e.persist();
+            // e.cancelBubble = true;//不管用
+            e.stopPropagation();//管用
+            // return false;//不管用
+            // 两种方法都不管用，因为react中的e是已经封装过的
+            // 最后试一下react支持的方法：
+            // e.nativeEvent.stopImmediatePropagation();//也不管用
+        }
+        divClick() {
+            console.log(2);
+        }
+        componentDidMount(e) {//这是原生事件
+            document.getElementById('btn1').addEventListener('click', (e) => {
+                console.log(3);
+                e.stopPropagation();
+            })
+        }
+        render() {
+            return (
+                <div id='div1' onClick={() => this.divClick()}>
+                    <button onClick={(e) => this.Bubbling(e)}>Bubbling</button>
+                    <button id='btn1'>aabbcc</button>
+                </div>
+            )
+        }
+    }
+
+    // document.addEventListener('click', () => {
+    //     console.log(2)
+    // })
+    ReactDOM.render(
+        <Wei />,
+        app
+    )
+    </script>
+</body>
+</html>

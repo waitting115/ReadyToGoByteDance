@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class Bdb extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    msg: ''
+                }
+            }
+
+            bdbChange(e) {
+                // console.log(this.refs['leo'])
+                this.setState({
+                    // msg: e.target.value
+                    msg: this.refs['leo'].value//经常用于获取非事件源元素
+                })
+            }
+
+            render() {
+                return (
+                    <div>
+                        <input type='text' id='input1' onChange={this.bdbChange.bind(this)} ref='leo'/>
+                        <div>{this.state.msg}</div>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Bdb />, app);
+    </script>
+</body>
+</html>

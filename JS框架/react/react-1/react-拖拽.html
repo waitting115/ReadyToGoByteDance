@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class Drag extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    needX: 0,
+                    needY: 0
+                }
+                this.disX = 0;
+                this.disY = 0;
+            }
+            mouseDown(e) {
+                // console.log(e.clientX, e.target.offsetLeft)
+                this.disX = e.clientX - e.target.offsetLeft;
+                this.disY = e.clientY - e.target.offsetTop;
+
+                document.onmousemove = this.mouseMove.bind(this);
+                document.onmouseup = this.mouseUp.bind(this);
+            }
+            mouseMove(e) {
+                this.setState({
+                    needX: e.clientX - this.disX,
+                    needY: e.clientY - this.disY
+                })
+            }
+            mouseUp(e) {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+
+            render() {
+                return (
+                    <div style={{
+                            width: this.props.style.width,
+                            height: this.props.style.height, 
+                            background: this.props.style.background,
+                            position: 'absolute',
+                            left: this.state.needX,
+                            top: this.state.needY
+                        }} 
+                        onMouseDown={this.mouseDown.bind(this)}
+                    >
+
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Drag style={{width: '200px', height: '200px', background: '#f40'}}/>,
+            app
+        );
+    </script>
+</body>
+</html>

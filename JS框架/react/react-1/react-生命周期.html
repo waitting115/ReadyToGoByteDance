@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+    class Wei extends React.Component{
+        constructor() {
+            super();
+            this.state = {
+                msg: 1
+            }
+        }
+        //组件挂载前，可以操作组件属性、状态值，但不可以获取组件内的对象
+        componentWillMount() {
+            console.log('组件挂载前');
+            console.log(document.querySelector('#div1'));//null
+        };
+        //组件挂载后，可以操作组件属性、状态值，也可以获取组件内的对象
+        componentDidMount() {
+            console.log('组件挂载后');
+            console.log(document.querySelector('#div1'));//<div>
+        };
+        //组件更新前
+        componentWillUpdate() {
+            console.log('组件更新前');
+            // debugger;
+        };
+        //组件更新后
+        componentDidUpdate() {
+            console.log('组件更新后');
+        };
+        //组件销毁前
+        componentWillUnmount() {
+            console.log('组件销毁前');
+        };
+
+        change() {
+            // console.log('change')
+            this.setState({
+                msg: Math.random()
+            });
+        };
+
+        unMount() {
+            ReactDOM.render(<span></span>,app)
+        }
+
+        render() {
+            return (
+                <div id='div1'>
+                    <button onClick={this.change.bind(this)}>Change</button>
+                    <div>{this.state.msg}</div>
+                    <button onClick={this.unMount.bind(this)}>unMount</button>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <Wei />,
+        app
+    )
+    </script>
+</body>
+</html>

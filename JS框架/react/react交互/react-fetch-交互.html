@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class Wei extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    foods: []
+                }
+            }
+
+            componentWillMount() {
+                this.getFoodsAjax();
+            }
+
+            // 后台获取foods
+            getFoodsAjax() {
+                let url = 'http://localhost:2233/get';
+                fetch(url).then(res => res.json()).then((res) => {
+                    setTimeout(() => {
+                        this.setState({
+                            foods: res
+                        })
+                    }, 1000)
+                });//默认get
+            }
+
+            render() {
+                let foodsLi = [];
+                this.state.foods.forEach((val, index) => {
+                    foodsLi.push(<li key={index}>{val}</li>)
+                })
+                return (
+                    <div>
+                    <div style={{display: this.state.foods.length > 0 ? 'none' : 'block'}}>暂时还没有内容...</div>
+                        <ul>
+                            {foodsLi}
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Wei/>,
+            app
+        )
+    </script>
+</body>
+</html>

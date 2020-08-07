@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        function c () {
+            let time = <span>{new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()}</span>
+            ReactDOM.render(time, app);
+        }
+        setInterval(c, 1000);
+
+    </script>
+</body>
+</html>

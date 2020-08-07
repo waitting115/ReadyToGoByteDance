@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class ParentCom extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    msg : '我是父组件的数据'
+                }
+            }
+            render() {
+                return (
+                    <div>
+                        <span>我是父组件</span>    
+                        <ChildCom msg = {this.state.msg}/>
+                    </div>
+                )
+            }
+        }
+
+        class ChildCom extends React.Component{
+            render() {
+                return (
+                    <div>
+                        <div>我是子组件，我收到的父组件数据为：</div>{this.props.msg}<br /><br />
+                        <div>这样传递的数据是一个指针，父子组件指向同一块内存地址，父组件中数据发生变化时子组件中的相应数据也会发生变化，如果想父子组件中的数据各自独立，子组件可以使用生命周期componentWillMount将父组件传过来的数据存到this.state的一个变量中，然后在组件中引用自己this.state中的对应变量。</div>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <ParentCom />,
+            app
+        );
+    </script>
+</body>
+</html>

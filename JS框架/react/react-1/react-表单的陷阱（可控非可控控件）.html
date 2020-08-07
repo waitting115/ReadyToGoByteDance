@@ -18,9 +18,19 @@
         }
 
         render() {
-            return {
-                
-            }
+            return (
+                <div>
+                    <span>如果指定了value，则表单内容就不可变了:  </span>
+                    <input type="text" value='1'/>
+                    <br/>
+                    <span>如果想让input表单中有初始值,用value是实现不了的,在react里需要用defaultValue: </span>
+                    <input type="text" defaultValue='1'/>
+                    <br/>
+                    <span>还有多选框单选框等组件也是同理，如果想默认选中某一项，需要使用defaultChecked: </span>
+                    <input type="checkbox" defaultChecked/><span>web</span>
+                    <input type="radio" defaultChecked/><span>web</span>
+                </div>   
+            )
         }
     }
     

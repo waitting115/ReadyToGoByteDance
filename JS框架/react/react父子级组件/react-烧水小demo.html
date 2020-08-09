@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class Water extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    temperature: 2
+                }
+            }
+
+            onChange(e) {
+                console.log(e)
+                this.setState({
+                    temperature: e.target.value
+                })
+            }
+
+            render() {
+                return (
+                    <div>
+                        <input type="number" onChange={(e) => this.onChange(e)} defaultValue={this.state.temperature}/>
+                        <WaterState nowTemperature={Number(this.state.temperature)} minTemperature={Number(0)} maxTemperature={Number(100)} />
+                    </div>
+                )
+            }
+        }
+
+        class WaterState extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    waterStateMsg: 'Default Msg'
+                }
+            }
+
+            componentWillMount() {
+                this.judgeTemperature();
+            }
+
+            componentDidUpdate() {
+                this.judgeTemperature()
+            }
+
+            judgeTemperature() {
+                let now = this.props.nowTemperature;
+                let min = this.props.minTemperature;
+                let max = this.props.maxTemperature;
+                let tempMsg = '';
+
+                if(now < max && now > min) {
+                    tempMsg = '水正在加热！'
+                } else if (now <= min) {
+                    tempMsg = '水结冰啦！'
+                } else {
+                    tempMsg = '水烧开啦！'
+                }
+
+                console.log(tempMsg)
+                // this.setState({
+				// 	waterStateMsg: tempMsg
+				// })
+                this.state.waterStateMsg = tempMsg
+            }
+
+            render() {
+                return (
+                    <div>
+                        <div>{this.state.waterStateMsg}</div>
+                    </div>
+                )
+            }
+        }
+
+
+        ReactDOM.render(
+            <Water/>,
+            app
+        );
+    </script>
+</body>
+</html>

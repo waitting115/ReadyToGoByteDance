@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .box{
+            width: 340px;
+            height: 340px;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class Wei extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    TABIndex : 0
+                }
+                this.timer = null;
+            }
+
+            getClickBtnIndex(index) {
+                this.setState({
+                    TABIndex: index
+                    
+                })
+            }
+
+            componentWillMount() {
+                this.doIt();
+            }
+
+            onMouseOverFn() {
+                clearInterval(this.timer);
+            }
+
+            onMouseOutFn() {
+                this.doIt();
+            }
+
+            doIt() {
+                let len = this.props.TABContent.topBtnText.length;
+                clearInterval(this.timer);
+                this.timer = setInterval(() => {
+                    this.setState({
+                        TABIndex: this.state.TABIndex >= len - 1 ? 0 : ++ this.state.TABIndex
+                    })
+                }, this.props.TABContent.time)
+            }
+
+            render() {
+                return (
+                    <div onMouseOver={() => this.onMouseOverFn()} onMouseOut = {() => this.onMouseOutFn()}>
+                        <TopBox topBtnText={this.props.TABContent.topBtnText} TABIndex={this.state.TABIndex} getClickBtnIndex={(i) => this.getClickBtnIndex(i)}/>
+                        <ContentBox contentText={this.props.TABContent.contentText} TABIndex={this.state.TABIndex}/>
+                    </div>
+                )
+            }
+        }
+
+        class TopBox extends React.Component{
+            constructor() {
+                super();
+            }
+
+            onClick(e) {
+                this.props.getClickBtnIndex(e.target.getAttribute('data-index'));
+            }
+
+            render() {
+                let topBtn = [];
+                let content = this.props.topBtnText;
+                let len = content.length;
+                for(let i = 0; i < len; i ++) {
+                    topBtn.push(
+                        <button
+                         style={{'background': this.props.TABIndex == i ? 'yellowgreen' : ''}}
+                         className="btn btn-outline-primary" key={i}
+                         onClick={(e)=>this.onClick(e)}
+                         data-index = {i}
+                         >
+                         {content[i]}
+                        </button>)
+                }
+                return (
+                    <div>
+                        <div className="btn-group">
+                            {topBtn}
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        class ContentBox extends React.Component{
+            constructor() {
+                super();
+            }
+
+            render() {
+                let block = [];
+                let content = this.props.contentText;
+                let len = content.length;
+                for(let i = 0; i < len; i ++) {
+                    block.push(<div style={{display: this.props.TABIndex == i ? 'block' : 'none'}} className="box" key={i}>{content[i]}</div>)
+                }
+                return (
+                    <div>
+                        {block}
+                    </div>
+                )
+            }
+        }
+
+        let TABContent = {
+            topBtnText : ['锡纸金针菇', '热干面', '烤冷面', '鸡蛋灌饼'],
+            contentText : ['锡纸+金针菇', '热+干面', '烤冷+面', '鸡蛋+灌饼'],
+            time: 1000
+        }
+    
+        ReactDOM.render(
+            <Wei TABContent={TABContent}/>,
+            app
+        )
+    </script>
+</body>
+</html>

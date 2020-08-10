@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+    <script src="../jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class Baidu extends React.Component{
+            constructor() {
+                super();
+                this.state = {
+                    myLi: []
+                }
+            }
+
+            onChangeFn(e) {
+                $.ajax({
+                    url: 'https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=32294,1422,32300,32358,32045,32398,32407,32115,32498,32481&wd=' + e.target.value + '&req=2&bs=3&csor=2',
+                    method: 'GET',
+                    jsonp: 'cb',
+                    dataType: 'jsonp',
+                    success: (data) => {
+                        let myLi = [];
+                        console.log(data)
+                        if(data.g !== undefined) {
+                            data.g.forEach((val, index) => {
+                                myLi.push(<li key={index}><a href={"https://www.baidu.com/s?ie=UTF-8&wd=" + val.q}>{val.q}</a></li>)
+                            })
+                        }
+                        this.setState({
+                            myLi: myLi
+                        })
+                    }
+                })
+            }
+
+            render() { 
+                return (
+                    <div className='container'>
+                        <label htmlFor="exampleInputEmail1">Baidu:</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Please search" onChange={(e) => this.onChangeFn(e)}/>     
+                        <ul id="ul">
+                            {this.state.myLi}
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <Baidu/>,
+            app
+        )
+    </script>
+</body>
+</html>

@@ -128,7 +128,7 @@ npm ls
 ### 9.卸载包
 
 ```
-npm uninstall
+npm uninstall style-loader css-loader
 ```
 
 ### 10.帮助

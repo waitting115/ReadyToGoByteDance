@@ -14,6 +14,10 @@
 
 
 
+#### 新建文件：
+
+> type nul>webpack.config.js
+
 
 
 # Linux命令
@@ -122,7 +126,11 @@ lsof -i:端口号
 
 结束进程的话直接 kill -9 进程id就可以了
 
+# IOS命令
 
+#### 创建文件：
+
+> touch webpack.config.js
 
 
 

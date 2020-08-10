@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react/react.js"></script>
+    <script src="../react/react-dom.js"></script>
+    <script src="../react/babel.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script>
+        function wei(msg) {
+            ul.innerHTML = '';
+            if(msg.g !== undefined) {
+                msg.g.forEach((val, index) => {
+                    let liNode = document.createElement('li');
+                    liNode.innerHTML = val.q;
+                    ul.appendChild(liNode);
+                })
+            }
+        }
+    </script>
+
+    <script type="text/babel">
+        class Baidu extends React.Component{
+            constructor() {
+                super();
+            }
+
+            onChangeFn(e) {
+                let scriptNode = document.createElement('script');
+                scriptNode.src = 'https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=32294,1422,32300,32358,32045,32398,32407,32115,32498,32481&wd=' + e.target.value + '&req=2&bs=3&csor=2&cb=wei';
+                document.head.appendChild(scriptNode);
+                scriptNode.remove();
+            }
+
+            render() {
+                return (
+                    <div className='container'>
+                        <label htmlFor="exampleInputEmail1">Baidu:</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Please search" onChange={(e) => this.onChangeFn(e)}/>     
+                        <ul id="ul">
+                            
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <Baidu/>,
+            app
+        )
+    </script>
+</body>
+</html>

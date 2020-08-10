@@ -5,6 +5,7 @@ class Wei2 extends React.Component{
         return (
             <div>
                 <button>com1</button>
+                <span>ComponentDemo.js</span>
             </div>
         )
     }
